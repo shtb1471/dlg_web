@@ -1,0 +1,192 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+</head>
+<div class="bread_nav"><b>客户管理</b> / 下级代理商</div>
+<div class="right_content_left employee_content_left">
+    <div class="search">
+        <div class="input_group_inline_float">
+            <label for="" class="inline_label">代理商名称</label>
+            <input type="text" placeholder=' 手机号'>
+        </div>
+        <div class="input_group_inline_float forTime_input">
+            <label for="date" class="inline_label">注册时间</label>
+            <p><input id="startDate" type="text">-<input id="endDate" type="text"></p>
+        </div>
+        <div class="input_group">
+            <span class="btn_search">取消搜索</span>
+        </div>
+    </div>
+    <div class="list_account_table list_lowerAgent">
+        <table id="table" class="employee_table list_lowerAgent_table">
+            <tr>
+                <th>下级代理商</th>
+                <th>代理区域</th>
+                <th>客户数</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="dlg-row-3 text-center">
+                        <img src="images/mifeng.png" alt="" class="company_logo">
+                    </div>
+                    <div class="dlg-row-7 clear-padding dlg-gray-color">
+                        <div>打零工护粮网科技有限公司</div>
+                        <div>2017-1-1 12:10:17</div>
+                    </div>
+                </td>
+                <td>南京市代理</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="dlg-row-3 text-center">
+                        <img src="images/mifeng.png" alt="" class="company_logo">
+                    </div>
+                    <div class="dlg-row-7 clear-padding dlg-gray-color">
+                        <div>打零工护粮网科技有限公司</div>
+                        <div>2017-1-1 12:10:17</div>
+                    </div>
+                </td>
+                <td>南京市代理</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="dlg-row-3 text-center">
+                        <img src="images/mifeng.png" alt="" class="company_logo">
+                    </div>
+                    <div class="dlg-row-7 clear-padding dlg-gray-color">
+                        <div>打零工护粮网科技有限公司</div>
+                        <div>2017-1-1 12:10:17</div>
+                    </div>
+                </td>
+                <td>南京市代理</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="dlg-row-3 text-center">
+                        <img src="images/mifeng.png" alt="" class="company_logo">
+                    </div>
+                    <div class="dlg-row-7 clear-padding dlg-gray-color">
+                        <div>打零工护粮网科技有限公司</div>
+                        <div>2017-1-1 12:10:17</div>
+                    </div>
+                </td>
+                <td>南京市代理</td>
+                <td>20</td>
+            </tr>
+        </table>
+        <div id="pageTool" class="dlg-task-page page-common"></div>
+    </div>
+</div>
+<script src="js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/check.js"></script>
+<script>
+    var notFoundData=" <div class=\"dlg-row add-padding-15\">"
+        + "     <h3 class='font-16 text-center' style='color: red;'>"
+        + "         <img class='dlg-no-list-img' src='./images/no-list.png'/>"
+        + "     </h3>"
+        + " </div>";
+    $(function () {
+        getDatePicker('startDate', 'endDate');
+        getPage(1,10)
+    })
+    $(document).ready(function () {
+        $.prototype.goodCheck = function () {
+            var allcheck = $(this).find('th').find(':checkbox');
+            var checks = $(this).find('td').find(':checkbox');
+            $(this).find(':checkbox').prop('checked', false);
+            allcheck.click(function () {
+                var set = $(this).parents('table').find('td').find(':checkbox');
+                if ($(this).prop('checked')) {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', true)
+                    });
+                } else {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', false)
+                    })
+                }
+            });
+            checks.click(function (e) {
+                e.stopPropagation();
+                var ling = $(this).parents('table').find('td').find(':checkbox:checked').length;
+                if (ling == checks.length) {
+                    allcheck.prop("checked", true)
+                } else {
+                    allcheck.prop("checked", false)
+                }
+            })
+        };
+        $('#table').goodCheck();
+        $(".delete_btn").click(function () {
+            $(this).parents("tr").remove();
+        })
+    })
+    function todoPageSize(pageSize, total) {
+        if(total>0){
+            $('#pageTool').Paging({
+                pageSize: pageSize,
+                count: total,
+                callback: function (page, pageSize, count) {
+                    /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                    getPage(page - 1,pageSize);
+                }
+            });
+        }
+    }
+    function getPage(page,size){
+        $.ajax({
+            url: url + '/cms/get/agent/infos?clienttype=2&userid=' + userid+'&page_index='+(page-1)+'&page_size='+size,
+            type: 'get',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            cache: 'false',
+            success: function (jsData) {
+                if(jsData.status==200&&jsData.body.code=="SUCCESS"){
+                    var datas=jsData.body.data;
+                    var html='   <tr>\n' +
+                        '                <th>下级代理商</th>\n' +
+                        '                <th>代理区域</th>\n' +
+                        '                <th>客户数</th>\n' +
+                        '            </tr>';
+                    if(datas.total>0){
+                        for(var i=0;i<datas.agent_list.length;i++){
+                            var data=datas.agent_list[i];
+                            html+='<tr>\n' +
+                                '                <td>\n' +
+                                '                    <div class="dlg-row-3 text-center">\n' +
+                                '                        <img src="images/mifeng.png" alt="" class="company_logo">\n' +
+                                '                    </div>\n' +
+                                '                    <div class="dlg-row-7 clear-padding dlg-gray-color">\n' +
+                                '                        <div>'+data.entname+'</div>\n' +
+                                '                        <div>2017-1-1 12:10:17</div>\n' +
+                                '                    </div>\n' +
+                                '                </td>\n' +
+                                '                <td>'+data.name+'</td>\n' +
+                                '                <td>20</td>\n' +
+                                '            </tr>';
+                        }
+                    }else{
+                       html=notFoundData
+                    }
+                    $("#table").html("").append(html);
+                     todoPageSize(size, datas.total)
+                }
+            }
+        })
+    }
+
+    function todoPageSize(pageSize,total){
+        $('#pageTool').html("");
+        $('#pageTool').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, pageSize, total) {
+                getPage(page-1,pageSize);
+            }
+        });
+    }
+</script>

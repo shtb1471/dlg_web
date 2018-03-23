@@ -1,0 +1,105 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<div class="bread_nav"> <b>账户管理</b> / 企业资料</div>
+<div class="right_content_left employee_content_left">
+    <div class="form_group">
+        <div class="input_group_inline">
+            <div id="localImag">
+                <img id="preview" src="images/upload.png">
+            </div>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">企业简称</label>
+            <span class="edit_text">上海打零工互谅网科技有限公司</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">营业执照</label>
+            <span class="upload_pic"> <i class="ren"></i> 未认证</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">企业性质</label>
+            <span class="edit_text">私营企业</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">所在地</label>
+            <span class="edit_text">上海市普陀区</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">详细地址</label>
+            <span class="edit_text">上海市普陀区真北路958号天地科技官场</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">企业简介</label>
+            <span class="edit_text">打零打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工打零工工</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">联系信息</label>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">联系人</label>
+            <span class="edit_text">任传伟</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">手机</label>
+            <span class="edit_text">15221801248</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">固定电话</label>
+            <span class="edit_text">021-87658776</span>
+        </div>
+        <div class="input_group_inline_edite">
+            <label for="">邮箱</label>
+            <span class="edit_text">service@dalinggong.com</span>
+        </div>
+        <div class="input_group_inline_edite input_group_btn">
+            <span class="de_btn de_btn_edite" id="submitchangeSave">修改</span>
+        </div>
+    </div>
+</div>
+<div class="bg_ground">
+    <div class="tan">
+        <span class="close">x</span>
+        <div id="localImag_pic">
+            　　　　　　<img id="preview_pic" src="images/upload.png">
+            <input type="file" name="file" id="doc_pic" onchange="javascript:setImagePreviewpic();"
+                   class="upload_input">
+            <span class="upload_pic_pic de_btn">点击上传</span>
+            　　　　
+        </div>
+        <div class="form_group right_tan">
+            <div class="input_group_inline input_pic">
+                <label for="">企业名称</label>
+                <input type="text">
+            </div>
+            <div class="input_group_inline input_pic">
+                <label for="">统一社会信用代码</label>
+                <input type="text">
+            </div>
+
+            <div class="input_group_inline input_pic">
+                <label for="">法定代表人</label>
+                <input type="text">
+            </div>
+            <div class="input_group_inline input_pic">
+                <label for="">注册地址</label>
+                <input type="text">
+            </div>
+            <div class="input_group_inline input_group_btn">
+                <span class="de_btn">保存</span>
+                <span class="de_btn">取消</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script src="./js/jsAddress.js"></script> -->
+<script>
+    $("#submitchangeSave").click(function () {
+        jumpPage("account/companyInfo.html", "rightPart");
+    })
+</script>

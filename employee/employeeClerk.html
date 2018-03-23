@@ -1,0 +1,730 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="js/pagination/paging.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/qrcode.min.js"></script>
+</head>
+<div class="bread_nav"><b>雇员管理</b> / 公司职员</div>
+<div class="right_content_left employee_content_left">
+    <div class="btngroup">
+        <span><a href="javascript:void(0);" onclick="addCustomer()">新增</a></span>
+        <span type="button" class="btn btn-default" onclick="uploadFile()">导入</span>
+        <input id="excelFile" style="display:none" type="file" onchange="submitFile();"/>
+    </div>
+    <input type="hidden" id="startIndex" value="1"/>
+    <input type="hidden" id="showCount" value="1"/>
+    <input type="hidden" id="showTotal" value="0"/>
+    <div class="search">
+        <div class="input_group">
+            <input type="text" id="postPhone" placeholder=' 手机号'>
+        </div>
+        <div class="input_group">
+            <input type="text" id="postName" placeholder=" 姓名">
+        </div>
+        <div class="input_group" onclick="getEmployerListByCondition()">
+            <span class="btn_search"><img src="images/icon_12.png" alt=""> </span>
+        </div>
+        <div class="input_group">
+            <span class="btn_search" onclick="getEmployerList();">取消搜索</span>
+        </div>
+    </div>
+    <div class="list_table list_employee_table">
+        <table id="table" style="width: 1000px" class="table dlg-table-account">
+
+            <tr class="checkboxAll">
+                <th><input type="checkbox"><label class="checkall_label">全选</label></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th><span class="de_btn">邀请接单</span></th>
+                <th><span class="de_btn">删除</span></th>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pageTool" class="dlg-task-page page-common"></div>
+    </div>
+</div>
+<!--新增-->
+<div id="add_customer_modal" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-employee-modal">
+            <h3 class="text-center add-padding-15">添加职员</h3>
+            <div class="dlg-add-employee">
+                <div class="input_group_inline" style="top: 0px;">
+                    <label>手机号</label>
+                    <input type="text" id="phone" name="phone" placeholder="手机号">
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div class="input_group_inline" style="top: 0px;">
+                    <label>姓名</label>
+                    <input type="text" id="userName" name="userName" placeholder="姓名">
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div class="input_group_inline" style="top: 0px;">
+                    <label>部门</label>
+                    <input type="text" id="branch" name="branch" placeholder="部门">
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div class="input_group_inline" style="top: 0px;">
+                    <label>岗位</label>
+                    <input type="text" id="post" name="post" placeholder="岗位"/>
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="text-center add-padding-15">
+                <span class="btn btn-warning-o" onclick="saveEmployeeO()">保存</span>&nbsp;&nbsp;
+                <span class="btn btn-default" onclick="closeCustomer()">取消</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="invite_modal" class="modal_bg_ground">
+    <div class="modal_tan" style="width:620px;">
+        <span class="close">x</span>
+        <div>
+            <h3 class="text-center">邀请雇员接单</h3>
+            <div class="dlg-row">
+                <div class="employeeLeftTitle">
+                    <img src="images/icon_01.png" alt="">
+                    选择零工
+                </div>
+                <div class="employeeRightTitle">
+                    <input type="text" placeholder="请输入零工关键字">
+                    <button class="btn btn-default background-gray-color">
+                        <img src="./images/icon_12.png" draggable="false"/>
+                    </button>
+                </div>
+            </div>
+
+            <table class="table employeeT" id="jobList">
+                <tr>
+                    <td style="width: 60px;padding: 0px 15px;">
+                        <input type="checkbox">
+                    </td>
+                    <td>
+                        <div class="dlg-row-8 clear-padding">
+                            <div class="dlg-list-title">
+                                <h3 class="font-16"
+                                    onclick="jumpPage('linggongguanli/yiguoqi-xiangqing.html', 'rightPart');">任传伟</h3>&nbsp;
+                                <i class="dlg-icon-bao"></i>
+                                <i class="dlg-icon-daili"></i>&nbsp;
+                                <span class="dlg-tag">家政保洁</span>
+                                <span class="dlg-tag">计时</span>
+                            </div>
+                            <div><span class="dlg-red-color">20</span>&nbsp;元/小时&nbsp;需2人
+                                &nbsp;工作时间：10.2-10.4 9:00-18:00
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 60px;padding: 0px 15px;">
+                        <input type="checkbox">
+                    </td>
+                    <td>
+                        <div class="dlg-list-title">
+                            <h3 class="font-16"
+                                onclick="jumpPage('linggongguanli/yiguoqi-xiangqing.html', 'rightPart');">任传伟</h3>&nbsp;
+                            <i class="dlg-icon-bao"></i>
+                            <i class="dlg-icon-daili"></i>&nbsp;
+                            <span class="dlg-tag">家政保洁</span>
+                            <span class="dlg-tag">计时</span>
+                        </div>
+                        <div><span class="dlg-red-color">20</span>&nbsp;元/小时&nbsp;需2人
+                            &nbsp;工作时间：10.2-10.4 9:00-18:00
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="dlg-page">
+                <!--<div id="pageTask" class="dlg-task-page page-common"></div>-->
+            </div>
+            <div class="text-center add-padding-15">
+                <button type="button" class="btn btn-warning-o" onclick="inviteByOrder()">确认</button>&nbsp;
+                <button type="button" class="btn btn-default" onclick="colseJobListModel()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="pageScript" src="js/pagination/paging.js"></script>
+<script src="js/public.js"></script>
+<script>
+
+    function uploadFile() {
+        $("#excelFile").click();
+    }
+
+    //导入excel
+    function submitFile() {
+        var formData = new FormData();
+        var name = $("#excelFile").val();
+        formData.append("file", $("#excelFile")[0].files[0]);
+        formData.append("name", name);
+
+        $.ajax({
+            url: url + '/ent/employment_relation/' + userid + '/' + entid + '/import?access_token=' + access_token,
+            type: 'POST',
+            async: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                console.log("正在进行，请稍候");
+            },
+            success: function (data) {
+                var jsData = JSON.parse(data);
+                if (jsData.status == "200") {
+                    if (jsData.body.code == "SUCCESS") {
+                        alert("导入雇员成功");
+                        getEmployerList();
+
+                    } else if (jsData.body.code == "FAIL") {
+                        var alertStr = "";
+                        if (jsData.body.data.paramerrormsg != "" && jsData.body.data.paramerrormsg != null) {
+                            alertStr += jsData.body.data.paramerrormsg;
+                        }
+                        if (jsData.body.data.mobileerrormsg != "" && jsData.body.data.mobileerrormsg != null) {
+                            alertStr += "  " + jsData.body.data.mobileerrormsg;
+                        }
+                        if (alertStr != null && alertStr != "") {
+                            alert(alertStr);
+                        }
+                    }
+                }
+            }
+        })
+    }
+    $(document).ready(function () {
+        $.prototype.goodCheck = function () {
+            var allcheck = $(this).find('th').find(':checkbox');
+            var checks = $(this).find('td').find(':checkbox');
+            $(this).find(':checkbox').prop('checked', false);
+            allcheck.click(function () {
+                var set = $(this).parents('table').find('td').find(':checkbox');
+                if ($(this).prop('checked')) {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', true)
+                    });
+                } else {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', false)
+                    })
+                }
+            });
+            checks.click(function (e) {
+                e.stopPropagation();
+                var ling = $(this).parents('table').find('td').find(':checkbox:checked').length;
+                if (ling == checks.length) {
+                    allcheck.prop("checked", true)
+                } else {
+                    allcheck.prop("checked", false)
+                }
+            })
+        };
+        $('#table').goodCheck();
+        $(".delete_btn").click(function () {
+            $(this).parents("tr").remove();
+        })
+
+        getEmployerList();
+
+    })
+    //查询雇员列表
+    function getEmployerList() {
+        var returnEntid = localStorage.getItem("entid");
+        console.log("returnEntid= " + returnEntid + " ACCESSTOKEN= ", access_token + " userid= " + userid + " entid= " + entid);
+
+        //得到起始页
+        var startIndex = $("#startIndex").val();
+        if (startIndex == null || startIndex == '') {
+            startIndex = 1;
+        }
+        //每页显示条数
+        var showCount = $("#showCount").val();
+        if (showCount == null || showCount == '') {
+            showCount = 10;
+        }
+
+        var postData = "{\"clienttype\" : \"2\" ,\"page_num\" :\"" + startIndex + "\",\"num_page_each\" :\"" + showCount + "\"";
+
+        var postPhone = $("#postPhone").val();
+        if (postPhone != null && postPhone != "") {
+            postData += ",\"mobile\" :\"" + postPhone + "\"";
+        }
+        var postName = $("#postName").val();
+        if (postName != null && postName != "") {
+            postData += ",\"name\" :\"" + postName + "\"";
+        }
+        postData += "}";
+
+        console.log("postData= ", postData);
+
+        $.ajax({
+            url: url + '/ent/employee/' + userid + '/' + returnEntid + '/list?access_token=' + access_token,
+            type: 'POST',
+            data: postData,
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            contentType: "application/json",
+            success: function (jsData) {
+                console.log("列表jsData=", jsData);
+                if (jsData.status == 200 && jsData.body.code == '成功') {
+                    var str = "";
+                    var html = "<tr>"
+                        + "<th></th>"
+                        + "<th style='width: 100px;'>头像</th>"
+                        + "<th>姓名</th>"
+                        + "<th style='width: 100px;'>手机号</th>"
+                        + "<th style='width: 100px;'>部门</th>"
+                        + "<th style='width: 100px;'>岗位</th>"
+                        + "<th>性别</th>"
+                        + "<th>年龄</th>"
+                        + "<th>雇佣次数</th>"
+                        + "<th style='width: 150px;'>操作</th>"
+                        + "</tr>";
+                    if (jsData.body.data.result.employees.length > 0) {
+                        for (var i = 0; i < jsData.body.data.result.employees.length; i++) {
+
+                            var employee = jsData.body.data.result.employees[i];
+                            html += "<tr>";
+                            //复选框
+                            html += "<td><input type=\"checkbox\" name=\"checkAllEmployee\" value=\"" + employee.employee_userid + "\" ></td>"
+                            //头像
+                            html += "<td>"
+                                + "<div>" + "</div>"
+                            html += "</td>";
+                            // 姓名
+                            var username = employee.name;
+                            if (username != '' && username != null) {
+                                html += "<td>" + username + "</td>";
+                            } else {
+                                html += "<td></td>";
+                            }
+                            // 手机号
+                            var mobile = employee.employee_userid;
+                            if (mobile != '' && mobile != null) {
+                                html += "<td>" + mobile + "</td>";
+                            } else {
+                                html += "<td></td>";
+                            }
+                            // 部门
+                            var department = employee.department;
+                            if (department != '' && department != null) {
+                                html += "<td>" + department + "</td>";
+                            } else {
+                                html += "<td></td>";
+                            }
+                            // 岗位
+                            var station = employee.station;
+                            if (station != '' && station != null) {
+                                html += "<td>" + station + "</td>";
+                            } else {
+                                html += "<td></td>";
+                            }
+                            // 性别
+                            html += "<td>"
+                                + "<div>" + "</div>"
+                            html += "</td>";
+                            // 年龄
+                            html += "<td>"
+                                + "<div>" + "</div>"
+                            html += "</td>";
+                            // 雇佣次数
+                            html += "<td>"
+                                + "<div>" + "</div>"
+                            html += "</td>";
+                            html += "<td>"
+                            html += "<a href=\"javascript:void(0)\" onclick='toInviteByOrder(\"" + employee.employee_userid + "\")'>邀请接单</a>&nbsp;&nbsp;";
+                            html += "<a href=\"javascript:void(0)\" onclick='delEmployee(\"" + employee.employee_userid + "\")'>删除</a>&nbsp;&nbsp;";
+
+                            +"</td>";
+                            +"</tr>";
+                        }
+                    } else {
+                        html += "<tr>"
+                            + "<td colspan=\"8\">"
+                            + "<div class=\"dlg-row add-padding-15\">"
+                            + "<h3 class='font-16 text-center' style='color: red;'>"
+                            + "<img class='dlg-no-list-img' src='./images/no-list.png'/>"
+                            + "</h3>"
+                            + "</td>"
+                            + "</tr>"
+                    }
+
+                    html += "<tr><th><input type=\"checkbox\" name=\"selectall\" id=\"selectall\" onclick=\"checkBoxSelect();\"  /><label class=\"checkall_label\" >全选</label></th>"
+                        + "<th></th><th></th><th></th><th></th><th></th><th></th><th></th>"
+                        + "<th><span class=\"de_btn\">邀请接单</span></th>"
+                        + "<th><span class=\"de_btn\" onclick=\"batchDel()\">删除</span></th></tr>";
+                    $("#table").html("").append(html);
+                    var pageSize = $("#showCount").val();
+                    todoPageSize(pageSize, jsData.body.data.result.total);
+                }
+            }
+        })
+
+    }
+
+    function loadScript() {
+        $("#pageScript").attr("src", "js/pagination/paging.js");
+        console.log( $("#pageScript")[0])
+    }
+
+    function todoPageSize(pageSize, total) {
+        console.log("pageSize=", pageSize);
+        console.log("total=", total);
+        // $('#pageTool').html("");
+        $('#pageTool').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, size, count) {
+                console.log('当前第 ' + page + '页,每页 ' + size + '条,总页数：' + count + '页');
+                $("#showCount").val(size);
+                $("#startIndex").val(page);
+                turnPage();
+            }
+        });
+    }
+
+    function turnPage() {
+        getEmployerList();
+    }
+
+    function addCustomer() {
+        $("#add_customer_modal").show();
+        // jumpPage("employee/employeeClerkadd.html", "rightPart");
+    }
+
+    function saveEmployeeO() {
+        var phone = $("#phone").val();
+        if (phone == "" || !/^1[3|4|5|7|8][0-9]{9}$/.test(phone)) {
+            $("input[name='phone']").focus().css("border-color", "red");
+            $("input[name='phone']").next().html("请输入正确手机号");
+            $("#add_customer_modal").show();
+            return false;
+        } else {
+            inputValueOperation($("input[name='phone']"));
+        }
+        ;
+        var userName = $("#userName").val();
+        if (userName == "") {
+            $("input[name='userName']").focus().css("border-color", "red");
+            $("input[name='userName']").next().html("请输入姓名");
+            $("#add_customer_modal").show();
+            return false;
+        } else {
+            inputValueOperation($("input[name='userName']"));
+        }
+        var branch = $("#branch").val();
+        if (branch == "") {
+            $("input[name='branch']").focus().css("border-color", "red");
+            $("input[name='branch']").next().html("请输入部门");
+            $("#add_customer_modal").show();
+            return false;
+        } else {
+            inputValueOperation($("input[name='branch']"));
+        }
+        var post = $("#post").val();
+        if (post == "") {
+            $("input[name='post']").focus().css("border-color", "red");
+            $("input[name='post']").next().html("请输入岗位");
+            $("#add_customer_modal").show();
+            return false;
+        } else {
+            inputValueOperation($("input[name='post']"));
+        }
+
+        //查询是否存在雇员
+        $.ajax({
+            url: url + '/ent/employment_relation/user/' + userid + '/exists?access_token=' + access_token,
+            type: 'GET',
+            data: {
+                mobile: phone
+            },
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            contentType: "application/json",
+            success: function (jsData) {
+                console.log("查询雇员是否存在jsData=", jsData);
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    if (!jsData.body.data) {
+
+                        alert("该用户信息不存在，不能添加");
+                        return false;
+                    } else {
+                        //添加雇员
+                        var returnEntid = localStorage.getItem("entid");
+                        console.log("userid= " + userid + " returnEntid= " + returnEntid);
+                        var postData = "{\"name\": \"" + userName + "\", \"mobile\": \"" + phone + "\", \"department\":\"" + branch + "\", \"station\": \"" + post + "\", \"clienttype\": 1 }";
+                        console.log(postData);
+                        alert(postData);
+                        $.ajax({
+                            url: url + '/ent/employment_relation/' + userid + '/' + returnEntid + '/build?access_token=' + access_token,
+                            type: 'POST',
+                            data: postData,
+                            dataType: 'json',
+                            timeout: '1000',
+                            cache: 'false',
+                            contentType: "application/json",
+                            success: function (jsData) {
+                                console.log("添加jsData=", jsData);
+                                if (jsData.status == 200) {
+
+                                    if (jsData.body.code == '成功') {
+                                        alert("添加雇员成功");
+                                        $("#add_customer_modal").hide();
+                                        getEmployerList();
+                                    } else if (jsData.body.code == 'FAIL') {
+                                        alert(jsData.body.msg);
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    }
+
+    function getEmployerListByCondition() {
+        $("#showCount").val("10");
+        $("#startIndex").val("1");
+        getEmployerList();
+    }
+
+    //删除雇员
+    function delEmployee(employee_userid) {
+        alert(employee_userid);
+        if (employee_userid != null && employee_userid != "") {
+            var postData = "{\"clienttype\" : \"1\" ,\"employee_userid\" :\"" + employee_userid + "\"}";
+
+            console.log(postData);
+            $.ajax({
+                url: url + '/ent/employee/' + userid + '/' + entid + '/del?access_token=' + access_token,
+                type: 'POST',
+                data: postData,
+                dataType: 'json',
+                timeout: '1000',
+                cache: 'false',
+                contentType: "application/json",
+                success: function (jsData) {
+                    console.log("删除雇员jsData=", jsData);
+                    if (jsData.status == 200) {
+                        alert("删除雇员成功");
+                        getEmployerList();
+                    }
+                }
+            })
+
+        } else {
+            alert("雇员id为空，不能删除");
+            return false;
+        }
+    }
+
+    //批量删除雇员
+    function batchDel() {
+        var str = "";
+        $("input:checkbox[name='checkAllEmployee']:checked").each(function () {
+            str += $(this).val() + " ";
+            alert(str);
+        });
+    }
+
+    //点击邀请接单
+    function toInviteByOrder() {
+        //将userid存在hidden中
+
+        inviteByOrderList(0, 3);
+    }
+
+    //邀请接单列表
+    function inviteByOrderList(pagenum, pagesize) {
+        $("#invite_modal").show();
+        var json = {
+            "userid": userid,
+            "x_coordinate": 116.326763,
+            "y_coordinate": 39.012012,
+            "agent_type": 1,
+            "province_name": "北京市",
+            "city_name": "北京市",
+            "area_name": "海淀区",
+            "pagenum": pagenum,
+            "pagesize": pagesize,
+
+        };
+
+        $.ajax({
+            url: url + '/job/jobMapList',
+            contentType: "application/json; charset=utf-8",
+            type: 'post',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            async: false,
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                    var list = data.body.data.list;
+                    var html = "";
+                    if (list.length > 0) {
+                        for (var num = 0; num < list.length; num++) {
+                            var vo = list[num];
+                            //动态显示内容
+                            html += "<tr>";
+                            html += "<td style=\"width: 60px;padding: 0px 15px;\">"
+                                + "<input type=\"checkbox\" name=\"jobCheckBox\" value=\"" + vo.id + "\" > </td>"
+                                + "<td>"
+                                + "<div class=\"dlg-row-8 clear-padding\">"
+                                + "<div class=\"dlg-list-title\">"
+                                + "<h3 class=\"font-16\" onclick=\"jumpChildrenPage(\'linggongguanli/linggongshichang-jiedanxiangqing.html?jobId=" + vo.id + "\',\'rightPart\')\">"
+                                + vo.task_title
+                                + "</h3>&nbsp;"
+                                + "<i class=\"dlg-icon-bao\"></i>" +
+                                +"<i class=\"dlg-icon-daili\"></i>&nbsp;"
+                                + "<span class=\"dlg-tag\">" + vo.post_type_name + "</span>"
+                                + "<span class=\"dlg-tag\">" + vo.cost_accounting_type_name + "</span>"
+                                + "</div>"
+                                + " <div> "
+                            if (vo.cost_accounting_type == 1) {
+                                html += "<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name;
+                            } else if (vo.cost_accounting_type == 2) {
+                                html += "<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            } else if (vo.cost_accounting_type == 3) {
+                                html += "<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name
+                                    + "<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            }
+                            html += "&nbsp;需" + vo.recruit_number + "人" +
+                                " &nbsp; 工作时间：" + vo.start_date.replace(/-/g, ".").substr(5) + "-" + vo.end_date.replace(/-/g, ".").substr(5);
+                            for (var i = 0; i < vo.job_time.length; i++) {
+                                html += " " + vo.job_time[i].start_time.substr(0, 5) + "-" + vo.job_time[i].end_time.substr(0, 5);
+                            }
+                        }
+                    } else {
+                        html += "<li>" +
+                            "<div class=\"dlg-row clear-padding\">" +
+                            "<img class='dlg-no-list-img' src='./images/no-list.png'/>" +
+                            "</div>" + "</li>";
+                    }
+                    $("#jobList").html("").append(html);
+                    todoJobPagesize(pagesize, data.body.data.total);
+                } else {
+                    alert("出错")
+                }
+            }
+        })
+    }
+
+    function inviteByOrder() {
+        var obj = document.getElementsByName("jobCheckBox");
+        var check_val = [];
+        for (k in obj) {
+            if (obj[k].checked)
+                check_val.push(obj[k].value);
+        }
+        alert(check_val);
+
+
+        // var postData = "{\"clienttype\" : \"0\" ,\"access_token\" :\"" + access_token + "\""
+        //     + ",\"messagetype\" :\"OPER_ORDER_INVITE_CODE\""
+        //     + ",\"receivers\" : [{\"userid\":\"6840\"}]"
+        //     + ",\"jobId\": \"6840\"
+        //
+        //     postData += "}";
+
+
+        var receivers = "";
+
+        var dataJson = {
+            "clienttype": 0,
+            "access_token": access_token,
+            "messagetype": "OPER_ORDER_INVITE_CODE",
+            "jobId": check_val,
+            "sex": Number(sex),
+            "start_date": start_date
+        };
+
+        console.log(postData);
+        $.ajax({
+            url: url + '/order/job/message/create',
+            type: 'POST',
+            data: postData,
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            contentType: "application/json",
+            success: function (data) {
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+
+                } else {
+                    alert("出错")
+                }
+            }
+        })
+
+
+    }
+
+    function todoJobPagesize(pageSize, total) {
+        console.log("11111pageSize=", pageSize);
+        console.log("1111total=", total);
+        // $('#pageTask').html("");
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, pageSize, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                inviteByOrder(page - 1, pageSize);
+            }
+        });
+    }
+
+    function inputValueOperation(obj) {
+        $(obj).next().html("");
+        $(obj).css("border-color", "#eaeaea");
+    }
+
+    function closeCustomer() {
+        //清空文本框
+        $("#phone").val("");
+        $("#userName").val("");
+        $("#branch").val("");
+        $("#post").val("");
+        $("#add_customer_modal").hide();
+    }
+
+    //关闭邀请接单弹出框
+    function colseJobListModel() {
+        $("#invite_modal").hide();
+    }
+
+    var isCheckAll = false;
+
+    function checkBoxSelect() {
+        if (isCheckAll) {
+            $("input[name='checkAllEmployee']").each(function () {
+                this.checked = false;
+            });
+            isCheckAll = false;
+        } else {
+            $("input[name='checkAllEmployee']").each(function () {
+                this.checked = true;
+            });
+            isCheckAll = true;
+        }
+    }
+</script>

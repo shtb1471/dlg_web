@@ -1,0 +1,246 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <title>零工市场-转单详情</title>
+</head>
+<div class="bread_nav"> <b>零工市场</b> / 我要转单 / 转单详情</div>
+<div class="dlg-content">
+    <div class="dlg-jiedan-box">
+        <div class="dlg-row">
+            <div class="dlg-row-8 clear-padding">
+                <div class="dlg-list-title">
+                    <h3 class="font-16 task_title">保洁阿姨</h3>&nbsp;
+                    <i class="dlg-icon-bao"></i>
+                    <i class="dlg-icon-daili"></i>&nbsp;
+                    <span class="dlg-tag post_type_name">家政保洁</span>
+                    <span class="dlg-tag cost_accounting_type_name">计时</span>
+                </div>
+                <div class="old_price"><span class="dlg-red-color">20</span><span class="danwei">元/小时</span></div>
+                <div class="dlg-jiedan-prograssB">
+                    <label>待招人数</label>&nbsp;
+                    <label id="dzrs" class="dlg-box"></label>
+                    <span class="dzrs">(4/10)</span>
+                </div>
+                <div>
+                    <label>干活时间：</label>
+                    <span class="workTime">10.2-10.4 9:00-18:00</span>
+                </div>
+                <div>
+                    <label>干活地址：</label>
+                    <span class="workAddress">上海普陀区真北路958号1号楼7楼</span>
+                </div>
+            </div>
+            <div class="dlg-row-2 dlg-jiedan-logo">
+                <img src="./images/logo.png" alt="">
+                <div>
+                    上海打零工互联网科技有限公司
+                </div>
+            </div>
+        </div>
+
+        <div class="detail">
+            <label>详情描述：</label>
+            <div class="task_description">上海普陀区真北路958号1号楼7楼上海普陀区真北路958号1号楼7楼上海普陀区真北路958号1号楼7楼上海普陀区真北路958号1号楼7楼</div>
+        </div>
+        <div class="imgShow">
+            <label>图片展示：</label>
+
+            <img src="./images/orderD.png" draggable="false" alt="">
+        </div>
+        <div>
+            <label>&nbsp;&nbsp;</label>
+            <button type="button" class="btn btn-warning-o" onclick="showAssignModal()">指派</button>
+            <button type="button" class="btn btn-default" onclick="showRepeatOrderModal()">转单</button>
+            <button type="button" class="btn btn-default">申请接单</button>
+        </div>
+    </div>
+    <!--转单-->
+    <div id="repeatOrder_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:520px;">
+            <span class="close">x</span>
+            <div class="dlg-repeatOrder-modal">
+                <h3 class="text-center add-padding-15">转单差价设置</h3>
+                <div class="title task_title">保洁阿姨</div>
+                <div class="dlg-repeatOrder-box">
+                    <div class="dlg-repeatOrder-group">
+                        <label>原报酬</label>
+                        <div class="old_price">
+                            <span class="dlg-red-color price_wage">20</span><span class="danwei">元/小时</span>
+                        </div>
+                    </div>
+                    <div class="dlg-repeatOrder-group">
+                        <label>我要赚</label>
+                        <div>
+                            <div class="own_money">
+                                <input type="text" name="own_money" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/小时</span>&nbsp;&nbsp;
+                                <input type="text" name="own_money1" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/件</span>
+                            </div>
+                            <div class="dlg-gray-color">最高差价为报酬的60%</div>
+                        </div>
+                    </div>
+                    <div class="dlg-repeatOrder-group">
+                        <label>转发后报酬</label>
+                        <div class="subordinate_money">
+                            <input type="text" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/小时</span>&nbsp;&nbsp;
+                            <input type="text" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/件</span>
+                        </div>
+                    </div>
+                    <div class="dlg-repeatOrder-group">
+                        <label>给下级的利润</label>
+                        <div class="new_price">
+                            <span class="dlg-red-color">20</span>元/小时/人
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center add-padding-15">
+                    <button type="button" class="btn btn-warning" onclick="repeatOrderModal()">确认转单</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-default" onclick="repeatOrderModal()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--指派-->
+    <div id="assign_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:520px;">
+            <span class="close">x</span>
+            <div class="dlg-assign-modal">
+                <h3 class="text-center add-padding-15">指派</h3>
+                <ul id="assignModalLists">
+                    <li class="active">普陀区（平谷区 18321271116）</li>
+                    <li>睢阳区（睢阳区 13937005551）</li>
+                    <li>商丘市（商丘市 15137037776）</li>
+                    <li>沈阳市（沈阳市 18640055457）</li>
+                    <li>睢阳区（睢阳区 13937005551）</li>
+                    <li>商丘市（商丘市 15137037776）</li>
+                    <li>沈阳市（沈阳市 18640055457）</li>
+                    <li>睢阳区（睢阳区 13937005551）</li>
+                    <li>商丘市（商丘市 15137037776）</li>
+                    <li>沈阳市（沈阳市 18640055457）</li>
+                </ul>
+
+                <div class="text-center add-padding-15">
+                    <button type="button" class="btn btn-default" onclick="AssignModal()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var id =sessionStorage.getItem("jobId");
+    $(function () {
+        $.ajax({
+            url: url+'/job/'+id,
+            contentType: "application/json; charset=utf-8",
+            type: 'get',
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+                if(data.status==200&&data.body.code=="SUCCESS"&&data.body.data!=""){
+                    var vo=data.body.data;
+                    $(".task_title").text(vo.task_title);
+                    $(".post_type_name").text(vo.post_type_name);
+                    $(".cost_accounting_type_name").text(vo.cost_accounting_type_name);
+                    $(".dzrs").text("("+(vo.recruit_number-vo.surplus_recruit_number)+"/"+vo.recruit_number+")");
+                    var own1=" <input type=\"text\" name=\"own_money\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"danwei\">元/小时</span>  " ;
+                    var sub1=" <input type=\"text\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"danwei\">元/小时</span>  " ;
+                    var own2=" <input type=\"text\" name=\"own_money1\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"subdanwei\">元/件</span>  " ;
+                    var sub2=" <input type=\"text\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"comdanwei\">元/件</span>  " ;
+
+                    var price_wage=" <span class=\"dlg-red-color price_wage\">"+vo.price_wage+"</span><span class=\"danwei\"></span>"
+                    var price_commission=" <span class=\"dlg-red-color price_commission\">"+vo.price_commission+"</span><span class=\"comdanwei\">元/件</span>"
+                    var new_price_wage=" <span class=\"dlg-red-color \">"+vo.price_wage+"</span><span class=\"danwei\"></span>"
+                    var new_price_commission=" <span class=\"dlg-red-color \">"+vo.price_commission+"</span><span class=\"comdanwei\"></span>"
+
+                    if(vo.cost_accounting_type==1){
+                        $(".own_money").html("").append(own1);
+                        $(".subordinate_money").html("").append(sub1);
+                        $(".old_price").html("").append(price_wage);
+                        $(".new_price").html("").append(new_price_wage);
+                        $(".danwei").text(vo.job_meter_unit_wage_name);
+                    }else if(vo.cost_accounting_type==2){
+                        $(".own_money").html("").append(own2);
+                        $(".subordinate_money").html("").append(sub2);
+                        $(".old_price").html("").append(price_commission);
+                        $(".new_price").html("").append(new_price_commission);
+                        $(".comdanwei").text(vo.job_meter_unit_commission_name);
+                    }else if(vo.cost_accounting_type==3){
+                        $(".own_money").html("").append(own1+"\n" +own2);
+                        $(".subordinate_money").html("").append(sub1+"\n" +sub2);
+                        $(".old_price").html("").append(price_wage+"\n"+price_commission);
+                        $(".new_price").html("").append(new_price_wage+"\n"+new_price_commission);
+                        $(".danwei").text(vo.job_meter_unit_wage_name);
+                        $(".comdanwei").text(vo.job_meter_unit_commission_name);
+                    }
+                    var imgShow=" <label>图片展示：</label>";
+                    for(var i=0;i<vo.job_imgs.length;i++){
+                        imgShow+="<img src=\""+vo.job_imgs[i].url+"\" draggable=\"false\" alt=\"\">"
+                    }
+                    $(".imgShow").html("").append(imgShow);
+                    var workTime= vo.start_date.replace(/-/g, ".").substr(5)+"-"+vo.end_date.replace(/-/g, ".").substr(5);
+                    for(var i=0;i<vo.job_time.length;i++){
+                        workTime+=" "+vo.job_time[i].start_time.substr(0,5)+"-"+vo.job_time[i].end_time.substr(0,5);
+                    }
+                    $(".workTime").text(workTime);
+                    $(".workAddress").text(vo.work_address);
+                    $(".task_description").text(vo.task_description);
+                }
+            }
+        })
+    })
+    function showAssignModal() {
+        $("#assign_modal").show();
+    }
+
+    function AssignModal() {
+        $("#assign_modal").hide();
+    }
+
+    function showRepeatOrderModal() {
+        $("#repeatOrder_modal").show();
+    }
+
+    function repeatOrderModal() {
+        var json ={
+            "userid":userid,
+            "wage_own_money": 1,
+            "wage_subordinate_money": 1,
+            "commission_own_money": 1,
+            "commission_subordinate_money": 1
+        };
+        if(id!=""){
+            $.ajax({
+                url: url+'/job/'+id+'/agentJob',
+                contentType: "application/json; charset=utf-8",
+                type: 'post',
+                data:JSON.stringify(json),
+                dataType: 'json',
+                timeout: '1000',
+                cache: 'false',
+                error: function () {
+                    alert('报错')
+                },
+                success: function (data) {
+                    if(data.status==200&&data.body.code=="SUCCESS"){
+                        var vo=data.body.data;
+                        console.log("成功")
+                    }
+                }
+            })
+        }
+        $("#repeatOrder_modal").hide();
+    }
+
+    $("#assignModalLists li").click(function () {
+        addActive(this);
+    })
+</script>

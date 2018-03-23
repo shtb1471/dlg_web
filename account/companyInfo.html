@@ -1,0 +1,399 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
+</head>
+<div class="bread_nav"><b>账户管理</b> / 企业资料</div>
+<div class="right_content_left employee_content_left" id=".">
+    <div id="companyForm" class="form_group">
+        <h3 class="dlg-title_tit">
+            基本信息
+        </h3>
+        <div class="input_group_inline">
+            <div id="localImag" class="dlg-row">
+                <div class="">
+                    <label>logo</label>
+                    <div class="dlg-preview" onclick="getLogo()">
+                        <img id="preview" src="images/upload.png"/>
+                    </div>
+                    <div style="float: left">
+                        <div id="container">
+                            <span class="img_info"> 图片小于1M;<br/>图片格式仅限jpg,png</span>
+                            <a id="selectfiles" href="javascript:void(0);" class='btn' style="display: none">选择文件</a>
+                            <a id="postfiles" href="javascript:void(0);" class='btn' style="display: none">开始上传</a>
+                            <input type="hidden" id="imgStyle" class="imgStyle" value="logo"/>
+                        </div>
+                    </div>
+                    <span class="dlg-red-color" style="margin-left: 60px;"></span>
+                </div>
+
+                　　　　　
+            </div>
+        </div>
+        <div class="input_group_inline" style="text-align: left;">
+            <label>企业简称</label>
+            <input type="text" id="company_name">
+            <input type="hidden" id="isagent">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline">
+            <label>所在地</label>
+            <input id="detailAddress" type="text" placeholder="请输入详细地址" style="width: 200px;">
+            <input id="doorNumber" type="text" placeholder="门牌号" style="width: 100px;">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline">
+            <label>企业简介</label>
+            <textarea id="company-desc"></textarea>
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <h3 class="dlg-title_tit">
+            认证信息
+        </h3>
+        <div class="input_group_inline" style="padding: 0px;top:0px;">
+            <div class="dlg-row">
+                <label>营业执照</label>
+                <div class="dlg-row-7" style="text-align: left;margin-top: 10px;">
+                    <div id="renzhenzhuangtai" style="padding-bottom: 6px;"></div>
+                    <div id="dlg-company-licence" class="dlg-company-licence" onclick="getLicense()">
+                        <img id="company-yyzz" src="" alt="点击上传">
+                    </div>
+                    <span class="dlg-red-color" style="margin-left: 60px;"></span>
+                    <div class="dlg-gray-color">*点击图片上传</div>
+                </div>
+            </div>
+
+        </div>
+        <h3 class="dlg-title_tit">
+            联系信息
+        </h3>
+        <div class="input_group_inline" style="padding-top: 0px;text-align: left">
+            <label>联系人</label>
+            <input type="text" id="company-userName">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline" style="padding-top: 0px;text-align: left">
+            <label>手机号</label>
+            <input type="text" id="company-phone">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline">
+            <label>固话</label>
+            <input type="text" id="company-tele">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline">
+            <label>邮箱</label>
+            <input type="email" id="company-email">
+            <span class="dlg-red-color" style="margin-left: 60px;"></span>
+        </div>
+        <div class="input_group_inline">
+            <label>&nbsp;</label>
+            <button id="submitSave" type="button" class="btn btn-warning-o" onclick="updateCompany()">保存</button>
+            <button id="submitUpdate" type="button" class="btn btn-warning" onclick="changeInputBtn()"
+                    style="display: none">修改
+            </button>
+            <button id="submitCancel" type="button" class="btn btn-warning" onclick="reloadBtn()">取消</button>
+        </div>
+    </div>
+</div>
+</div>
+<!--图片上传-->
+<script type="text/javascript" src="./js/lib/crypto1/crypto/crypto.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/hmac/hmac.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/sha1/sha1.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/md5/md5.js"></script>
+<script type="text/javascript" src="./js/lib/base64.js"></script>
+<script type="text/javascript" src="./js/lib/plupload-2.1.2/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="./js/upload.js"></script>
+<script src="./js/jsAddress.js"></script>
+<script>
+    $(function () {
+        var entid = localStorage.getItem("entid");
+        getCompanyInfo();
+        AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
+            var autoOptions = {
+                city: "北京", //城市，默认全国
+                input: "detailAddress"//使用联想输入的input的id
+            };
+            autocomplete = new AMap.Autocomplete(autoOptions);
+            AMap.event.addListener(autocomplete, "select", function (e) {
+                //TODO 针对选中的poi实现自己的功能
+                console.log(e.poi.adcode);
+            });
+        });
+
+        function getDetailAddress(x, y) {
+            AMap.service('AMap.Geocoder', function () {
+                geocoder = new AMap.Geocoder({
+                    city: "010"
+                });
+                //逆地理编码
+                var lnglatXY = [x, y];
+                geocoder.getAddress(lnglatXY, function (status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        //详细地址获取
+                        console.log(result, "formattedAddress");
+                        var provinceName=result.regeocode.addressComponent.province;
+                        $.get("http://restapi.amap.com/v3/config/district?key=deae182cee34787b59fc779ffe424c92&keywords="+provinceName+"&subdistrict=0&extensions=base",function (res) {
+                            var provinceId=res.districts[0].adcode;//省id
+                        });
+                    } else {
+                        //获取地址失败
+                    }
+                });
+
+            })
+        }
+    })
+
+    function getCompanyInfo() {
+       // console.log("getCompanyInfo  entid= " + entid + "   " + access_token + "  " + userid);
+        var entid = localStorage.getItem("entid");
+        if (entid != 0 && entid != null && entid != "") {
+            //企业信息--详情
+            $("#preview").parent().removeAttr("onclick");
+            $("#dlg-company-licence").removeAttr("onclick");
+            $("#companyForm input,#companyForm textarea,#companyForm select").prop("readonly", true);
+            $("#companyForm select").attr("disabled", true);
+            $("#submitSave").hide();
+            $("#submitCancel").hide();
+            $("#submitUpdate").show();
+            //调用企业详情接口
+            $.ajax({
+                url: url + '/ent/' + userid + '/getinfo',
+                type: 'post',
+                data: {access_token: access_token, clienttype: 2, userid: userid},
+                dataTypt: 'json',
+                timeout: '2000',
+                cache: 'false',
+                success: function (data) {
+                    var jsData = JSON.parse(data);
+                   // console.log("详情jsData=", jsData);
+                    if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                        if (jsData.body.data.logo == "" || jsData.body.data.logo == null) {
+                            $("#preview").attr("src", "images/upload.png");
+                        } else {
+                            $("#preview").attr("src", jsData.body.data.logo);
+                        }
+                        $("#company_name").val(jsData.body.data.name);
+                        $("#isagent").val(jsData.body.data.isagent);//是否为代理，默认隐藏
+                        $("#enterprise_nature option:selected").val();
+                        $("#detailAddress").val();
+                        $("#doorNumber").val();
+                        $("#company-desc").val(jsData.body.data.desc);
+                        var html = "";
+                        if (jsData.body.data.eaudit == 0 || jsData.body.data.eaudit == null) {
+                            html = "<div class=\"dlg-gray-color\">\n" +
+                                "    <i class=\"no-renzhen\"></i> 未认证\n" +
+                                "</div>";
+
+                        }
+                        else if (jsData.body.data.audit == 1) {
+                            html = "<div class=\"dlg-main-color\"><i class=\"yes-renzhen\"></i> 认证中</div>";
+                        } else if (jsData.body.data.audit == 2) {
+                            html = "<div class=\"dlg-green-color\"><i class=\"yes-renzhen-m\"></i>已认证</div>";
+                        }
+                        else {
+                            html = "<div class=\"dlg-red-color\"><i class=\"yes-renzhen-fail\"></i> 认证失败</div>";
+                        }
+                        $("#renzhenzhuangtai").html(html);
+                        $("#company-yyzz").attr("src", "");
+                        $("#company-userName").val(jsData.body.data.contact);
+                        $("#company-phone").val(jsData.body.data.contactTelephone);
+                        $("#company-tele").val();
+                        $("#company-email").val(jsData.body.data.email);
+                    } else {
+                        alert(jsData.body.code);
+                    }
+                }
+            });
+        } else {
+            //显示添加修改
+           // console.log("11333");
+            $("#preview").attr("onclick", "getLogo()");
+            $("#dlg-company-licence").attr("onclick", "getLicense()");
+            $("#companyForm input,#companyForm textarea,#companyForm select").attr("readonly", false);
+            $("#companyForm select").attr("disabled", false);
+            $("#submitUpdate").hide();
+            $("#submitCancel").show();
+            $("#submitSave").show();
+        }
+    }
+
+    function changeInputBtn() {
+        $("#preview").parent().attr("onclick", "getLogo()");
+        $("#dlg-company-licence").attr("onclick", "getLicense()");
+        $("#companyForm input,#companyForm textarea,#companyForm select").attr("readonly", false);
+        $("#companyForm select").attr("disabled", false);
+        $("#submitUpdate").hide();
+        $("#submitCancel").show();
+        $("#submitSave").show();
+    }
+
+    function reloadBtn() {
+        $("#preview").removeAttr("onclick");
+        $("#dlg-company-licence").removeAttr("onclick");
+        getCompanyInfo();
+    }
+
+    //修改企业信息
+    function updateCompany() {
+        if (!verifyInput()) {
+            return false;
+        }
+        var logo = $("#preview").attr("src");
+        // var logoStr = logo.substr(21, logo.length);
+
+        var name = $("#company_name").val();
+        var detailAddress = $("#detailAddress").val();
+        var doorNumber = $("#doorNumber").val();
+        var desc = $("#company-desc").val();
+        var yyzzStr = $("#company-yyzz").attr("src");
+        var companyUserName = $("#company-userName").val();
+        var companyPhone = $("#company-phone").val();
+        var companyTele = $("#company-tele").val();
+        var email = $("#company-email").val();
+
+        if (doorNumber != null && doorNumber != "") {
+            detailAddress += doorNumber;
+        }
+
+        console.log("name= ", name);
+        console.log("detailAddress= ", detailAddress);
+        console.log("desc= ", desc);
+        console.log("companyUserName= ", companyUserName);
+        console.log("companyPhone= ", companyPhone);
+        console.log("companyTele= ", companyTele);
+        console.log("email= ", email);
+
+
+        $.ajax({
+            url: url + '/ent/' + userid + '/upinfo',
+            type: 'post',
+            data: {
+                name: name,
+                industry: "",
+                contact: companyUserName,
+                userid: userid,
+                enterpriseNature: "",
+                shortname: "",
+                desc: desc,
+                logo: logo,
+                clienttype: 1,
+                contactTelephone: companyPhone,
+                enterpriseNatureName: "",
+                email: email,
+                access_token: access_token
+            },
+            dataTypt: 'json',
+            timeout: '1000',
+            cache: 'false',
+            success: function (data) {
+                var jsData = JSON.parse(data);
+
+                console.log("保存企业jsdata", jsData);
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var returnEntid = jsData.body.data.entid;
+
+                    // var src = yyzzStr.substr(21, yyzzStr.length);
+
+                    if (returnEntid != null && returnEntid != "") {
+                        localStorage.setItem('entid', returnEntid);
+                        //营业执照上传
+                        $.ajax({
+                            url: url + '/ent/ent_idcard/' + userid + '/' + returnEntid + '/save',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                access_token: access_token,
+                                idcard: yyzzStr,
+                                clienttype: 1,
+                                userid: userid
+                            },
+                            //timeout: '1000',
+                            cache: 'false',
+                            success: function (jsData) {
+                                var jsData = JSON.parse(data);
+                                console.log("营业执照上传jsData=", jsData);
+                                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                                    alert("修改企业信息成功");
+                                    getCompanyInfo();
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    }
+
+    function verifyInput() {
+        if ($("#preview").attr("src") == 'images/upload.png') {
+            $("#preview").parent().next().html("点击上传logo");
+            return false;
+        } else {
+            $("#preview").parent().next().html("");
+        }
+        if ($("#company_name").val() == "") {
+            $("#company_name").focus().css("border-color", "red");
+            $("#company_name").next().next().html("企业简称不为空");
+            return false;
+        } else {
+            $("#company_name").css("border-color", "#eaeaea");
+            $("#company_name").next().next().html("");
+        }
+        if ($("#detailAddress").val() == "") {
+            $("#detailAddress").focus().css("border-color", "red");
+            $("#detailAddress").next().next().html("请输入详细地址");
+            return false;
+        } else {
+            $("#detailAddress").css("border-color", "#eaeaea");
+            $("#detailAddress").next().next().html("");
+        }
+        if ($("#company-desc").val() == "") {
+            $("#company-desc").focus().css("border-color", "red");
+            $("#company-desc").next().html("请输入企业简介");
+            return false;
+        } else {
+            $("#company-desc").css("border-color", "#eaeaea");
+            $("#company-desc").next().html("");
+        }
+        if ($("#company-yyzz").attr("src") == "") {
+            $("#company-yyzz").parent().next().html("请上传营业执照");
+            return false;
+        } else {
+            $("#company-yyzz").parent().next().html("");
+        }
+        if ($("#company-userName").val() == "") {
+            $("#company-userName").focus().css("border-color", "red");
+            $("#company-userName").next().html("联系人不为空");
+            return false;
+        } else {
+            $("#company-userName").css("border-color", "#eaeaea");
+            $("#company-userName").next().html("");
+        }
+        if ($("#company-phone").val() == "" || !/^1[3|4|5|7|8][0-9]{9}$/.test($("#company-phone").val())) {
+            $("#company-phone").focus().css("border-color", "red");
+            $("#company-phone").next().html("请输入正确手机号");
+            return false;
+        } else {
+            $("#company-phone").css("border-color", "#eaeaea");
+            $("#company-phone").next().html("");
+        }
+            return true;
+    }
+    function getLogo() {
+        $("#imgStyle").val('logo');
+        $('#selectfiles').click();
+    }
+
+    function getLicense() {
+        $("#imgStyle").val('license');
+        $('#selectfiles').click();
+    }
+
+</script>

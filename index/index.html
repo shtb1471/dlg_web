@@ -1,0 +1,938 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <style>
+        *{
+            font-family: "微软雅黑","Microsoft YaHei",Arial;
+        }
+    </style>
+</head>
+<div class="dlg-content">
+    <div class="dlg-row-7 clear-padding-left">
+        <div class="dlg-statistic">
+            <div class="dlg-row-3">
+                <ul class="dlg-box">
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>当月邀请企业</span>
+                        </div>
+                    </li>
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>当月邀请雇员</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3>6</h3>
+                            <span>累计邀请企业</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3>6</h3>
+                            <span>累计邀请雇员</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="dlg-row-7">
+                <ul class="dlg-box">
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>当月发单量</span>
+                        </div>
+                    </li>
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>当月接单量</span>
+                        </div>
+                    </li>
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>当月完工量</span>
+                        </div>
+                    </li>
+                    <li class="dlg-border-bottom">
+                        <div>
+                            <h3>6</h3>
+                            <span>交易金额</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3>6</h3>
+                            <span>当月受益</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3>6</h3>
+                            <span>总收益</span>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <h3 class="dlg-title">
+            待处理
+        </h3>
+        <div class="dlg-ddgl-tabs" style="border: 1px solid #dddddd;">
+            <ol id="ddgl-type">
+                <li class="active">有人接单</li>
+                <li>待验收</li>
+                <li>待结算</li>
+                <li>待评价</li>
+                <li>待支付账单</li>
+            </ol>
+        </div>
+        <div class="dlg-task-lists" id="needToDo">
+            <ul>
+                <li>
+                    <div class="dlg-row add-padding-15">
+                        <div class="dlg-row-5 clear-padding">
+                            <div class="dlg-index-task">资料整理员15名</div>
+                            <div class="dlg-list-title">
+                                <div class="dlg-list-imgLogo">
+                                    <div class="dlg-list-img">
+                                        <img src="./images/mifeng.png" draggable="false"/>
+                                    </div>
+                                    <div class="dlg-cx-num">
+                                        36.5
+                                    </div>
+                                </div>
+                                <div class="dlg-list-info">
+                                    <h3>任传伟</h3>
+                                    <span class="mini-size">
+                                                成交3|好评2|差评1
+                                            </span>
+                                </div>
+                            </div>
+                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                            <div>这里是个人描述16字</div>
+                        </div>
+                        <div class="dlg-row-5 text-right dlg-index-margin">
+                            <div><h3>等待同意</h3></div>
+                            <div>接单时间：2017-10-12 9:00：00</div>
+                            <div>
+                                <button type="button" class="btn btn-warning">同意</button>
+                                <button type="button" class="btn btn-default">拒绝</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </li>
+                <li>
+                    <div class="dlg-row add-padding-15">
+                        <div class="dlg-row-5 clear-padding">
+                            <div class="dlg-index-task">资料整理员15名</div>
+                            <div class="dlg-list-title">
+                                <div class="dlg-list-imgLogo">
+                                    <div class="dlg-list-img">
+                                        <img src="./images/mifeng.png" draggable="false"/>
+                                    </div>
+                                    <div class="dlg-cx-num">
+                                        36.5
+                                    </div>
+                                </div>
+                                <div class="dlg-list-info">
+                                    <h3>任传伟</h3>
+                                    <span class="mini-size">
+                                                成交3|好评2|差评1
+                                            </span>
+                                </div>
+                            </div>
+                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                            <div>这里是个人描述16字</div>
+                        </div>
+                        <div class="dlg-row-5 text-right dlg-index-margin">
+                            <div><h3>待验收</h3></div>
+                            <div>接单时间：2017-10-12 9:00：00</div>
+                            <div>
+                                <button type="button" class="btn btn-warning">通过</button>
+                                <button type="button" class="btn btn-default">不通过</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row add-padding-15">
+                        <div class="dlg-row-5 clear-padding">
+                            <div class="dlg-index-task">资料整理员15名</div>
+                            <div class="dlg-list-title">
+                                <div class="dlg-list-imgLogo">
+                                    <div class="dlg-list-img">
+                                        <img src="./images/mifeng.png" draggable="false"/>
+                                    </div>
+                                    <div class="dlg-cx-num">
+                                        36.5
+                                    </div>
+                                </div>
+                                <div class="dlg-list-info">
+                                    <h3>任传伟</h3>
+                                    <span class="mini-size">
+                                                成交3|好评2|差评1
+                                            </span>
+                                </div>
+                            </div>
+                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                            <div>这里是个人描述16字</div>
+                        </div>
+                        <div class="dlg-row-5 text-right dlg-index-margin">
+                            <div><h3>待结算</h3></div>
+                            <div>接单时间：2017-10-12 9:00：00</div>
+                            <div>
+                                <button type="button" class="btn btn-warning">结算 </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row add-padding-15">
+                        <div class="dlg-row-5 clear-padding">
+                            <div class="dlg-index-task">资料整理员15名</div>
+                            <div class="dlg-list-title">
+                                <div class="dlg-list-imgLogo">
+                                    <div class="dlg-list-img">
+                                        <img src="./images/mifeng.png" draggable="false"/>
+                                    </div>
+                                    <div class="dlg-cx-num">
+                                        36.5
+                                    </div>
+                                </div>
+                                <div class="dlg-list-info">
+                                    <h3>任传伟</h3>
+                                    <span class="mini-size">
+                                                成交3|好评2|差评1
+                                            </span>
+                                </div>
+                            </div>
+                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                            <div>这里是个人描述16字</div>
+                        </div>
+                        <div class="dlg-row-5 text-right dlg-index-margin">
+                            <div><h3>待评价</h3></div>
+                            <div>接单时间：2017-10-12 9:00：00</div>
+                            <div>
+                                <button type="button" class="btn btn-warning">评价 </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row add-padding-15">
+                        <div class="dlg-row-5 clear-padding">
+                            <div class="dlg-index-task">资料整理员15名</div>
+                            <div class="dlg-list-title">
+                                <div class="dlg-list-imgLogo">
+                                    <div class="dlg-list-img">
+                                        <img src="./images/mifeng.png" draggable="false"/>
+                                    </div>
+                                    <div class="dlg-cx-num">
+                                        36.5
+                                    </div>
+                                </div>
+                                <div class="dlg-list-info">
+                                    <h3>任传伟</h3>
+                                    <span class="mini-size">
+                                                成交3|好评2|差评1
+                                            </span>
+                                </div>
+                            </div>
+                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                            <div>这里是个人描述16字</div>
+                        </div>
+                        <div class="dlg-row-5 text-right dlg-index-margin">
+                            <div><h3>待支付</h3></div>
+                            <div>接单时间：2017-10-12 9:00：00</div>
+                            <div>
+                                <button type="button" class="btn btn-warning">支付</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div id="pageTools" class="dlg-task-page page-small"></div>
+        </div>
+    </div>
+    <div id="pay_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:520px;">
+            <span class="close">x</span>
+            <div class="dlg-payment-modal" id="querenzhifu">
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="orderid"/>
+
+    <div class="dlg-row-3">
+        <div class="dlg-box dlg-rz-info" id="info">
+            <div class="dlg-rz-logo">
+                <img src="./images/mifeng.png" alt=""/>
+            </div>
+            <div>打零工互联网科技有限公司</div>
+            <div class="dlg-gray-color">
+                <i class="no-renzhen"></i>
+                <!--<i class="yes-renzhen"></i>-->
+                未认证
+            </div>
+            <div id="account">账户余额：29281元</div>
+            <div>
+                <button type="button" class="btn btn-warning" target="wodeqianbao">充值</button>
+                <button type="button" class="btn btn-default" target="wodeqianbao">提现</button>
+            </div>
+        </div>
+        <div class="dlg-fabu">
+            <button type="button" class="btn btn-warning-o" onclick=" jumpPage('linggongguanli/fabulinggong.html', 'rightPart')">发布零工</button>
+        </div>
+        <div class="dlg-task-lists dlg-info-lists" id="newsList">
+            <div class="dlg-task-title">
+                消息
+            </div>
+            <ul class="dlg-info-list" >
+                <li>
+                    <div class="dlg-row-7 clear-padding">
+                        <div class="dlg-list-title">
+                            <div class="dlg-list-img dlg-info-img">
+                                <img src="./images/mifeng.png" draggable="false"/>
+                            </div>
+                            <div class="dlg-list-info dlg-info-info">
+                                <div class="dlg-high-color">任传伟</div>
+                                <div class="mini-size">
+                                    [保洁阿姨]接单了
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        9:00
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row-7 clear-padding">
+                        <div class="dlg-list-title">
+                            <div class="dlg-list-img dlg-info-img">
+                                <img src="./images/mifeng.png" draggable="false"/>
+                            </div>
+                            <div class="dlg-list-info dlg-info-info">
+                                <div class="dlg-high-color">任传伟</div>
+                                <div class="mini-size">
+                                    [保洁阿姨]接单了
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        昨天
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row-7 clear-padding">
+                        <div class="dlg-list-title">
+                            <div class="dlg-list-img dlg-info-img">
+                                <img src="./images/mifeng.png" draggable="false"/>
+                            </div>
+                            <div class="dlg-list-info dlg-info-info">
+                                <div class="dlg-high-color">任传伟</div>
+                                <div class="mini-size">
+                                    [保洁阿姨]接单了
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        17/11/11
+                    </div>
+                </li>
+                <li>
+                    <div class="dlg-row-7 clear-padding">
+                        <div class="dlg-list-title">
+                            <div class="dlg-list-img dlg-info-img">
+                                <img src="./images/mifeng.png" draggable="false"/>
+                            </div>
+                            <div class="dlg-list-info dlg-info-info">
+                                <div class="dlg-high-color">任传伟</div>
+                                <div class="mini-size">
+                                    [保洁阿姨]接单了
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        17/12/11
+                    </div>
+                </li>
+            </ul>
+            <div id="pageTool" class="dlg-task-page page-small"></div>
+        </div>
+    </div>
+</div>
+<!--<div id="dialog-message" title="提示">
+    <div>
+        是否删除当前列表
+    </div>
+</div>-->
+<script src="js/pagination/paging.js"></script>
+<script>
+    $(function () {
+        getNews(1,10);
+        getNeedToDoCount();
+        doAccept(1,10);
+        getInfo();
+        getAccount();
+        $(".recharge").click(function () {
+            jumpPage("account/wodeqianbao.html", "rightPart");
+        })
+
+    })
+    $("#ddgl-type li").click(function () {
+        addActive(this);
+        showNeedToDo(this);
+    })
+
+    var notFoundData=" <div class=\"dlg-row add-padding-15\">"
+    + "     <h3 class='font-16 text-center' style='color: red;'>"
+    + "         <img class='dlg-no-list-img' src='./images/no-list.png'/>"
+    + "     </h3>"
+    + " </div>"
+    ;
+    //获取待处理各类型数据和
+    function getNeedToDoCount() {
+    }
+    //展示待处理数据
+    function showNeedToDo(obj){
+        var index = $(obj).index()+1;
+        if(index==1){
+            //1有人接单
+            doAccept(1,10);
+        }else if(index>1&&index<5){
+            //2待验收3待结算4待评价
+            getOrderList(1,10,index);
+        }else if(index==5){
+            //5待支付
+        }
+    }
+    //有人接单数据获取
+    function doAccept(pageIndex,size){
+        var dataJson={
+            "userid":userid,
+            "clienttype":2,
+            "pageindex":pageIndex-1,
+            "size":size,
+            "role":"er",
+            "status":1,
+            "messagetype":"OPER_ORDER_APPLY_CODE"
+        }
+        $.ajax({
+            url: url +'/order/job/message/list',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            data: dataJson,
+            //timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                if(jsData.status==200&&jsData.body.code=="SUCCESS"){
+                    putInnerHtml(size,jsData.body.data,"needToDo1");
+                }
+            }
+        })
+    }
+    //填充html
+    function putInnerHtml(size,data,name) {
+        var html='';
+        if(data.total==0){
+            html=notFoundData;
+        }else{
+            if(name.indexOf("needToDo")!=-1){
+                html+='<ul>';
+                for(var i=0;i<data.list.length;i++){
+                    var dl=data.list[i];
+                    html+='  <li style="padding:0px;">\n' +
+                        '                    <div class="dlg-row add-padding-15">\n' +
+                        '                        <div class="dlg-row-5 clear-padding">\n' +
+                        '                            <div class="dlg-index-task">'+dl.content.jobname+'</div>\n' +
+                        '                            <div class="dlg-list-title">\n' +
+                        '                                <div class="dlg-list-imgLogo">\n' +
+                        '                                    <div class="dlg-list-img">\n' +
+                        '                                        <img src="./images/mifeng.png" draggable="false"/>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="dlg-cx-num">\n' +
+                        '                                        36.5\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                                <div class="dlg-list-info">\n' +
+                        '                                    <h3>'+dl.content.employeename+'</h3>\n' +
+                        '                                    <span class="mini-size">\n' +
+                        '                                                成交3|好评2|差评1\n' +
+                        '                                            </span>\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                            <div>男&nbsp;24|180cm|上海-普陀</div>\n' +
+                        '                            <div>这里是个人描述16字</div>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="dlg-row-5 text-right dlg-index-margin">\n' +
+                        '                            <div><h3>'+dl.status_text+'</h3></div>\n' +
+                        '                            <div>接单时间：2017-10-12 9:00：00</div>\n';
+
+
+
+                    if(name=="needToDo1"){
+                        for (var j = 0; j < dl.buttons.length; j++) {
+                            if (dl.buttons[j].operateStatusCode == "agree") {
+                                html += "<button type=\"button\" class=\"btn btn-default\" onclick=\"tongyi('"+dl.id+"')\">"+dl.buttons[j].operateStatusText +"</button>&nbsp;&nbsp;";
+                            }else if (dl.buttons[j].operateStatusCode == "refuse"){
+                                html += "<button type=\"button\" class=\"btn btn-default\">"+dl.buttons[j].operateStatusText +"</button>&nbsp;&nbsp;";
+                            }
+                        }
+                    }else if(name=="needToDo2"){
+                        html+=' <div>\n' +
+                            '                                <button type="button" class="btn btn-warning">通过</button>\n' +
+                            '                                <button type="button" class="btn btn-default">不通过</button>\n' +
+                            '                            </div>';
+                    }else if(name=="needToDo3"){
+                        html+='<div>\n' +
+                            '                                <button type="button" class="btn btn-warning">结算 </button>\n' +
+                            '                            </div>';
+                    }else if(name=="needToDo4"){
+                        html+=' <div>\n' +
+                            '                                <button type="button" class="btn btn-warning">评价 </button>\n' +
+                            '                            </div>'
+                    }else if(name=="needToDo4"){
+                        html+='<div>\n' +
+                            '                                <button type="button" class="btn btn-warning" onclick="showPaymentModal">支付</button>\n' +
+                            '                            </div>';
+                    }
+                       html+='                        </div>\n' +
+                        '                    </div>\n' +
+                        '                </li>'+ '\n';
+                }
+                html+='</ul>\n'+
+                '<div id="pageTools" class="dlg-task-page page-small"></div>';
+            }else if(name=="newsList"){
+                for (var i=0;i<data.msglist.length;i++) {
+                    var  di=data.msglist[i];
+                    html+=' <div class="dlg-task-title">\n' +
+                        '                消息\n' +
+                        '            </div>\n' +
+                        '            <ul class="dlg-info-list" >'
+                    html+='<li>\n' +
+                        '                    <div class="dlg-row-7 clear-padding">\n' +
+                        '                        <div class="dlg-list-title">\n' +
+                        '                            <div class="dlg-list-img dlg-info-img">\n' +
+                        '                                <img src="./images/mifeng.png" draggable="false"/>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="dlg-list-info dlg-info-info">\n' +
+                        '                                <div class="dlg-high-color">' + di.sender + '</div>\n' +
+                        '                                <div class="mini-size">\n'
+                        + di.msg +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="dlg-row-3 text-right">\n'
+                        + di.ctime +
+                        '                    </div>\n' +
+                        '                </li>'
+                    html+='</ul>\n'+
+                        '<div id="pageTool" class="dlg-task-page page-small"></div> '
+                }
+            }
+
+        }
+        if(name!=null&&name.indexOf("needToDo")!=-1){
+            $("#needToDo").html("").append(html);
+            todoPageSize(size, data.total,"needToDo")
+        }else if(name=="newsList"){
+            $("#newsList").html("").append(html);
+            todoPageSize(size, data.total,"newsList")
+        }
+    }
+    //2待验收3待结算4待评价
+    function getOrderList(pageIndex,size,index){
+        var status;
+        if(index==2){
+            status="10";
+        }else if(index==3){
+            status="20";
+        }else if(index==4){
+            status="30";
+        }
+        var dataJson={
+            "userid":userid,
+            "clienttype":2,
+            "pageindex":pageIndex-1,
+            "size":size,
+            "eeorer":"er",
+            "status":status
+        }
+        $.ajax({
+            url: url +'/order/list',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            data: dataJson,
+            cache: 'false',
+            success: function (jsData) {
+                if(jsData.status==200&&jsData.body.code=="SUCCESS"){
+                    putInnerHtml(size,jsData.body.data,"needToDo"+index);
+                }
+            }
+        })
+    }
+    function todoPageSize(pageSize,total,toolId) {
+        if(toolId=="newsList"){
+            $('#pageTool').html("");
+            $('#pageTool').Paging({
+                pageSize: pageSize,
+                count: total,
+                callback: function (page, pageSize, total) {
+                    getPage(page-1,pageSize);
+                }
+            });
+        }else if(toolId!=null&&toolId.indexOf("needToDo")!=-1){
+            $('#pageTools').html("");
+            $('#pageTools').Paging({
+                pageSize: pageSize,
+                count: total,
+                callback: function (page, pageSize, total) {
+                    getPage(page-1,pageSize);
+                }
+            });
+        }
+    }
+    //获取右侧消息
+    function getNews(page,size) {
+        var msgtype = 'OPER_ORDER_APPLY_CODE';//默认系统消息
+        $.ajax({
+            url: url + '/push/message/' + userid + '/get',
+            type: 'post',
+            data: {
+                access_token: access_token,
+                msgtype: msgtype,
+                issender: 1,
+                reads: 2,
+                clienttype: 2,
+                startindex: page,
+                count: size
+            },
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (jsData) {
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var data = jsData.body.data.msglist;
+                    putInnerHtml(size,jsData.body.data,"newsList");
+                    // $("#newsList").html("").append(html);
+                    // todoPageSize(size, jsData.body.data.total,"newsList")
+                }
+            }
+        })
+    }
+    /**
+     * 获取个人信息
+     */
+    function getInfo(){
+        var dataJson={
+            "access_token":access_token,
+            "clienttype":2
+        }
+        $.ajax({
+            url: url + '/ent/'+ userid+'/getinfo',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            data: dataJson,
+            async:false,
+            //timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (jsData) {
+                if(jsData.status==200&&jsData.body.code=="SUCCESS"){
+                    var html=""
+                    if(jsData.body.data!=[]) {
+                        var data = jsData.body.data;
+                        var html='<div class="dlg-rz-logo">\n';
+                        if(data.logo!="None"){
+                            html+='                <img src="';
+                            if(data.logo!="None"){
+                                html+=data.logo.replace('http:/', 'http://');
+                            }
+                            html+='" alt=""/>\n' ;
+                        }else{
+                            html+= '                <img src="./images/mifeng.png" alt=""/>\n';
+                        }
+                        html+='            </div>\n' +
+                            '            <div>'+data.name+'</div>\n' +
+                            '            <div class="dlg-gray-color">\n' ;
+                                if(data.audit==0){
+                                    html+='<i class="yes-renzhen"></i>\n 认证中';
+                                }else if(data.audit==1){
+                                   html+= '                <i class="yes-renzhen-m"></i>\n'+'认证成功';
+                                }else if(data.audit==2){
+                                    html+= '                <i class="yes-renzhen-fail"></i>\n'+'认证失败';
+                                }
+
+                        html+= '            </div>\n' +
+                            '<div id="account">账户余额：29281元</div>'+
+                            '            <div>\n' +
+                            '                <button type="button" class="btn btn-warning" target="wodeqianbao">充值</button>\n' +
+                            '                <button type="button" class="btn btn-default" target="wodeqianbao">提现</button>\n' +
+                            '            </div>';
+                        $("#info").html("").append(html);
+
+                    }
+                }
+            }
+        })
+    }
+    /**
+     * 获取余额信息
+     */
+    function getAccount(){
+        var dataJson={
+            "access_token":access_token,
+            "clienttype":2
+        }
+        $.ajax({
+            url: url + '/account/'+ userid+'/getaccount',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            data: dataJson,
+            //timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (jsData) {
+                var html='';
+                if(jsData.status==200&&jsData.body.code=="SUCCESS"){
+                   html+='账户余额：'+jsData.body.data.balance+'元'
+                }
+                $("#account").html("").append(html)
+            }
+        })
+    }
+    function tongyi(messageid){
+        $.ajax({
+            url:url+'/order/job/message/agree',
+            type: 'post',
+            dataType: 'json',
+            data:"userid="+userid+
+            "&messageid="+messageid+
+            "&clienttype=0" +
+            "&access_token="+access_token,
+            //timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("同意接口",jsData)
+                orderData(0,0);
+            }
+        })
+    }
+    //获取对应账单信息
+    function showPaymentModal(orderId) {
+        $("#pay_modal").show();
+
+        $.ajax({
+            url: url + '/account/'+userid+'/corder',
+            type: 'post',
+            dataType: 'json',
+            data:"clienttype=1" +
+            "&business=order"+
+            "&ids="+orderId+
+            "&userid="+userid+
+            "&access_token="+access_token,
+            //timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("订单账单信息",jsData)
+                var result = "";
+                if (jsData.body.msg=="无可支付订单") {
+                    $("#pay_modal").hide();
+                    alert("请去钱包结算")
+                }else {
+                    result += "<h3 class=\"text-center add-padding-15\">确认付款</h3>";
+                    result += "<div class=\"title\">账单明细</div>";
+                    result += "<div class=\"dlg-payment-account\">";
+                    result += "     <div>";
+                    result += "         <label>报酬</label>";
+                    result += "         <span>600.00元</span>";
+                    result += "     </div>";
+                    result += "     <div>";
+                    result += "         <label>小费</label>";
+                    result += "         <span>10.00元</span>";
+                    result += "     </div>";
+                    result += "     <div>";
+                    result += "         <label>扣款</label>";
+                    result += "         <span>0元</span>";
+                    result += "     </div>";
+                    result += "     <div>";
+                    result += "         <label>平台服务费</label>";
+                    result += "         <span>24.00元</span>";
+                    result += "     </div>";
+                    result += "     <div>";
+                    result += "         <label>总金额</label>";
+                    result += "         <span>634.00元</span>";
+                    result += "     </div>";
+                    result += "</div>";
+                    result += "<div class=\"title\">选择付款方式</div>";
+                    result += "<ul id=\"PaymentType\">";
+                    result += "     <li class=\"active\" data-index='1' onclick='changeStyle(this)'>余额</li>";
+                    result += "     <li data-index='2' onclick='changeStyle(this)'>微信</li>";
+                    result += "     <li data-index='3' onclick='changeStyle(this)'>支付宝</li>";
+                    //result += "     <li data-index='4'>一网通银行卡支付</li>";
+                    result += "</ul>";
+                    result += "<div id='yue'>";
+                    result += "     <div id=\"showSum\" class=\"dlg-red-color\">可用余额1500.00元</div>";
+                    result += "     <div class=\"title\">请输入支付密码</div>";
+                    result += "     <div id='pwd'>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+                    result += "     </div>";
+                    result += "     <div class=\"text-center add-padding-15\">";
+                    result += "          <button type=\"button\" class=\"btn btn-warning\" onclick=\"cancelPaymentModal('"+jsData.body.data.achid+"','"+jsData.body.data.paymentid+"')\">立即支付</button>&nbsp;&nbsp;";
+                    result += "          <button type=\"button\" class=\"btn btn-default\" onclick=\"cancelPaymentModal()\">取消</button>";
+                    result += "     </div>";
+                    result += "</div>";
+                    result += "<div id='weixin' style='display: none;'>";
+                    result += "</div>";
+                    result += "<div id='zhifubao' style='display: none;'>";
+                    result += "</div>";
+
+                    $("#querenzhifu").html(result);
+                }
+            }
+        })
+    }
+
+    function changeStyle(obj) {
+        $("#showSum").hide();
+        $("#changestyle").val($(obj).attr("data-index"));
+        switch ($(obj).attr("data-index")){
+            case "1":
+                $("#weixin").hide();
+                $("#zhifubao").hide();
+                $("#yue").show();
+                $("#showSum").show();
+                break;
+            case "2":
+                $("#yue").hide();
+                $("#zhifubao").hide();
+                $("#weixin").show();
+                break;
+            case "3":
+                $("#yue").hide();
+                $("#weixin").hide();
+                $("#zhifubao").show();
+                break;
+        }
+        $(obj).siblings().removeClass("active");
+        $(obj).addClass("active");
+    }
+
+
+    var inputs="";
+    function cancelPaymentModal(achid,orderid) {
+        console.log("achid",achid)
+        console.log("orderid",orderid)
+        if (inputs.length==0) {
+            alert("请输入密码")
+            $("#pay_modal").show();
+        }
+
+        if ($("#changestyle").val() == "1") {
+            $.ajax({
+                url: url + '/account/'+userid+'/'+orderid+'/balance',
+                type: 'post',
+                dataType: 'json',
+                data: "clienttype=1" +
+                "&achid=" +achid+
+                //"&paypwd="+inputs+
+                "&userid="+userid+
+                "&access_token=" + access_token,
+                //timeout: '1000',
+                cache: 'false',
+                success: function (jsData) {
+                    console.log("支付完成", jsData)
+                }
+            })
+        }
+    }
+
+
+    /**
+     * 支付
+     * @param orderid
+     */
+    function zhifu(orderid){
+
+        $.ajax({
+            url: url + '/account/'+userid+'/'+orderid+'/balance',
+            type: 'post',
+            dataType: 'json',
+            data:"userid="+employer_id+
+            "&clienttype=1" +
+            "&achid=0"+
+            "&access_token="+access_token,
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("支付接口",jsData)
+
+            }
+        })
+    }
+
+    /**
+     * 确认付款
+     */
+    function querenwancheng(day_date,order_id){
+        $.ajax({
+            url: url + '/order/'+order_id+'/child/confirm',
+            type: 'post',
+            dataType: 'json',
+            data:"userid="+userid+
+            "&clienttype=1" +
+            "&daydate="+day_date+
+            "&access_token="+access_token,
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("确认付款",jsData)
+
+            }
+        })
+    }
+   /* $( "#dialog-message" ).dialog({
+        modal: true,
+        buttons: {
+            "确定": function() {
+                $( this ).dialog( "close" );
+            },
+            "取消":function () {
+                $( this ).dialog( "close" );
+            }
+        }
+    });*/
+</script>

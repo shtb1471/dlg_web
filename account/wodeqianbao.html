@@ -1,0 +1,701 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>账户管理-我的钱包</title>
+</head>
+<div class="bread_nav"><b>账户管理</b> / 我的钱包</div>
+<div id="rightPart">
+    <div class="dlg-content">
+        <div class="dlg-wallet-head">
+            <input type="hidden" id="startIndex" value="0"/>
+            <input type="hidden" id="showCount" value="10"/>
+            <div>
+                <label>账户总额&nbsp;&nbsp;</label><span id="account_total"></span>
+                <button type="button" class="btn btn-default" onclick="showRechargeModal()">充值</button>
+                <button type="button" class="btn btn-default" onclick="jumpPage('./account/tixian.html','rightPart')">
+                    提现
+                </button>
+            </div>
+            <div>
+                <label>可提现余额&nbsp;&nbsp;</label><span id="account_settamount"></span>&nbsp;&nbsp;
+                <label>不可提现余额&nbsp;&nbsp;</label><span id="account_unbalance"></span>&nbsp;&nbsp;
+                <label>保证金&nbsp;&nbsp;</label><span id="account_securitymoney"></span>&nbsp;&nbsp;
+            </div>
+            <div>
+                <!--<label>账户&nbsp;&nbsp;</label>-->
+                <!--<select name="" id="">-->
+                <!--<option value="rcw">子账户：任传伟</option>-->
+                <!--</select>-->
+                <label>交易类型&nbsp;&nbsp;</label>
+                <ul id="changeStyle">
+                    <li id="SUB11" onclick="turnPage(this.id)">充值</li>
+                    <li id="SUB12" onclick="turnPage(this.id)">提现</li>
+                    <li>线下充值</li>
+                    <input id="selectPayType" style="display: none"/>
+                </ul>
+            </div>
+            <div>
+                <label>交易时间&nbsp;&nbsp;</label>
+                <input id="startDate" type="text" placeholder="开始日期"/><span>～</span><input id="endDate" type="text"
+                                                                                           placeholder="结束日期"/>
+                <ul id="changeTime">
+                    <li id="today" onclick="turnPage(this.id)">今天</li>
+                    <li id="yestoday" onclick="turnPage(this.id)">昨天</li>
+                    <li id="week" onclick="turnPage(this.id)">最近7天</li>
+                    <li id="month" onclick="turnPage(this.id)">最近30天</li>
+                    <input id="selectDay" style="display: none"/>
+                </ul>
+            </div>
+        </div>
+        <div class="dlg-row dlg-wallet-sum">
+            <div class="dlg-row-3 dlg-box">
+                <ul class="dlg-sum-num">
+                    <li>
+                        <div>收入</div>
+                        <div><span id="account_totalincome"></span>&nbsp;&nbsp;<span id="addCount"></span></div>
+                    </li>
+                    <li>
+                        <div>支出</div>
+                        <div><span id="account_totalexpend"></span>&nbsp;&nbsp;<span id="subCount"></span></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="dlg-row-7">
+                <ul class="dlg-change-style">
+                    <li id="ALL" class="active" onclick="turnPage(this.id);">全部</li>
+                    <li id="ADD" onclick="turnPage(this.id);">收入</li>
+                    <li id="SUB" onclick="turnPage(this.id);">支出</li>
+                    <input id="selectType" value="ALL" style="display: none"/>
+                </ul>
+            </div>
+        </div>
+        <!--loading-->
+        <div id="loading" class="dlg-task-lists">
+            <div class="dlg-row clear-padding">
+                <img class="dlg-no-list-img" src="./images/loading.gif"/>
+            </div>
+        </div>
+        <table id="acountListTableTr" class="table dlg-table-account">
+
+        </table>
+        <div class="dlg-page">
+            <div id="pageTool" class="dlg-task-page page-common"></div>
+        </div>
+    </div>
+    <div id="recharge_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:520px;">
+            <span class="close" onclick="closePaymentModal()">x</span>
+            <div class="dlg-recharge-modal">
+                <div>
+                    <label>
+                        充值金额
+                    </label>
+                    <input id="totalfee" type="number"
+                           oninput="getValue(this)"/>
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div>
+                    <ul class="dlg-payment">
+                        <li class="active">支付宝</li>
+                        <li>微信</li>
+                        <li>银行卡</li>
+                    </ul>
+                    <input type="hidden" id="paytype" value="ALIPAY"/>
+                    <div><label>应付金额：</label><span id="dlg-price"></span>元</div>
+                    <div class="dlg-payment-content">
+                        <button type="button" class="btn btn-warning-o" onclick="doRecharge()">去支付</button>
+                        <button type="button" class="btn btn-default" onclick="closePaymentModal()">关闭</button>
+                    </div>
+                    <div class="dlg-payment-content">
+                        <img id="showPayImage" draggable="false" alt="">
+                    </div>
+                    <div class="dlg-payment-content">
+                        <button type="button" class="btn btn-warning-o">去支付</button>
+                        <button type="button" class="btn btn-default" onclick="closePaymentModal()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="show_bg_ground" class="bg_ground" style="display: none;">
+    <div class="tan" style="height:300px;margin-top:5%;">
+        <span class="close">x</span>
+        <div class="tan_pic"><img src="./images/tb.png" alt=""></div>
+        <div class="tan_tip">
+            <ul>
+                <li>请您在新打开的页面上完成支付</li>
+                <li>付款完成前请不要关闭此窗口</li>
+                <li>完成付款后请跟俊您的情况点击下面的按钮：</li>
+            </ul>
+        </div>
+        <p>
+            <button onclick="closeBgGround()">已完成付款</button>
+            <button onclick="closeBgGround()">付款遇到问题？</button>
+        </p>
+    </div>
+</div>
+
+<div id="wallet_pay_modal" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-payment-modal" id="querenzhifu">
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="change_style" value="1">
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/check.js"></script>
+<script src="js/public.js"></script>
+<script src="./js/md5.js" type="text/javascript"></script>
+
+<script>
+
+    console.log(access_token + " " + userid);
+    function showLoading() {
+        $("#acountListTableTr").hide();
+        $("#loading").show();
+    }
+    $(function () {
+        showLoading();
+        $(".close").click(function () {
+            $(".bg_ground").hide();
+        });
+        //我的余额
+        if (access_token != null && access_token != "") {
+            $.ajax({
+                url: url + '/account/' + userid + '/getaccount',
+                type: 'post',
+                data: {access_token: access_token, clienttype: 2},
+                dataType: 'json',
+                timeout: '1000',
+                cache: 'false',
+                success: function (jsData) {
+                    if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+
+                        var orangeBalance = jsData.body.data.balance;
+                        $("#account_total").html(orangeBalance + "元");
+
+                        var orangeUnBalance = jsData.body.data.unbalance;
+                        $("#account_unbalance").html(orangeUnBalance + "元");
+
+                        var orangeSettamount = jsData.body.data.settamount;
+                        $("#account_settamount").html(orangeSettamount + "元");
+
+                        var orangeSecuritymoney = jsData.body.data.securitymoney;
+                        $("#account_securitymoney").html(orangeSecuritymoney + "元");
+
+                        var orangeTotalIncome = jsData.body.data.totalincome;
+                        $("#account_totalincome").html(orangeTotalIncome + "元");
+
+                        var orangeTotalExpen = jsData.body.data.totalexpend;
+                        $("#account_totalexpend").html(orangeTotalExpen + "元");
+
+                    }
+                }
+            })
+        }
+        getacchistory();
+
+        $(".dlg-payment-content").eq(0).show();
+        getDatePicker('startDate', 'endDate');
+    })
+
+    function todoPageSize(pageSize, total) {
+        $('#pageTool').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, size, count) {
+
+                console.log('当前第 ' + page + '页,每页 ' + size + '条,总页数：' + count + '页');
+                $("#showCount").val(size);
+                $("#startIndex").val(page - 1);
+                turnPage('');
+            }
+        });
+    }
+
+    //获取收支明细
+    function getacchistory() {
+        //得到起始页
+        var startIndex = $("#startIndex").val();
+        if (startIndex == null || startIndex == '') {
+            startIndex = 0;
+        }
+        //每页显示条数
+        var showCount = $("#showCount").val();
+        if (showCount == null || showCount == '') {
+            showCount = 10;
+        }
+        var payType = $("#selectType").val();
+
+        console.log("startIndex=" + startIndex + " showCount=" + showCount + " payType=" + payType);
+        //获取收支明细
+        $.ajax({
+            url: url + '/account/' + userid + '/getacchistory',
+            type: 'post',
+            data: {
+                access_token: access_token,
+                clienttype: 2,
+                startindex: startIndex,
+                count: showCount,
+                paytype: payType
+            },
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("交易明细数据",jsData)
+                $("#loading").hide();
+                $("#acountListTableTr").show();
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var str = "";
+                    var html = "<tr>"
+                        + "<th style='width: 150px;'>交易时间</th>"
+                        + "<th style='width: 190px;'>流水号|订单号</th>"
+                        + "<th>对方信息</th>"
+                        + "<th>交易类型</th>"
+                        + "<th>交易金额（元）</th>"
+                        + "<th>交易状态</th>"
+                        + "<th>交易备注</th>"
+                        + "<th>操作</th>"
+                        + "</tr>";
+                    if (jsData.body.data.acclist.length > 0) {
+                        var addCount = 0;
+                        var subCount = 0;
+                        for (var i = 0; i < jsData.body.data.acclist.length; i++) {
+                            //获取交易achid
+                            var achid = jsData.body.data.acclist[i].achid;
+                            var orderid = jsData.body.data.acclist[i].orderid;
+
+                            var bankorderno = "";//保存第三方流水号
+                            var payerUserNo = "";//保存
+
+
+                            //根据记录id查询交易记录详情
+                            $.ajax({
+                                url: url + '/account/' + userid + '/' + achid + '/getorderinfo',
+                                type: 'post',
+                                data: {access_token: access_token, clienttype: 2},
+                                dataType: 'json',
+                                timeout: '1000',
+                                cache: 'false',
+                                success: function (detailJsData) {
+                                    // console.log("详情jsData=", detailJsData);
+                                    if (detailJsData.status == 200 && detailJsData.body.code == 'SUCCESS') {
+                                        bankorderno = detailJsData.body.data.bankorderno;
+                                    }
+                                }
+                            })
+
+                            html += "<tr>";
+                            //交易时间
+                            var timespace = jsData.body.data.acclist[i].timespace;//时间
+                            var dateStr = stringToDate(timespace);
+                            html += "<td>"
+                                + "<div>" + dateStr + "</div>"
+                                + "</td>"
+                                //流水号|订单号
+                                + "<td>"
+                                + jsData.body.data.acclist[i].achid + "<br/>"
+                                + jsData.body.data.acclist[i].achid;
+                            // if (banktrxno != null && banktrxno != '') {
+                            //     html += "<div>" + banktrxno + "</div>"
+                            // }
+                            html += "</td>";
+                            //对方信息
+                            var showInfo = "";
+                            var trxtypename = jsData.body.data.acclist[i].trxtypename;//得到交易类型
+                            var payType = jsData.body.data.acclist[i].funddirectiontype;
+                            var paystatus = jsData.body.data.acclist[i].paystatus;
+                            if (trxtypename != null && trxtypename != '') {
+                                //没有返回payType，所以对方信息暂时显示交易类型
+                                if (payType != null && payType != '') {
+                                    /*if (funddirectiontype == 'ADD') {
+                                        if (paytype == 'ALIPAY') {
+                                            showInfo = "支付宝充值";
+                                        } else if (paytype == 'WXPAY') {
+                                            showInfo = "支付宝充值";
+                                        }*/
+                                    //统计交易笔数   等交易状态为成功则count++   不成功不统计
+                                    if (paystatus == 'SUCCESS') {
+
+                                        addCount++;
+                                    }
+                                } else {
+                                    /*if (paytype == 'ALIPAY') {
+                                        showInfo = "支付宝提现";
+                                    } else if (paytype == 'WXPAY') {
+                                        showInfo = "支付宝提现";
+                                    }}*/
+                                    //统计交易笔数   等交易状态为成功则count++   不成功不统计
+                                    if (paystatus == 'SUCCESS') {
+                                        subCount++;
+                                    }
+                                }
+                                html += "<td>"
+                                    + "<div></div>"
+                                    + "<div></div>"
+                                    + "</td>";
+                            } else {
+                                html += "<td>"
+                                    + "<div></div>"
+                                    + "<div></div>"
+                                    + "</td>";
+                            }
+
+                            // 交易类型
+                            var trxtypename = jsData.body.data.acclist[i].trxtypename;
+                            if (trxtypename != '' && trxtypename != null) {
+                                html += "<td>" + trxtypename + "</td>";
+                            } else {
+                                html += "<td></td>";
+                            }
+                            //交易金额
+                            html += "<td>" + jsData.body.data.acclist[i].amount + "</td>"
+                                //交易状态
+                                + "<td>"+jsData.body.data.acclist[i].paystatusname +"</td>"
+                                //交易备注
+                                + "<td> </td>"
+                                //操作
+                                    if (jsData.body.data.acclist[i].paystatus=="CREATED") {
+                                        html += "<td><button type='button' class='btn btn-default' onclick=\"showPaymentModal('"+jsData.body.data.acclist[i].achid+"','"+jsData.body.data.acclist[i].orderid+"','"+jsData.body.data.acclist[i].amount+"')\">支付</button></td>";
+                                    }
+
+                                + "</tr>";
+                        }
+
+                        //显示收入支出笔数
+                        $("#addCount").html(addCount + "笔");
+                        $("#subCount").html(subCount + "笔");
+
+                    }
+                    else {
+                        html += "<tr>"
+                            + "<td colspan=\"7\">"
+                            + "<div class=\"dlg-row add-padding-15\">"
+                            + "<h3 class='font-16 text-center' style='color: red;'>"
+                            + "<img class='dlg-no-list-img' src='./images/no-list.png'/>"
+                            + "</h3>"
+                            + "</td>"
+                            + "</tr>"
+                    }
+
+                    $("#acountListTableTr").html("").append(html);
+                    var pageSize = $("#showCount").val();
+                    todoPageSize(pageSize, jsData.body.data.total);
+                }
+            }
+        })
+    }
+
+    //分页查询
+    function turnPage( id) {
+
+        //交易类型
+        // if (id == 'ADD') {
+        //     $("#selectPayType").html("ADD");
+        // }
+        // if (id == 'SUB') {
+        //     $("#selectPayType").html("SUB");
+        // }
+
+        //交易时间
+        if (id == 'today') {
+            $("#selectDay").val("today");
+        }
+        if (id == 'yestoday') {
+            $("#selectDay").val("yestoday");
+        }
+        if (id == 'week') {
+            $("#selectDay").val("week");
+        }
+        if (id == 'month') {
+            $("#selectDay").val("month");
+        }
+
+        //全部 收入 支出
+        if (id == 'ALL') {
+            $("#selectType").val("ALL");
+            $("#pageTool").html("");
+            $("#startIndex").val("");
+            showLoading();
+        }
+        if (id == 'ADD') {
+            $("#selectType").val("ADD");
+            $("#pageTool").html("");
+            $("#startIndex").val("");
+            showLoading();
+        }
+        if (id == 'SUB') {
+            $("#selectType").val("SUB");
+            $("#pageTool").html("");
+            $("#startIndex").val("");
+            showLoading();
+        }
+
+        //获取查询条件
+        var selectPayType = "";
+        var selectDay = "";
+        var selectType = "";
+        if (id != null && id != '') {
+            selectPayType = $("#selectPayType").val();
+            selectDay = $("#selectDay").val();
+            selectType = $("#selectType").val();
+        } else {
+            selectType = "ALL";
+        }
+
+         console.log("selectPayType=" + selectPayType + " selectDay=" + selectDay + " selectType=" + selectType);
+        //获取收支明细
+        getacchistory();
+    }
+
+
+    $("#changeStyle li,#changeTime li,.dlg-change-style li").click(function () {
+        addActive(this);
+    })
+    $(".dlg-payment li").click(function () {
+        var index = $(this).index();
+        var totalfee = $("#totalfee").val();
+        if (totalfee == 0 || totalfee == null) {
+            $("#totalfee").focus().css("border-color", "red");
+            $("#totalfee").next().html("金额不为空");
+            return false;
+        } else {
+            $("#totalfee").css("border-color", "#eaeaea");
+            $("#totalfee").next().html("");
+            $(".dlg-payment li").removeClass("active");
+            $(this).addClass("active");
+            if (index == 0) {
+                $("#paytype").val("ALIPAY");
+            } else if (index == 1) {
+                $("#paytype").val("WXPAY");
+                doRecharge();
+            } else {
+                $("#paytype").val("");
+            }
+            $(".dlg-payment-content").hide();
+            $(".dlg-payment-content").eq(index).show();
+        }
+    })
+
+    function showRechargeModal() {
+        $("#recharge_modal").show();
+    }
+
+    function closePaymentModal() {
+        //清空文本框
+        $("#totalfee").val("");
+        $('#dlg-price').html("");
+        $("#recharge_modal").hide();
+    }
+
+    function closeBgGround() {
+        //重新刷新页面
+        getacchistory();
+        $("#show_bg_ground").hide();
+    }
+
+    //充值
+    function doRecharge() {
+        var totalfee = $("#totalfee").val();
+        var paytype = $("#paytype").val();
+
+        if (access_token != null && access_token != "") {
+            console.log("access_token=" + access_token + " paytype=" + paytype + " totalfee=" + totalfee);
+            $.ajax({
+                url: url + '/account/' + userid + '/recharge',
+                type: 'post',
+                data: {access_token: access_token, clienttype: 2, paytype: paytype, totalfee: totalfee},
+                dataType: 'json',
+                timeout: '3000',
+                cache: 'false',
+                success: function (data) {
+                    console.log("充值data=",data);
+                    if (data.status == 200 && data.body.code == 'SUCCESS') {
+                        if (paytype == 'ALIPAY') {
+                            var returnUrl = data.body.data.returnurl;
+                            var orderId = data.body.data.orderid;
+
+                            if (returnUrl != null && returnUrl != '') {
+
+                                window.open(returnUrl);
+                                var rechargeModal = document.getElementById("recharge_modal");
+                                rechargeModal.style.display = 'none';
+
+                                var showBgGroound = document.getElementById("show_bg_ground");
+                                showBgGroound.style.display = 'block';
+
+
+                            }
+                        } else if (paytype == 'WXPAY') {
+                            var codeUrl = data.body.data.code_url;
+
+                            //通过返回的微信code 调用生成二维码接口
+                            if (codeUrl != null && codeUrl != '') {
+                                console.log("weixin url=",url);
+                                $('#showPayImage').attr('src', url + '/sys/qrcode?content=' + codeUrl);
+                            }
+                        }
+
+                    }
+                }
+            })
+        }
+
+    }
+
+    function add0(m){return m<10?'0'+m:m };
+    function stringToDate(timespace) {
+        var date = new Date(timespace);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        // return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        return year+'-'+add0(month)+'-'+add0(day)+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds);
+    }
+
+    function getValue(obj) {
+        document.getElementById('dlg-price').innerHTML = obj.value;
+        $(obj).css("border-color", "#eaeaea");
+        $(obj).next().html("");
+    }
+    function showListModal() {
+        $("#wallet_pay_modal").show();
+    }
+
+
+//    function cancelPaymentModal() {
+//        $("#wallet_pay_modal").hide();
+//    }
+
+    //单次单选弹框
+    function showPaymentModal(achid,orderid,amount) {
+
+
+
+        var result = "";
+
+        result += "<h3 class=\"text-center add-padding-15\">确认付款</h3>";
+        result += "<div class=\"title\">账单明细</div>";
+        result += "<div class=\"dlg-payment-account\">";
+        result += "     <div>";
+        result += "         <label>报酬</label>";
+        result += "         <span>600.00元</span>";
+        result += "     </div>";
+        result += "     <div>";
+        result += "         <label>小费</label>";
+        result += "         <span>10.00元</span>";
+        result += "     </div>";
+        result += "     <div>";
+        result += "         <label>扣款</label>";
+        result += "         <span>0元</span>";
+        result += "     </div>";
+        result += "     <div>";
+        result += "         <label>平台服务费</label>";
+        result += "         <span>24.00元</span>";
+        result += "     </div>";
+        result += "     <div>";
+        result += "         <label>总金额</label>";
+        result += "         <span>"+amount+"元</span>";
+        result += "     </div>";
+        result += "</div>";
+        result += "<div class=\"title\">选择付款方式</div>";
+        result += "<ul id=\"PaymentType\">";
+        result += "     <li class=\"active\" data-index='1' onclick='change_style(this)'>余额</li>";
+        result += "     <li data-index='2' onclick='change_style(this)'>微信</li>";
+        result += "     <li data-index='3' onclick='change_style(this)'>支付宝</li>";
+        //result += "     <li data-index='4'>一网通银行卡支付</li>";
+        result += "</ul>";
+        result += "<div id='yue'>";
+        result += "     <div id=\"showSum\" class=\"dlg-red-color\">可用余额1500.00元</div>";
+        result += "     <div class=\"title\">请输入支付密码</div>";
+        result += "     <div id='pwd'>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "         <input type=\"password\" maxlength=\"1\" oninput=\"paymentJump(this)\"/>";
+        result += "     </div>";
+        result += "     <div class=\"text-center add-padding-15\">";
+        result += "          <button type=\"button\" class=\"btn btn-warning\" onclick=\"cancelPaymentModal('"+achid+"','"+orderid+"')\">立即支付</button>&nbsp;&nbsp;";
+        result += "          <button type=\"button\" class=\"btn btn-default\" onclick=\"cancelPaymentModal()\">取消</button>";
+        result += "     </div>";
+        result += "</div>";
+        result += "<div id='weixin' style='display: none;'>";
+        result += "</div>";
+        result += "<div id='zhifubao' style='display: none;'>";
+        result += "</div>";
+
+        $("#querenzhifu").html(result);
+
+        $("#wallet_pay_modal").show();
+    }
+
+    var inputs="";
+    function cancelPaymentModal(achid,orderid) {
+
+        var result = "";
+        console.log("achid",achid)
+        console.log("orderid",orderid)
+        if (inputs.length==0) {
+            alert("请输入密码")
+            $("#wallet_pay_modal").show();
+            return false;
+        }
+
+        if ($("#change_style").val() == "1") {
+            var password = hex_md5(inputs);
+            $.ajax({
+                url: url + '/account/'+userid+'/'+orderid+'/balance',
+                type: 'post',
+                dataType: 'json',
+                data: "clienttype=1" +
+                "&achid=" +achid+
+                "&paypwd="+password+
+                "&userid="+userid+
+                "&access_token=" + access_token,
+                //timeout: '1000',
+                cache: 'false',
+                success: function (jsData) {
+                    console.log("支付完成", jsData)
+                    if (jsData.body.msg == "支付成功-等待结算") {
+                        alert("支付成功")
+                    }
+                }
+            })
+        }
+    }
+
+    //支付密码
+    function paymentJump(obj) {
+        $(obj).focus().css("border-color", "#ddd");
+        if (/\d/.test($(obj).val())) {
+            if (parseInt($(obj).val())) {
+                $(obj).next().focus();
+                inputs += $(obj).val();
+            } else {
+                $(obj).prev().focus();
+            }
+        } else {
+            $(obj).val("").focus().css("border-color", "red");
+            return false;
+        }
+    }
+
+    $("#PaymentType li").click(function () {
+        $("#showSum").hide();
+        if ($(this).index() == 0) {
+            $("#showSum").show();
+        }
+        addActive(this);
+    })
+</script>

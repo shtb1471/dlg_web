@@ -1,0 +1,486 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="./js/pagination/paging.css"/>
+    <title>零工市场-我要转单</title>
+</head>
+<div class="bread_nav"> <b>零工市场</b> / 我要转单</div>
+<div class="dlg-content">
+    <div class="dlg-lgsc-box">
+        <div>
+            <label>关键字 &nbsp;<input id="query_text" type="text" placeholder="请输入关键字"/>&nbsp;</label>
+            <label>价格范围 &nbsp;<input type="text" class="mini-width" placeholder="最小价格"/> - <input type="text"
+                                                                                                  class="mini-width"
+                                                                                                  placeholder="最大价格"/>
+                &nbsp;</label>
+            <label>零工日期 &nbsp;<input id="startDate" type="text" placeholder="开始日期"/> ～<input id="endDate" type="text"
+                                                                                             placeholder="结束日期"/> &nbsp;</label>
+            <button class="btn btn-default background-gray-color"><img src="./images/icon_12.png" draggable="false">
+            </button>
+        </div>
+        <div>
+            <label>
+                零工类型&nbsp;&nbsp;<span>家政保洁</span>
+                &nbsp;<span class="active">志愿义工</span>
+                &nbsp;<span>操作工</span>
+                &nbsp;<span>生活服务</span>
+                &nbsp;<span>教育培训</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                付款方式&nbsp;&nbsp;<span class="active">计时</span>
+                &nbsp;<span>计费</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                来自&nbsp;&nbsp;<span class="active">全部</span>
+                &nbsp;<span>我的客户</span>
+                &nbsp;<span>我的代理区域</span>
+            </label>
+            <div class="dlg-zd-operation">
+                <input type="checkbox"/>
+                <div>只看我可以转单的</div>
+            </div>
+        </div>
+    </div>
+    <div class="dlg-row clear-padding-left">
+        <div class="dlg-task-lists dlg-lgsc-lists">
+            <!--loading-->
+            <div id="loading" class="dlg-task-lists">
+               <div class="dlg-row clear-padding">
+                 <img class="dlg-no-list-img" src="./images/loading.gif"/>
+               </div>
+            </div>
+            <!--list-->
+            <ul id="jobList">
+                <li>
+                    <div class="dlg-row-4 clear-padding">
+                        <div class="dlg-list-title" onclick="jumpChildrenPage('./linggongguanli/linggongshichang-zhuandanxiangqing.html?jobId=1','rightPart')">
+                            <h3 class="font-16">任传伟</h3>&nbsp;
+                            <i class="dlg-icon-bao"></i>
+                            <i class="dlg-icon-daili"></i>&nbsp;
+                            <span class="dlg-tag">家政保洁</span>
+                            <span class="dlg-tag">计时</span>
+                        </div>
+                        <div><span class="dlg-red-color">20</span>&nbsp;元/小时&nbsp;需2人
+                            &nbsp;工作时间：10.2-10.4 9:00-18:00
+                        </div>
+                        <div>上海普陀区真北路958号1号楼7楼</div>
+                    </div>
+                    <div class="dlg-row-3 text-center">
+                        <div class="dlg-lgsc-list-right">
+                            进度&nbsp;
+                            <label class="dlg-box"></label>
+                            (3/10)
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        <a href="javascript:void(0)" target="linggong-zhuandanxiangqing" id="zhuan_dan">转单</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dlg-page">
+            <div id="pageTask" class="dlg-task-page page-common"></div>
+        </div>
+        <!--转单-->
+        <div id="repeatOrder_modal" class="modal_bg_ground">
+            <div class="modal_tan" style="width:480px;">
+                <span class="close">x</span>
+                <div class="dlg-repeatOrder-modal">
+                    <h3 class="text-center add-padding-15">转单差价设置</h3>
+                    <div class="title zhuan_title"></div>
+                    <div class="dlg-repeatOrder-box">
+                        <div class="dlg-repeatOrder-group">
+                            <label>原报酬</label>
+                            <div class="old_price">
+                                <span class="dlg-red-color price_wage">20</span><span class="danwei">元/小时</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="zhuan_id" />
+                        <input type="hidden" id="payStyleModal" />
+                        <div class="dlg-repeatOrder-group">
+                            <label>我要赚</label>
+                            <div>
+                                <div class="own_money">
+                                    <input type="text" name="own_money" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/小时</span>
+                                    <span class="dlg-red-color"></span>
+                                    <input type="text" name="own_money1" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/件</span>
+                                    <span class="dlg-red-color"></span>
+                                </div>
+                                <div class="dlg-gray-color">最高差价为报酬的60%</div>
+                            </div>
+                        </div>
+                        <div class="dlg-repeatOrder-group">
+                            <label>转发后报酬</label>
+                            <div class="subordinate_money">
+                                <input name="pay_money" type="text" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/小时</span>
+                                <span class="dlg-red-color"></span>
+                                <input name="pay_money1" type="text" oninput="if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}"/>&nbsp;<span>元/件</span>
+                                <span class="dlg-red-color"></span>
+                            </div>
+                        </div>
+                        <div class="dlg-repeatOrder-group">
+                            <label>给下级利润</label>
+                            <div class="new_price">
+                                <span class="dlg-red-color">20</span>元/小时/人
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center add-padding-15">
+                        <button type="button" class="btn btn-warning" onclick="repeatOrderModal(1)">确认转单</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-default" onclick="repeatOrderModal(2)">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--指派-->
+        <div id="assign_modal" class="modal_bg_ground">
+            <div class="modal_tan" style="width:520px;">
+                <span class="close">x</span>
+                <div class="dlg-assign-modal">
+                    <h3 class="text-center add-padding-15">指派</h3>
+                    <ul id="assignModalLists">
+                        <li class="active">普陀区（平谷区 18321271116）</li>
+                        <li>睢阳区（睢阳区 13937005551）</li>
+                        <li>商丘市（商丘市 15137037776）</li>
+                        <li>沈阳市（沈阳市 18640055457）</li>
+                        <li>睢阳区（睢阳区 13937005551）</li>
+                        <li>商丘市（商丘市 15137037776）</li>
+                        <li>沈阳市（沈阳市 18640055457）</li>
+                        <li>睢阳区（睢阳区 13937005551）</li>
+                        <li>商丘市（商丘市 15137037776）</li>
+                        <li>沈阳市（沈阳市 18640055457）</li>
+                    </ul>
+
+                    <div class="text-center add-padding-15">
+                        <button type="button" class="btn btn-default" onclick="AssignModal()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script>
+    $(function () {
+        getDatePicker('startDate', 'endDate');
+        getPage(0,10);
+        // $("#zhuan_dan").click(function () {
+        //     jumpPage("linggongguanli/linggongshichang-zhuandanxiangqing.html", "rightPart");
+        // });
+        // $("#loading").show();
+        // $("#jobList").hide().html("");
+        // $("#pageTask").hide();
+    })
+    $(".dlg-lgsc-box div span").click(function () {
+        addActive(this);
+    })
+    var arrProgress = [12, 46, 89, 30];
+    for (var i = 0; i < arrProgress.length; i++) {
+        $(".dlg-lgsc-list-right label").eq(i).progressbar({
+            value: arrProgress[i]
+        });
+    }
+
+    function todoPageSize(pageSize, total) {
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, size, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                getPage(page - 1,pageSize);
+            }
+        });
+    }
+
+
+    function getPage(pagenum,pagesize) {
+        //         "post_type": "job.type_11",
+        // "start_date": "2018-01-01",
+        //     "end_date": "2018-02-01",
+        var json = {
+                  "userid": userid,
+                  "x_coordinate": 116.326763,
+                  "y_coordinate": 39.012012,
+                    "agent_type":0,
+                  "province_name": "北京市",
+                  "city_name": "北京市",
+                  "area_name": "海淀区",
+                  "pagenum": pagenum,
+                  "pagesize": pagesize,
+
+        };
+        if($('#query_text').val()!=""){
+            json.query_text=$('#query_text').val();
+        }
+
+        $.ajax({
+            url: url+'/job/jobMapList',
+            contentType: "application/json; charset=utf-8",
+            type: 'post',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            async: false,
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+                if(data.status==200&&data.body.code=='SUCCESS'){
+                    var list =data.body.data.list;
+                    var liBody = $("#jobList");
+                    var html = "";
+                    $("#loading").hide();
+                    $("#jobList").show().html("");
+                    $("#pageTask").show();
+                    if(list.length>0){
+                        for (var num=0;num<list.length;num++) {
+                            var vo=list[num];
+                            //动态显示内容
+                            html += "<li>"+
+                                "<div class=\"dlg-row\">"+
+                                "<div class=\"dlg-row-4 clear-padding\">"+
+                                "<div class=\"dlg-list-title\" onclick=\"jumpChildrenPage(\'linggongguanli/linggongshichang-zhuandanxiangqing.html?jobId="+vo.id+"\',\'rightPart\')\">"+
+                                "<h3 class=\"font-16\">"+vo.task_title+"</h3>&nbsp;"+
+                                "<i class=\"dlg-icon-bao\"></i>"+
+                                "<i class=\"dlg-icon-daili\"></i>&nbsp;"+
+                                "<span class=\"dlg-tag\">"+vo.post_type_name+"</span>"+
+                                "<span class=\"dlg-tag\">"+vo.cost_accounting_type_name+"</span>"+
+                                "</div>"+
+                                "<div>";
+                            if(vo.cost_accounting_type==1) {
+                                html+="<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name;
+                            }else if(vo.cost_accounting_type==2){
+                                html+="<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            }else if(vo.cost_accounting_type==3){
+                                html+="<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name
+                                    +"<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            }
+                            html+="&nbsp;需"+vo.recruit_number+"人"+
+                                " &nbsp; 工作时间："+vo.start_date.replace(/-/g, ".").substr(5)+"-"+vo.end_date.replace(/-/g, ".").substr(5);
+                            for(var i=0;i<vo.job_time.length;i++){
+                                html+=" "+vo.job_time[i].start_time.substr(0,5)+"-"+vo.job_time[i].end_time.substr(0,5);
+                            }
+                            html+="</div>"+
+                                "<div>"+vo.work_address+"</div>"+
+                                "</div>"+
+                                "<div class=\"dlg-row-3 text-center\">"+
+                                "<div class=\"dlg-lgsc-list-right\">"+
+                                "进度&nbsp;"+
+                                "<label class=\"dlg-box\"></label>"+
+                                "("+ (vo.recruit_number-vo.surplus_recruit_number)+"/"+vo.recruit_number+")"+
+                                "</div>"+
+                                "</div>"+
+                                "<div class=\"dlg-row-3 text-right\">"+
+                                "<a href=\"javascript:void(0)\" target=\"linggong-zhuandanxiangqing\" name=\"zhuan_dan\" onclick=\"showRepeatOrderModal('"+vo.id+"')\">转单</a>"+
+                                "</div>"+
+                                "</div>"+
+                                "</li>";
+                        }
+
+                    }else{
+                        $("#pageTask").hide();
+                        html += '<li>'+
+                            '<div class="dlg-row clear-padding">'+
+                            "<img class='dlg-no-list-img' src='./images/no-list.png'/>"+
+                            '</div>'+
+                            '</li>';
+                    }
+                    liBody.html("").append(html);
+                    todoPageSize(9,data.body.data.total)
+                }
+            }
+        })
+    }
+    function showAssignModal() {
+        $("#assign_modal").show();
+    }
+
+    function AssignModal() {
+        $("#assign_modal").hide();
+    }
+
+    function showRepeatOrderModal(obj) {
+        $.ajax({
+            url: url+'/job/'+obj,
+            contentType: "application/json; charset=utf-8",
+            type: 'get',
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+                if(data.status==200&&data.body.code=="SUCCESS"){
+                    var vo=data.body.data;
+                    $(".zhuan_title").text(vo.task_title);
+                    $(".price_wage").text(vo.price_wage);
+                    $("#zhuan_id").val(vo.id);
+                    $("#payStyleModal").val(vo.cost_accounting_type);
+                    var own1=" <input type=\"text\" name=\"own_money\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"danwei\">元/小时</span><span class='dlg-red-color mini-size'></span>  " ;
+                    var sub1=" <input type=\"text\" name=\"own_money1\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"danwei\">元/小时</span><span class='dlg-red-color mini-size'></span>  " ;
+                    var own2=" <input type=\"text\" name=\"pay_money\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"subdanwei\">元/件</span><span class='dlg-red-color mini-size'></span>  " ;
+                    var sub2=" <input type=\"text\" name=\"pay_money1\" oninput=\"if(!/^[0-9]+.?[0-9]*$/.test(this.value)){this.value='';}\"/> <span class=\"comdanwei\">元/件</span><span class='dlg-red-color mini-size'></span>  " ;
+                    var price_wage=" <span class=\"dlg-red-color price_wage\">"+vo.price_wage+"</span><span class=\"danwei\"></span>"
+                    var price_commission=" <span class=\"dlg-red-color price_commission\">"+vo.price_commission+"</span><span class=\"comdanwei\">元/件</span>"
+                    var new_price_wage=" <span class=\"dlg-red-color \">"+vo.price_wage+"</span><span class=\"danwei\"></span>"
+                    var new_price_commission=" <span class=\"dlg-red-color \">"+vo.price_commission+"</span><span class=\"comdanwei\"></span>"
+
+                    if(vo.cost_accounting_type==1){
+                        $(".own_money").html("").append(own1);
+                        $(".subordinate_money").html("").append(sub1);
+                        $(".old_price").html("").append(price_wage);
+                        $(".new_price").html("").append(new_price_wage);
+                        $(".danwei").text(vo.job_meter_unit_wage_name);
+                    }else if(vo.cost_accounting_type==2){
+                        $(".own_money").html("").append(own2);
+                        $(".subordinate_money").html("").append(sub2);
+                        $(".old_price").html("").append(price_commission);
+                        $(".new_price").html("").append(new_price_commission);
+                        $(".comdanwei").text(vo.job_meter_unit_commission_name);
+                    }else if(vo.cost_accounting_type==3){
+                        $(".own_money").html("").append(own1+"\n" +own2);
+                        $(".subordinate_money").html("").append(sub1+"\n" +sub2);
+                        $(".old_price").html("").append(price_wage+"\n"+price_commission);
+                        $(".new_price").html("").append(new_price_wage+"\n"+new_price_commission);
+                        $(".danwei").text(vo.job_meter_unit_wage_name);
+                        $(".comdanwei").text(vo.job_meter_unit_commission_name);
+                    }
+
+                }
+            }
+        })
+        $("#repeatOrder_modal").show();
+
+
+    }
+
+    function repeatOrderModal(obj) {
+        var own_money=$("input[name='own_money']");
+        var own_money1=$("input[name='own_money1']");
+        var pay_money=$("input[name='pay_money']");
+        var pay_money1=$("input[name='pay_money1']");
+        if(obj==1){
+            switch($("#payStyleModal").val()){
+                case 1:
+                    if(own_money.val()==""){
+                        own_money.focus().css("border-color","red");
+                        own_money.next().next().html("我要赚不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(own_money);
+                    }
+                    if(pay_money.val()==""){
+                        pay_money.focus().css("border-color","red");
+                        pay_money.next().next().html("转发后报酬不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(pay_money);
+                    }
+                    break;
+                case 2:
+                    if(own_money1.val()==""){
+                        own_money1.focus().css("border-color","red");
+                        own_money1.next().next().html("我要赚不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(own_money1);
+                    }
+                    if(pay_money1.val()==""){
+                        pay_money1.focus().css("border-color","red");
+                        pay_money1.next().next().html("转发后报酬不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(pay_money1);
+                    }
+                    break;
+                default:
+                    if(own_money.val()==""){
+                        own_money.focus().css("border-color","red");
+                        own_money.next().next().html("我要赚不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(own_money);
+                    }
+                    if(own_money1.val()==""){
+                        own_money1.focus().css("border-color","red");
+                        own_money1.next().next().html("转发后报酬不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(own_money1);
+                    }
+                    if(pay_money.val()==""){
+                        pay_money.focus().css("border-color","red");
+                        pay_money.next().next().html("我要赚不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(pay_money);
+                    }
+                    if(pay_money1.val()==""){
+                        pay_money1.focus().css("border-color","red");
+                        pay_money1.next().next().html("转发后报酬不为空");
+                        $("#repeatOrder_modal").show();
+                        return false;
+                    }else{
+                        inputValueOperation(pay_money1);
+                    }
+                    break;
+            }
+            var json ={
+                "userid":userid,
+                "wage_own_money": 1,
+                "wage_subordinate_money": 1,
+                "commission_own_money": 1,
+                "commission_subordinate_money": 1
+            }
+            var id=$("#zhuan_id").val();
+            if(id!=""){
+                $.ajax({
+                    url: url+'/job/'+id+'/agentJob',
+                    contentType: "application/json; charset=utf-8",
+                    type: 'post',
+                    data:JSON.stringify(json),
+                    dataType: 'json',
+                    timeout: '1000',
+                    cache: 'false',
+                    error: function () {
+                        alert('报错')
+                    },
+                    success: function (data) {
+                        if(data.status==200&&data.body.code=="SUCCESS"){
+                            var vo=data.body.data;
+                            alert("转单成功")
+                        }
+                    }
+                })
+            }
+        }
+        $("#repeatOrder_modal").hide();
+    }
+
+    function inputValueOperation(obj) {
+        $(obj).next().next().html("");
+        $(obj).css("border-color", "#eaeaea");
+    }
+</script>

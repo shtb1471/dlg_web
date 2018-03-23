@@ -1,0 +1,319 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <title>发布零工</title>
+</head>
+<div class="bread_nav"><b>零工管理</b> / 发布零工</div>
+<div class="dlg-content">
+    <div class="dlg-fabu-form">
+        <h3 class="dlg-title">
+            基本信息
+        </h3>
+        <div class="dlg-form-group">
+            <div>
+                <label>零工名称</label>
+                <input id="taskName" type="text" placeholder="请输入零工名称" maxlength="10"
+                       onchange="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'');"
+                       onchange="inputValueOperation(this)"/>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label>零工类型</label>
+                <select id="taskType" name="post_type" onchange="inputValueOperation(this)">
+                    <!--<option value="" selected>请选择零工类型</option>-->
+                    <!--<option value="1">志愿义工</option>-->
+                    <!--<option value="2">促销导购</option>-->
+                    <!--<option value="3">展会协助</option>-->
+                    <!--<option value="4">物流配送</option>-->
+                    <!--<option value="5">搬运装卸</option>-->
+                    <!--<option value="6">活动充场</option>-->
+                    <!--<option value="7">餐饮服务</option>-->
+                    <!--<option value="8">单车协助</option>-->
+                    <!--<option value="9">操作工</option>-->
+                    <!--<option value="0">传单派发</option>-->
+                    <!--<option value="11">礼仪模特</option>-->
+                    <!--<option value="12">地摊拉访</option>-->
+                    <!--<option value="13">其他</option>-->
+                </select>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label>人数</label>
+                <input id="taskPersonNum" type="text" placeholder="请输入雇佣人数" value="1" maxlength="3"
+                       onkeyup="value=value.replace(/[^0-9]+/g,'')" onchange="inputValueOperation(this)"/>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label>性别</label>
+                <span class="dlg-sex-label">
+                        <label for="unlimited">
+                            <input id="unlimited" type="radio" value="3" name="sex" checked/>&nbsp;不限
+                        </label>
+                        <label for="male">
+                            <input id="male" type="radio" value="1" name="sex"/>&nbsp;男
+                        </label>
+                        <label for="female">
+                            <input id="female" type="radio" value="2" name="sex"/>&nbsp;女
+                        </label>
+                    </span>
+
+            </div>
+        </div>
+        <h3 class="dlg-title">
+            结算信息
+        </h3>
+        <div class="dlg-form-group">
+            <div id="accountForm">
+                <label>计算方式</label>
+                <span data-id="1">计时</span>
+                <span data-id="2">计件</span>
+                <span class="active" data-id="3">计时+计件</span>
+            </div>
+            <div id="jishiShow">
+                <label>固定报酬</label>
+                <input type="text" id="price_wage" onkeyup="value=value.replace(/[^0-9]+/g,'')" onchange="inputValueOperationNext(this)">
+                <select id="job_meter_unit_wage">
+                    <option value="1">元/小时</option>
+                    <option value="2">元/天</option>
+                    <option value="3">元/次</option>
+                </select>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div id="jijianShow">
+                <label>提成</label>
+                <input type="text" id="price_commission" onkeyup="value=value.replace(/[^0-9]+/g,'')" onchange="inputValueOperationNext(this)">
+                <select id="job_meter_unit_commission">
+                    <option value="1">元/件</option>
+                </select>
+                <span class="dlg-red-color"></span>
+            </div>
+        </div>
+        <h3 class="dlg-title">
+            干活时间地点
+        </h3>
+        <div class="dlg-form-group">
+            <div>
+                <label>干活日期</label>
+                <input id="startDate" class="datePicker" type="text" placeholder="开始日期"/>
+                <span>-</span>
+                <input id="endDate" class="datePicker" type="text" placeholder="结束日期"/>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div id="workTime">
+                <label>干活时间</label>
+                <div id="dlg-time-range">
+                        <span class="dlg-time-box">
+                            <i class="dlg-time-close" onclick="closeTime(this)"></i>
+                            <input type="text" data-banci="全天" id="time" readonly value="9:00-18:00"/>
+                        </span>
+                </div>
+                <button type="button" class="btn btn-default" onclick="addTimeModal()">添加时间段</button>
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label>工作地点</label>
+                <span class="dlg-fb-address">
+                        <div id="dlgAddress" class="dlg-row clear-padding">
+                            <span class="dlg-red-color"></span>
+                        </div>
+                        <div class="dlg-blue-color" onclick="showAddressModal()">地址管理</div>
+                    <input type="hidden" id="provinceId"/>
+                    </span>
+            </div>
+        </div>
+
+        <h3 class="dlg-title">
+            要求描述
+        </h3>
+        <div class="dlg-form-group">
+                <textarea id="task_description" cols="60" rows="6" maxlength="500"
+                          oninput="document.getElementById('textarea-num').innerHTML=this.value.length;"
+                          onblur=" if(this.value.length<5) {this.focus();document.getElementById('errorDescMsg').innerHTML='至少输入5个字'}else{document.getElementById('errorDescMsg').innerHTML=''}"
+                          placeholder="用明确清晰的语言描述你的需求，对雇员的要求，让雇员更了解泥的需求，内容中不要包含QQ、微信、电话、邮箱、网址、公众号等联系方式，请至少输入5个字的描述"></textarea>
+            <div class="textarea-num-box"><span id="textarea-num">0</span>/500</div>
+            <span id="errorDescMsg" class="dlg-red-color"></span>
+        </div>
+        <h3 class="dlg-title">添加图片&nbsp;&nbsp;
+            <span class="mini-size dlg-gray-color">零工现场相关照片</span>
+        </h3>
+        <div class="dlg-form-group">
+            <div class="choose-file-btn webuploader-container">
+                <div id="chooseFile" class="webuploader-pick" onclick="chooseFile()">选择图片</div>
+                <!--oss-->
+                <div id="container">
+                    <a id="selectfiles" href="javascript:void(0);" class='btn' style="display: none">选择文件</a>
+                    <a id="postfiles" href="javascript:void(0);" class='btn' style="display: none">开始上传</a>
+                    <input type="hidden" id="imgStyle" class="imgStyle" value="job"/>
+                </div>
+            </div>
+            <div id="imgUrl">
+
+            </div>
+            <span id="errorMsg" class="dlg-red-color"></span>
+            <div class="dlg-gray-color mini-size">高质量图片会让需求更明确，最多3张图片，图片上包含微信、QQ、手机号、二维码、色情内容的服务会导致审核不通过。</div>
+        </div>
+        <h3 class="dlg-title">
+            联系方式
+        </h3>
+        <div class=" dlg-form-group">
+            <div>
+                <label for="username">验收人&nbsp;</label>
+                <input id="username" name="username" type="text" placeholder="请输入真实姓名">
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label for="phone">联系电话&nbsp;</label>
+                <input id="phone" name="phone" type="text" placeholder="请输入电话">
+                <span class="dlg-red-color"></span>
+            </div>
+            <div>
+                <label for="email">邮箱(选填)&nbsp;</label>
+                <input id="email" name="email" type="text" placeholder="请输入邮箱">
+                <span class="dlg-red-color"></span>
+            </div>
+        </div>
+        <div class="dlg-form-group dlg-form-input">
+            <div for="dlg-server">
+                <input id="dlg-server" name="dlg-server" type="checkbox"/>
+                <span class="dlg-blue-color">代理商服务</span>
+                选中后会有代理商为此服务
+            </div>
+            <div for="dlg-baixian">
+                <input id="dlg-baoxian" name="dlg-baoxian" type="checkbox"/>
+                <span class="dlg-blue-color">保险服务</span>
+                《保险协议》&nbsp;&nbsp;2元/人/天
+            </div>
+        </div>
+        <div class="add-padding-15">
+            <button type="button" id="releaseOddJob" class="btn btn-default" onclick="releaseOddJob()">确认发布</button>&nbsp;&nbsp;
+            <button type="button" id="updateOddJob" class="btn btn-default" onclick="updateOddJob();"
+                    style="display: none">确认修改
+            </button>&nbsp;&nbsp;
+            <!--<button class="btn btn-default">取消</button>-->
+        </div>
+    </div>
+    <div id="time_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:320px;">
+            <span class="close">x</span>
+            <div class="dlg-time-modal">
+                <h3>添加时间段</h3>
+                <div>
+                    <input id="shiftName" placeholder="班次名称" style="width: 252px;" maxlength="4"/>
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div style="margin:0px">
+                    <input class="time" id="startTime" placeholder="请选择起始时间" readonly>&nbsp;&nbsp;
+                    <input class="time" id="endTime" placeholder="请选择结束时间" readonly>
+                    <span class="dlg-red-color"></span>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-default" onclick="addTimeR()">保存</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="address_modal" class="modal_bg_ground">
+        <div class="modal_tan" style="width:520px;">
+            <span class="close">x</span>
+            <div class="dlg-address-modal">
+                <h3 class="text-center add-padding-15">地址管理</h3>
+                <div>
+                    <div class="modal_title">新添加地址</div>
+                    <div>
+                        <input id="detailAddress" type="text" placeholder="请输入详细地址" style="width: 200px;"/>
+                        <input id="doorNumber" type="text" placeholder="门牌号" style="width: 120px;"/>
+                        <button class="btn btn-warning-o" onclick="addAddressModal()">添加</button>
+                    </div>
+                    <input type="hidden" id="addressInfo"/>
+                    <input type="hidden" id="x_coordinate"/>
+                    <input type="hidden" id="y_coordinate"/>
+                    <input type="hidden" id="jobId"/>
+                    <input type="hidden" id="towncode"/>
+                </div>
+                <hr/>
+
+                <div>
+                    <div class="modal_title">详细地址</div>
+                    <table id="address">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--上传图片-->
+<script type="text/javascript" src="./js/lib/crypto1/crypto/crypto.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/hmac/hmac.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/sha1/sha1.js"></script>
+<script type="text/javascript" src="./js/lib/crypto1/md5/md5.js"></script>
+<script type="text/javascript" src="./js/lib/base64.js"></script>
+<script type="text/javascript" src="./js/lib/plupload-2.1.2/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="./js/upload.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/fabulinggong.js"></script>
+<script>
+    $(function () {
+
+        $("#releaseOddJob").show();
+        $("#updateOddJob").hide();
+
+        /**
+         * 零工类型
+         */
+        $.ajax({
+            url: url + '/sys/jobcatgory',
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: '',
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                var result = "";
+                result += "<option value=\"\" selected>请选择零工类型</option>";
+                for (var i = 0; i < jsData.body.data.pagelist.length; i++) {
+
+                    result += " <option value=\"" + jsData.body.data.pagelist[i].ccode + "\">" + jsData.body.data.pagelist[i].cname + "</option>";
+                }
+                $("#taskType").html(result);
+            }
+        })
+        //显示地址列表
+        refreshAddress();
+
+        //显示详情
+        showJobInfo();
+
+        /**
+         * 发布零工 获取企业基础信息
+         */
+        $.ajax({
+            url: url + '/ent/'+userid+'/getinfo',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                "access_token":access_token,
+                "clienttype":"1"
+            },
+            cache: 'false',
+            success: function (jsData) {
+                console.log("企业信息",jsData)
+                $("#email").val(jsData.body.data.email);
+                $("#username").val(jsData.body.data.contact);
+                $("#phone").val(jsData.body.data.contactTelephone);
+            }
+        })
+    })
+</script>
+
+
+

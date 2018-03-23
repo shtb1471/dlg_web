@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="icon" href="./images/favicon.ico" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/login.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/md5.js" type="text/javascript"></script>
+    <script src="js/public.js"></script>
+    <script src="js/md5.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="login">
+        <div class="header" spanconten="注册" topath="register">
+            <header>
+                <div class="container">
+                    <div class="leftcontent">
+                        <img src="images/download.png" alt="打零工logo"> | 客服电话：400-750-8585
+                    </div>
+                    <div class="righttcontent"><span>登录</span>&nbsp; |&nbsp; <span>注册</span></div>
+                </div>
+            </header>
+        </div>
+        <div class="bg">
+            <div class="container">
+                <div class="login_box fr">
+                    <div class="tab clearfix">
+                        <span class="current">账号密码登录</span>
+                        <span class="">验证码登录</span>
+                    </div>
+                    <p class="login_tip"></p>
+                    <input type="tel" placeholder="请输入手机号" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11"
+                           class="phone" onblur="phoneblur()" onfocus="phonefocus()" id="phone">
+                    <div class="login_word" id="login_first">
+                        <input type="password" placeholder="请输入密码" maxlength="16" class="phone" id="password"
+                               onblur="passwordblur()" onfocus="passwordfocus()">
+                        <button type="button" class="mainColor-bg login_btn" onclick="login()">登录</button>
+                        <div class="rember_password clearfix">
+                            <label class="ivu-checkbox-wrapper">
+                      <span class="ivu-checkbox">
+                        <span class="ivu-checkbox-inner"></span> <!---->
+                        <input id="rememberMe" type="checkbox" class="ivu-checkbox-input">
+                      </span> 记住密码
+                            </label>
+                            <span class="mainColor fr">忘记密码</span>
+                        </div>
+                    </div>
+                    <div class="login_word" id="login_second" style="display: none;">
+                        <div class="login_code clearfix">
+                            <input type="tel" placeholder="请输入图形验证码" maxlength="4" class="phone" id="imgvalidmaCode"
+                                   onfocus="imgvalidCodefocus()" onblur="imgvalidCodeblur()">
+                            <img src="" alt="图形验证码" class="mainColor" id="imgvalidma">
+                        </div>
+                        <div class="login_code infocode clearfix" style="">
+                            <input type="tel" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="4" placeholder="请输入验证码"
+                                   class="phone" id="validCodenum" onblur="validCodeblur()" onfocus="validCodefocus()">
+                            <input type="button" id="validCode" class="btn outlinea mainColor ivu-btn" value="获取验证码" />
+                        </div>
+                        <button type="button" class="mainColor-bg login_btn" onclick="loginvalid()">登录</button>
+                    </div>
+                    <h4 class="remind"></h4>
+                    <div class="mainColor reg">
+                        <span onclick="window.location.href='register.html'">快速注册</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer">
+                    <div class="container">
+                        <p>Copyright©2017 打零工版权所有 沪ICP备15006046号</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // var url = 'http://test2.dalinggong.com';
+            // 倒计时
+            var validCode = document.getElementById('validCode');
+            var countdown = 59;
+
+            function settime(obj) {
+                if (countdown == 0) {
+                    obj.removeAttribute("disabled");
+                    obj.value = "获取验证码";
+                    countdown = 59;
+                    return;
+                } else {
+                    obj.setAttribute("disabled", true);
+                    obj.value = "重新发送(" + countdown + ")";
+                    countdown--;
+                }
+                setTimeout(function () {
+                    settime(obj)
+                }, 1000)
+            }
+
+            $(function () {
+                $("#validCode").click(function () {
+                    var phone = $('#phone').val();
+                    var imgvalidmaCode = $('#imgvalidmaCode').val();
+                    if (phone.length < 11) {
+                        $("#phone").css("border", "1px solid red");
+                        $(".login_tip").text("手机号不能少于11位");
+                        return false;
+                    } else if (!(/^1[34578]\d{9}$/.test(phone))) {
+                        $("#phone").css("border", "1px solid red");
+                        $(".login_tip").text("请输入有效手机号码");
+                        return false;
+                    }else if (imgvalidmaCode.length < 4) {
+                        $("#imgvalidmaCode").css("border", "1px solid red");
+                        $(".login_tip").text("图文验证码有误");
+                    }else {
+                        $(".login_tip").text("");
+                        $.ajax({
+                            url: url+'/sys/sendsmscode',
+                            type: 'post',
+                            data: {phone: phone,vcode:imgvalidmaCode},
+                            dataType: 'json',
+                            timeout: '1000',
+                            cache: 'false',
+                            success: function (data) {
+                                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                                    $(".login_tip").text(data.status.msg);
+                                    settime(validCode);
+                                }else {
+                                    $(".login_tip").text(data.status.msg);
+                                }
+                            }
+                        })
+                    }
+                })
+                $(".tab span:nth-child(1)").click(function () {
+                    $(this).addClass("current").siblings().removeClass("current");
+                    $("#login_first").show().siblings("#login_second").hide();
+                    $('#phone').css("border", "1px solid #eaeaea");
+                    $(".login_tip").text("");
+                });
+                $(".tab span:nth-child(2)").click(function () {
+                    imgvalidma();
+                    $(this).addClass("current").siblings().removeClass("current");
+                    $("#login_second").show().siblings("#login_first").hide();
+                    $('#phone').css("border", "1px solid #eaeaea");
+                    $(".login_tip").text("");
+                });
+            });
+
+            function phoneblur() {
+                var phone = $('#phone').val();
+                if (phone.length < 11) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("手机号不能少于11位");
+                } else if (!(/^1[34578]\d{9}$/.test(phone))) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("请输入有效手机号码")
+                } else {
+                    $(".login_tip").text("");
+                }
+            }
+
+            function phonefocus() {
+                $(".login_tip").text("");
+                $("#phone").css("border", "1px solid #eaeaea");
+            }
+
+            function passwordblur() {
+                var password = $('#password').val();
+                if (password.length < 6) {
+                    $("#password").css("border", "1px solid red");
+                    $(".login_tip").text("密码不能少于6位");
+                }
+            }
+
+            function passwordfocus() {
+                $("#password").css("border", "1px solid #eaeaea");
+            }
+
+            function validCodeblur() {
+                var validCodenum = $('#validCodenum').val();
+                if (validCodenum.length < 4) {
+                    $("#validCodenum").css("border", "1px solid red");
+                    $(".login_tip").text("验证码输入有误");
+                }
+            }
+
+            function validCodefocus() {
+                var validCodenum = $('#validCodenum').val();
+                $("#validCodenum").css("border", "1px solid #eaeaea");
+            }
+
+            function imgvalidCodeblur() {
+                var imgvalidmaCode = $('#imgvalidmaCode').val();
+                if (imgvalidmaCode.length < 4) {
+                    $("#imgvalidmaCode").css("border", "1px solid red");
+                    $(".login_tip").text("图文验证码有误");
+                }
+            }
+
+            function imgvalidCodefocus() {
+                $("#imgvalidmaCode").css("border", "1px solid #eaeaea");
+            }
+
+            function imgvalidma() {
+                $("#imgvalidma").attr("src", url+'/sys/vcode');
+            }
+
+            $("#imgvalidma").click(function () {
+                imgvalidma();
+            });
+
+            function login() {
+                var password = $('#password').val();
+                var phone = $('#phone').val();
+                if (phone.length < 11) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("手机号不能少于11位");
+                } else if (!(/^1[34578]\d{9}$/.test(phone))) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("请输入有效手机号码")
+                } else if (password.length < 6) {
+                    $("#password").css("border", "1px solid red");
+                    $(".login_tip").text("密码不能少于6位");
+                } else {
+
+                    $.ajax({
+                        url: url + '/auth/check',
+                        type: 'post',
+                        data: {
+                                phone: phone
+                        },
+                        dataType: 'json',
+                        cache: 'false',
+                        success: function (jsData) {
+                            console.log(jsData)
+                            if (jsData.body.data.firstlogin == "0") {
+                                password = hex_md5($('#password').val());
+                            }else {
+                                password = $('#password').val();
+                            }
+
+                            console.log("password",password)
+                            $.ajax({
+                                url: url+'/auth/login',
+                                type: 'post',
+                                data: {phone: phone, pwd: password, channel: 1, clienttype: 1},
+                                dataType: 'json',
+                                // timeout: '1000',
+                                cache: 'false',
+                                error: function () {
+                                    alert('报错')
+                                },
+                                success: function (jsData) {
+                                    //var jsData=JSON.parse(data);
+                                    if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                                        window.localStorage.setItem('userid', jsData.body.data.userid);
+                                        window.localStorage.setItem('isagent', jsData.body.data.isagent);
+                                        window.localStorage.setItem('access_token', jsData.body.data.access_token);
+                                        window.localStorage.setItem('entid',jsData.body.data.entid);
+                                        if ($('#rememberMe').is(':checked')) {
+                                            window.localStorage.setItem('phone', phone);
+                                            window.localStorage.setItem('password', password);
+                                        }
+                                        // alert("登录成功")
+                                        if(jsData.body.data.entid != 0 && jsData.body.data.entid !=null && jsData.body.data.entid != ""){
+                                            window.location.href = 'main.html';
+                                        }else{
+                                            alert("请先完善企业资料");
+                                            window.location.href = ' /NewWeb/main.html#/account/companyInfo';
+                                        }
+                                    }else{
+                                        $("#phone").css("border", "1px solid red");
+                                        $(".login_tip").text(jsData.body.msg);
+                                        console.log(jsData.body.msg)
+                                    }
+                                }
+                            })
+
+                            $(".login_tip").text("");
+                            $("#phone,#password,#validCodenum,#imgvalidmaCode").css("border", "1px solid #eaeaea");
+                            $("#phone,#password,#validCodenum,#imgvalidmaCode").css("border", "1px solid #eaeaea");
+                        }
+                    })
+                }
+            }
+
+            function loginvalid() {
+                var phone = $('#phone').val();
+                var password = $('#password').val();
+                var imgvalidmaCode = $("#imgvalidmaCode").val();
+                var validCodenum = $("#validCodenum").val();
+                if (phone.length < 11) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("手机号不能少于11位");
+                } else if (!(/^1[34578]\d{9}$/.test(phone))) {
+                    $("#phone").css("border", "1px solid red");
+                    $(".login_tip").text("请输入有效手机号码")
+                } else if (imgvalidmaCode.length < 4) {
+                    $("#imgvalidmaCode").css("border", "1px solid red");
+                    $(".login_tip").text("图文验证码有误");
+                } else if (!(/^1[34578]\d{9}$/.test(phone))) {
+                    $("#imgvalidmaCode").css("border", "1px solid red");
+                    $(".login_tip").text("请输入有效图文验证码");
+                } else if (validCodenum.length < 4) {
+                    $("#validCodenum").css("border", "1px solid red");
+                    $(".login_tip").text("验证码输入有误");
+                } else {
+                    $.ajax({
+                        url: url+'/auth/login',
+                        type: 'post',
+                        data: {phone: phone, pwd: password, channel: 1, clienttype: 1},
+                        dataType: 'json',
+                        //timeout: '1000',
+                        cache: 'false',
+                        error: function () {
+                            alert('报错')
+                        },
+                        success: function (jsData) {
+                            //var jsData=JSON.parse(data);
+                            console.log("登录接口",jsData)
+                            if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                                localStorage.setItem('userid', jsData.body.data.userid);
+                                localStorage.setItem('isagent', jsData.body.data.isagent);
+                                localStorage.setItem('access_token', jsData.body.data.access_token);
+                                localStorage.setItem('entid', jsData.body.data.entid);
+                                if ($('#rememberMe').is(':checked')) {
+                                    localStorage.setItem('phone', phone);
+                                    localStorage.setItem('password', password);
+                                }
+                                if (jsData.body.data.entid !=0 && jsData.body.data.entid != null && jsData.body.data.entid!= "") {
+                                    window.location.href = 'main.html';
+                                }else{//没有企业id跳到企业信息添加页面
+                                    window.location.href = 'NewWeb/main.html#/account/companyInfo';
+                                }
+
+                                
+                            }
+                        }
+                    })
+                    $(".login_tip").text("");
+                    $("#phone,#password,#validCodenum,#imgvalidmaCode").css("border", "1px solid #eaeaea");
+                    $("#phone,#password,#validCodenum,#imgvalidmaCode").css("border", "1px solid #eaeaea");
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

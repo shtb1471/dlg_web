@@ -1,0 +1,31 @@
+.ui-paging-container{color:#666;font-size: 12px;padding: 6px 0px;}
+.ui-paging-container ul.xxPagination{overflow: hidden;text-align: center;}
+.ui-paging-container ul.xxPagination,.ui-paging-container ul.xxPagination li{list-style: none;}
+.ui-paging-container ul.xxPagination li{display: inline-block;padding:0px;margin-left: 5px;color:#666;cursor: pointer;border: 0px;}
+.ui-paging-container ul.xxPagination li.ui-pager{cursor: pointer;}
+.ui-paging-container ul.xxPagination li.ui-pager:hover,.ui-paging-container ul.xxPagination li.focus{background-color: #f3b764;color:#FFFFFF;}
+.ui-paging-container ul.xxPagination li.ui-paging-ellipse{border:none;}
+.ui-paging-container ul.xxPagination li.ui-paging-toolbar{padding:0;}
+.ui-paging-container ul.xxPagination li.ui-paging-toolbar select{height:22px;border:1px solid #ddd;color: #666;}
+.ui-paging-container ul.xxPagination li.ui-paging-toolbar input{line-height: 20px; height:20px;padding:0;border:1px solid #ddd;text-align: center;width: 30px;margin:0 0 0 5px;vertical-align: middle;}
+.ui-paging-container ul.xxPagination li.ui-paging-toolbar a{vertical-align: middle; text-decoration: none;display: inline-block;height:20px;border:1px solid #ddd;vertical-align: top;border-radius: 2px;line-height: 20px;padding:0 3px;cursor: pointer;margin-left: 5px;color: #666;}
+.ui-paging-container ul.xxPagination li.ui-pager-disabled,.ui-paging-container ul.xxPagination li.ui-pager-disabled:hover{background-color: #f6f6f6;;cursor: default;border:none;color:#666;border: 1px solid #ddd;}
+.ui-paging-container ul.xxPagination li.js-page-prev,.ui-paging-container ul.xxPagination li.js-page-next{border: 1px solid #dddddd;color: #333333;}
+.c-icon {
+    background: url(https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/global/img/icons_5859e57.png) no-repeat 0 0;
+    _background-image: url(https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/global/img/icons_d5b04cc.gif);
+}
+.c-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    vertical-align: text-bottom;
+    font-style: normal;
+    overflow: hidden;
+}
+.c-icon-chevron-left-gray {
+    background-position: -817px -146px;
+}
+.c-icon-chevron-right-gray {
+    background-position: -840px -146px;
+}

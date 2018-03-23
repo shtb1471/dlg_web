@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="./css/news.css"/>
+    <script src="js/md5.js" type="text/javascript"></script>
+    <script src="js/public.js"></script>
+</head>
+<body>
+<div class="bread_nav"><b>账户管理</b> / 安全设置</div>
+<div class="right_content_left securityset_content_left">
+    <div class="form_group">
+        <div class="input_group_inline input_seting">
+            <span class="icon_i"><img src="images/i_01.png" alt=""></span>
+            <div>绑定手机号<span id="phoneValue">***********</span></div>
+        </div>
+
+        <div class="input_group_inline input_seting">
+            <span class="icon_i"><img src="images/i_02.png" alt=""></span>
+            <div>绑定邮箱<span id="mailValue"></span></div>
+            <span class="linkColor" onclick="showAccountModal(1)">修改</span>
+        </div>
+
+        <div class="input_group_inline input_seting">
+            <span class="icon_i"><img src="images/i_03.png" alt=""></span>
+            <div>登录密码<span id="passwordValue">******</span></div>
+            <span class="linkColor" onclick="showAccountModal(2)">修改</span>
+        </div>
+
+        <div class="input_group_inline input_seting">
+            <span class="icon_i"><img src="images/i_03.png" alt=""></span>
+            <div>支付密码<span id="payValue">******</span></div>
+            <span class="linkColor" id="pay_change_link" onclick="showAccountModal(3)">修改</span>
+        </div>
+    </div>
+</div>
+<!--弹框-->
+<div id="account_modal" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-assign-modal">
+            <h3 id="account-modal-title" class="text-center add-padding-15"></h3>
+            <div class="account_modal_box">
+                <div id="account_modal_box1" style="display: none">
+                    <div>
+                        <label>请输入邮箱</label>&nbsp;
+                        <input type="email" id="mail_change" placeholder="请输入邮箱"/><span class="dlg-red-color"></span>
+                        <div class="email_verification_code">
+                            <div class="email_code">
+                                <label>图形验证码</label>&nbsp;
+                                <input type="text" placeholder="请输入图形验证码" maxlength="6" class="pay" id="email_imgvalidmaCode"/>
+                                <img src="" alt="图形验证码" class="pay_mainColor" id="email_imgvalidma" onclick="imgvalidma_email()" style="width: 100px;"/>
+                                <span class="dlg-red-color" style="margin-left:80px; "></span>
+                            <div>
+                            <label>验证码</label>&nbsp;
+                            <input id="SMSVerifyCode_email" type="text" placeholder="短信验证码" onkeyup="value=value.replace(/[^\d]/g,'')"
+                                   maxlength="6" class="phone_input_code" style="width:80px;">
+                            <button type="button" class="btn btn-warning-o" onclick="getSMSVerifyCode_email(this)">获取验证码</button>
+                            <span class="dlg-red-color" style="margin-left:80px; "></span>
+                            <div class="dlg-gray-color mini-size" style="margin-left:72px;padding: 6px 0px;">
+                                &nbsp;&nbsp;发送至:<span class="phone_send_phone" id="phone_email_phone"></span>
+                            </div>
+                        </div>
+                    </div>
+                        <button type="button" class="btn btn-default" onclick="todoVerifyEmail()">绑定</button>
+                        <span class="dlg-red-color" style="margin-left: 80px;"></span>
+                    </div>
+                    <div class="text-center add-padding-15">
+                    </div>
+                    </div>
+                </div>
+                <div id="account_modal_box2" style="display: none">
+                    <div>
+                        <label>原始密码</label>
+                        <input type="password" placeholder="请输入原始密码" id="old_password" autocomplete="off"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>新密码</label>
+                        <input type="password" placeholder="请输入新密码" id="new_password" autocomplete="off"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div class="text-center add-padding-15">
+                        <button type="button" class="btn btn-default" onclick="changePWD()">保存</button>
+                    </div>
+                </div>
+
+                <div id="account_modal_box3" style="display: none">
+                    <input type="hidden" id="payPWDTag">
+                    <div>
+                        <label>原始密码</label>
+                        <input type="password" placeholder="请输入原始密码" id="old_password_pay" autocomplete="off"/><span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>支付密码</label>&nbsp;
+                        <input type="password" id="pay_change" autocomplete="off" placeholder="请输入支付密码"><span class="dlg-red-color"></span>
+                    </div>
+                    <div class="pay_verification_code">
+                        <div class="pay_code">
+                            <label>图形验证码</label>&nbsp;
+                            <input type="text" placeholder="请输入图形验证码" maxlength="6" class="pay" id="pay_imgvalidmaCode"/>
+                            <img src="" alt="图形验证码" class="pay_mainColor" id="pay_imgvalidma" onclick="imgvalidma()" style="width:100px;"/>
+                            <span class="dlg-red-color" style="margin-left:80px; "></span>
+                        </div>
+                        <div>
+                            <label>验证码</label>&nbsp;
+                            <input id="SMSVerifyCode" type="text" placeholder="短信验证码" onkeyup="value=value.replace(/[^\d]/g,'')"
+                                   maxlength="6" class="phone_input_code" style="width:80px;">
+                            <button type="button" class="btn btn-warning-o" onclick="getSMSVerifyCode(this)">获取验证码</button>
+                            <span class="dlg-red-color" style="margin-left:80px; "></span>
+                            <div class="dlg-gray-color mini-size" style="margin-left:72px;padding: 6px 0px;">
+                                &nbsp;&nbsp;发送至:<span class="phone_send_phone" id="phone_s_phone"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center add-padding-15">
+                        <button type="button" class="btn btn-default" onclick="payPWD()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // var userid = localStorage["userid"];
+    // var access_token = localStorage["access_token"];
+    // var entid = localStorage["entid"];
+    // console.log("userid:  "+userid+";   "+"access_token:  "+access_token+";   "+"entid:  "+entid+";");
+    $(function () {
+        checkHasPWD();
+        getEmail();
+    })
+    function checkHasPWD() {
+        //检查是否有支付密码
+        $.ajax({
+            url: url + '/account/' + userid + '/checkpwd',
+            type: 'post',
+            data: {access_token: access_token, clienttype: 2},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                    var result = data.body.data.set;
+                    if (result == 1) {
+                        $("#payValue").html("******");
+                        $("#pay_change_link").html("修改");
+                        $("#payPWDTag").val(1);
+                    } else if (result == 0) {
+                        $("#payValue").html("");
+                        $("#pay_change_link").html("设置");
+                        $("#payPWDTag").val(0);
+                    }
+                } 
+            }
+        });
+    }
+    function getEmail() {
+        //获取邮箱
+        $.ajax({
+            url: url + '/ent/' + userid + '/getinfo',
+            type: 'post',
+            data: {access_token: access_token, clienttype: 2},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                	//console.log(data.body.data.contactTelephone);
+                	var email = data.body.data.email;
+                	$("#mailValue").html(email);
+                }
+            }
+        });
+    }
+
+    function showAccountModal(tag) {
+        $("#account_modal").show();
+        $("#account_modal_box" + tag).siblings().hide();
+        $("#account_modal_box" + tag).show();
+        switch (tag) {
+            case 1:
+                $("#mail_change").val("");
+                $("#account-modal-title").html("修改绑定邮箱");
+                $("#phone_email_phone").html($("#phoneValue").html());
+                imgvalidma_email();
+                break;
+            case 2:
+                $("#old_password,#new_password").val("");
+                $("#account-modal-title").html("修改登陆密码");
+                break;
+            case 3:
+                if ($("#payPWDTag").val() == 1) {
+                    $("#account-modal-title").html("修改支付密码");
+                } else {
+                    $("#account-modal-title").html("设置支付密码");
+                }
+                $("#phone_s_phone").html($("#phoneValue").html());
+                imgvalidma_pay();
+                break;
+        }
+    }
+
+    
+    function todoVerifyEmail() {
+        if ($("#mail_change").val() == "" || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test($("#mail_change").val())) {
+            $("#mail_change").css("border-color", "red");
+            $("#mail_change").next().html("输入正确邮箱");
+            $("#account_modal").show();
+            return false;
+        } else {
+            $("#mail_change").parent().find("span.dlg-red-color").html("");
+            $("#mail_change").css("border-color", "#eaeaea");
+        }
+        if($("#email_imgvalidmaCode").val()==""){
+            $("#email_imgvalidmaCode").focus().css("border-color", "red");
+            $("#email_imgvalidmaCode").parent().find("span.dlg-red-color").html("图形验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#email_imgvalidmaCode").parent().find("span.dlg-red-color").html("");
+            $("#email_imgvalidmaCode").css("border-color", "#eaeaea");
+        }
+        if($("#SMSVerifyCode_email").val()==""){
+            $("#SMSVerifyCode_email").focus().css("border-color", "red");
+            $("#SMSVerifyCode_email").parent().find("span.dlg-red-color").html("短信验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#SMSVerifyCode_email").parent().find("span.dlg-red-color").html("");
+            $("#SMSVerifyCode_email").css("border-color", "#eaeaea");
+        }
+      //绑定邮箱
+      console.log($("#mail_change").val()+";   "+$("#SMSVerifyCode_email").val());
+        $.ajax({
+            url: url+'/ent/'+userid+"/"+entid+'/upemail',
+            type: 'post',
+            data: {access_token: access_token,clienttype:"1",email: $("#mail_change").val(),vcode: $("#SMSVerifyCode_email").val()},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                	$("#account_modal").hide();
+                    alert("邮箱已更改绑定");
+                    window.location.reload();
+                }
+            }
+        });
+    }
+
+    function changePWD() {
+        if ($("#old_password").val() == "") {
+            $("#old_password").focus().css("border-color", "red");
+            $("#old_password").next().html("输入正确旧密码");
+            $("#account_modal").show();
+            return false;
+        } else if($("#old_password").val().length < 6 || $("#old_password").val().length > 6){
+            $("#old_password").focus().css("border-color", "red");
+            $("#old_password").next().html("旧密码长度为6");
+            $("#account_modal").show();
+            return false;
+        }else {
+            $("#old_password").next().html("");
+            $("#old_password").css("border-color", "#eaeaea");
+        }
+        if ($("#new_password").val() == "" || $("#new_password").val().length < 6 && $("#new_password").val().length > 6) {
+            $("#new_password").focus().css("border-color", "red");
+            $("#new_password").next().html("输入正确新密码");
+            $("#account_modal").show();
+            return false;
+        } else if($("#new_password").val().length < 6 || $("#new_password").val().length > 6){
+            $("#new_password").focus().css("border-color", "red");
+            $("#new_password").next().html("输入正确新密码");
+            $("#account_modal").show();
+            return false;
+        }else {
+            $("#new_password").next().html("");
+            $("#new_password").css("border-color", "#eaeaea");
+            var newpassword = hex_md5($('#new_password').val());
+            var oldpassword = hex_md5($('#old_password').val());
+        }
+        //修改登录密码
+        
+        $.ajax({
+            url: url+'/user/'+userid+'/mpssword',
+            type: 'post',
+            data: {access_token: access_token,oldpwd: oldpassword,pwd:  newpassword},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                      $("#account_modal").hide();
+                      alert("密码已修改，请重新登录");
+                  	  window.location.href = 'login.html';
+                }else{
+                	alert(data.body.msg);
+                }
+            }
+        });
+    }
+    
+    function payPWD() {
+    	if ($("#old_password_pay").val() == "") {
+            $("#old_password_pay").focus().css("border-color", "red");
+            $("#old_password_pay").next().html("请输入原始密码");
+            $("#account_modal").show();
+            return false;
+        }else{
+        	$("#old_password_pay").next().html("");
+            $("#old_password_pay").css("border-color", "#eaeaea");
+        }
+        if ($("#pay_change").val() == "") {
+            $("#pay_change").focus().css("border-color", "red");
+            $("#pay_change").next().html("请输入支付密码");
+            $("#account_modal").show();
+            return false;
+        } else if($("#pay_change").val().length < 6 || $("#pay_change").val().length > 6){
+            $("#pay_change").focus().css("border-color", "red");
+            $("#pay_change").next().html("支付密码长度为6");
+            $("#account_modal").show();
+            return false;
+        }else {
+            $("#pay_change").next().html("");
+            $("#pay_change").css("border-color", "#eaeaea");
+        }
+        if($("#pay_imgvalidmaCode").val()==""){
+            $("#pay_imgvalidmaCode").focus().css("border-color", "red");
+            $("#pay_imgvalidmaCode").parent().find("span.dlg-red-color").html("图形验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#pay_imgvalidmaCode").parent().find("span.dlg-red-color").html("");
+            $("#pay_imgvalidmaCode").css("border-color", "#eaeaea");
+        }
+        if($("#SMSVerifyCode").val()==""){
+            $("#SMSVerifyCode").focus().css("border-color", "red");
+            $("#SMSVerifyCode").parent().find("span.dlg-red-color").html("短信验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#SMSVerifyCode").parent().find("span.dlg-red-color").html("");
+            $("#SMSVerifyCode").css("border-color", "#eaeaea");
+        }
+        //修改支付密码
+        $.ajax({
+            url: url+'/account/'+userid+'/paypassword',
+            type: 'post',
+            data: {access_token: access_token,pwd: $("#pay_change").val(),clienttype: 2,vcode: $("#SMSVerifyCode").val(),oldpwd: $("#old_password_pay").val()},//待确定
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                	$("#account_modal").hide();
+                    alert("支付密码已修改");
+                    window.location.reload();
+                }else{
+                	alert(data.body.msg);
+                }
+            }
+        });
+    }
+    // 图形验证码
+    function imgvalidma_pay() {
+        $("#pay_imgvalidma").attr("src", url+'/sys/vcode');
+    }
+    function imgvalidma_email() {
+        $("#email_imgvalidma").attr("src", url+'/sys/vcode');
+    }
+    //支付密码短信验证码
+    function getSMSVerifyCode(obj) {
+        if ($("#pay_imgvalidmaCode").val() == "") {
+            $("#pay_imgvalidmaCode").focus().css("border-color", "red");
+            $("#pay_imgvalidmaCode").parent().find("span.dlg-red-color").html("图形验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#pay_imgvalidmaCode").parent().find("span.dlg-red-color").html("");
+            $("#pay_imgvalidmaCode").css("border-color", "#eaeaea");
+        }
+        $.ajax({
+        	url: url+'/sys/'+userid+'/smscode',
+            type: 'post',
+            data: {access_token: access_token,vcode: $("#pay_imgvalidmaCode").val()},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                    getTime(obj);
+                }else{
+                    alert(data.body.msg);
+                }
+            }
+        });
+    }
+  //邮箱短信验证码
+    function getSMSVerifyCode_email(obj) {
+        if ($("#email_imgvalidmaCode").val() == "") {
+            $("#email_imgvalidmaCode").focus().css("border-color", "red");
+            $("#email_imgvalidmaCode").parent().find("span.dlg-red-color").html("图形验证码不为空");
+            $("#account_modal").show();
+            return false;
+        }else{
+            $("#email_imgvalidmaCode").parent().find("span.dlg-red-color").html("");
+            $("#email_imgvalidmaCode").css("border-color", "#eaeaea");
+        }
+        $.ajax({
+            url: url+'/sys/'+userid+'/smscode',
+            type: 'post',
+            data: {access_token: access_token,vcode: $("#email_imgvalidmaCode").val()},
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (data) {
+            	console.log(data);
+                if (data.status == 200 && data.body.code == 'SUCCESS') {
+                    getTime(obj);
+                }else{
+                    alert(data.body.msg);
+                }
+            }
+        });
+    }
+    //倒计时60s
+    var fixTime = 59;
+    function getTime(obj) {
+        if (fixTime == 0) {
+            $(obj).prop("disabled", false);
+            $(obj).html("获取验证码");
+            fixTime = 59;
+        } else {
+            $(obj).prop("disabled", true);
+            $(obj).html("重发(" + fixTime + ")");
+            fixTime--;
+            setTimeout(function () {
+                getTime(obj)
+            }, 1000)
+        }
+    }
+</script>
+</body>
+</html>

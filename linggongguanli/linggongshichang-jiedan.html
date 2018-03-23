@@ -1,0 +1,334 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="./js/pagination/paging.css"/>
+    <title>零工市场-我要转单</title>
+</head>
+<div class="bread_nav"> <b>零工市场</b> / 我要转单</div>
+<div class="dlg-content">
+    <div class="dlg-lgsc-box">
+        <div>
+            <label>关键字 &nbsp;<input id="query_text" type="text" placeholder="请输入关键字"/>&nbsp;</label>
+            <label>价格范围 &nbsp;<input type="text" class="mini-width" placeholder="最小价格"/> - <input type="text"
+                                                                                                  class="mini-width"
+                                                                                                  placeholder="最大价格"/>
+                &nbsp;</label>
+            <label>零工日期 &nbsp;<input id="startDate" type="text" placeholder="开始日期"/> ～<input id="endDate" type="text"
+                                                                                             placeholder="结束日期"/> &nbsp;</label>
+            <button class="btn btn-default background-gray-color"><img src="./images/icon_12.png" draggable="false">
+            </button>
+        </div>
+        <div>
+            <label>
+                零工类型&nbsp;&nbsp;<span>家政保洁</span>
+                &nbsp;<span class="active">志愿义工</span>
+                &nbsp;<span>操作工</span>
+                &nbsp;<span>生活服务</span>
+                &nbsp;<span>教育培训</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                付款方式&nbsp;&nbsp;<span class="active">计时</span>
+                &nbsp;<span>计费</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                来自&nbsp;&nbsp;<span class="active">全部</span>
+                &nbsp;<span>我的客户</span>
+                &nbsp;<span>我的代理区域</span>
+            </label>
+            <div class="dlg-zd-operation">
+                <input type="checkbox"/>
+                <div>只看我可以转单的</div>
+            </div>
+        </div>
+    </div>
+    <div class="dlg-row clear-padding-left">
+        <div class="dlg-task-lists dlg-lgsc-lists">
+            <!--loading-->
+            <div id="loading" class="dlg-task-lists">
+                <div class="dlg-row clear-padding">
+                    <img class="dlg-no-list-img" src="./images/loading.gif"/>
+                </div>
+            </div>
+            <ul id="jobList">
+                <li>
+                    <div class="dlg-row-4 clear-padding">
+                        <div class="dlg-list-title" onclick="jumpChildrenPage('./linggongguanli/linggongshichang-zhuandanxiangqing.html?jobId=1','rightPart')">
+                            <h3 class="font-16">任传伟</h3>&nbsp;
+                            <i class="dlg-icon-bao"></i>
+                            <i class="dlg-icon-daili"></i>&nbsp;
+                            <span class="dlg-tag">家政保洁</span>
+                            <span class="dlg-tag">计时</span>
+                        </div>
+                        <div><span class="dlg-red-color">20</span>&nbsp;元/小时&nbsp;需2人
+                            &nbsp;工作时间：10.2-10.4 9:00-18:00
+                        </div>
+                        <div>上海普陀区真北路958号1号楼7楼</div>
+                    </div>
+                    <div class="dlg-row-3 text-center">
+                        <div class="dlg-lgsc-list-right">
+                            进度&nbsp;
+                            <label class="dlg-box"></label>
+                            (3/10)
+                        </div>
+                    </div>
+                    <div class="dlg-row-3 text-right">
+                        <a href="javascript:void(0)" target="linggong-zhuandanxiangqing"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dlg-page">
+            <div id="pageTask" class="dlg-task-page page-common"></div>
+        </div>
+    </div>
+</div>
+<div  class="bg_ground" style="display: block;">
+    <div class="tan" style=" width: 280px;height: 220px;">
+        <p id="ewmTitleName" style="text-align: center; padding: 10px 0;font-size: 16px;">零工名称</p>
+        <p style=" text-align: center;padding: 10px 0;"><img id="ewmLogo" src='./images/no-list.png' alt="" style="width:30px;height: 30px;border-radius: 100%;"/><span id="ermErName">刘胡灵</span></p>
+        <div class="tan_tip">
+            <div class="ewm">
+                <input id="uu" type="text" value="http://www.runoob.com" style="width:80%;display:none;"/>
+                <div id="qrcode" class="qrcode" style="text-align: center;"></div>
+            </div>
+        </div>
+        <span class="close" style="position: absolute;left: 49%;border-radius: 100px;color: #d8d5d5; border: 1px solid #b1b0b0; bottom: 11%;line-height: 24px;">x</span>
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="./js/qrcode.min.js"></script>
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script>
+    $(function () {
+        $(".bg_ground").hide();
+        $(".dlg-lgsc-lists ul li").click(function(){
+            alert(0000)
+            $(".bg_ground").show();
+        })
+        $(".close").click(function(){
+            $(".bg_ground").hide();
+        })
+        $("#loading").show();
+        $("#jobList").hide().html("");
+        $("#pageTask").hide();
+        // var texturl = $("#uu").val();
+        // $('#qrcode').qrcode({width: 100,height: 100,text: texturl});
+        getDatePicker('startDate', 'endDate');
+        getPage(1,10);
+        // $("#zhuan_dan").click(function () {
+        //     jumpPage("linggongguanli/linggongshichang-zhuandanxiangqing.html", "rightPart");
+        // });
+
+
+    })
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 100,
+        height: 100
+    });
+
+    $(".dlg-lgsc-box div span").click(function () {
+        addActive(this);
+    })
+    var arrProgress = [12, 46, 89, 30];
+    for (var i = 0; i < arrProgress.length; i++) {
+        $(".dlg-lgsc-list-right label").eq(i).progressbar({
+            value: arrProgress[i]
+        });
+    }
+
+    function getPage(pagenum,pagesize) {
+        //         "post_type": "job.type_11",
+        // "start_date": "2018-01-01",
+        //     "end_date": "2018-02-01",
+        var json = {
+            "userid": userid,
+            "x_coordinate": 116.326763,
+            "y_coordinate": 39.012012,
+            "agent_type": 1,
+            "province_name": "北京市",
+            "city_name": "北京市",
+            "area_name": "海淀区",
+            "pagenum": pagenum-1,
+            "pagesize": pagesize,
+
+        };
+        if($('#query_text').val()!=""){
+            json.query_text=$('#query_text').val();
+        }
+        $.ajax({
+            url: url+'/job/jobMapList',
+            contentType: "application/json; charset=utf-8",
+            type: 'post',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            async:false,
+            error: function () {
+                alert('报错')
+            },
+            success: function (data) {
+                if(data.status==200&&data.body.code=='SUCCESS'){
+                    var list =data.body.data.list;
+                    var liBody = $("#jobList");
+                    var html = "";
+                    $("#loading").hide();
+                    $("#jobList").show().html("");
+                    $("#pageTask").show();
+                    if(list.length>0){
+                        for (var num=0;num<list.length;num++) {
+                            var vo=list[num];
+                            //动态显示内容
+                            html += "<li>"+
+                                "<div class=\"dlg-row\">"+
+                                "<div class=\"dlg-row-4 clear-padding\">"+
+                                "<div class=\"dlg-list-title\" onclick=\"jumpChildrenPage(\'linggongguanli/linggongshichang-jiedanxiangqing.html?jobId="+vo.id+"\',\'rightPart\')\">"+
+                                "<h3 class=\"font-16\">"+vo.task_title+"</h3>&nbsp;"+
+                                "<i class=\"dlg-icon-bao\"></i>"+
+                                "<i class=\"dlg-icon-daili\"></i>&nbsp;"+
+                                "<span class=\"dlg-tag\">"+vo.post_type_name+"</span>"+
+                                "<span class=\"dlg-tag\">"+vo.cost_accounting_type_name+"</span>"+
+                                "</div>"+
+                                "<div>";
+                            if(vo.cost_accounting_type==1) {
+                                html+="<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name;
+                            }else if(vo.cost_accounting_type==2){
+                                html+="<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            }else if(vo.cost_accounting_type==3){
+                                html+="<span class='dlg-red-color'>" + vo.price_wage + "</span>&nbsp;" + vo.job_meter_unit_wage_name
+                                    +"<span class='dlg-red-color'>" + vo.price_commission + "</span>&nbsp;" + vo.job_meter_unit_commission_name;
+                            }
+                            html+="&nbsp;需"+vo.recruit_number+"人"+
+                                " &nbsp; 工作时间："+vo.start_date.replace(/-/g, ".").substr(5)+"-"+vo.end_date.replace(/-/g, ".").substr(5);
+                            for(var i=0;i<vo.job_time.length;i++){
+                                html+=" "+vo.job_time[i].start_time.substr(0,5)+"-"+vo.job_time[i].end_time.substr(0,5);
+                            }
+
+                            html+="</div>"+
+                                "<div>"+vo.work_address+"</div>"+
+                                "</div>"+
+                                "<div class=\"dlg-row-3 text-center\">"+
+                                "<div class=\"dlg-lgsc-list-right\">"+
+                                "进度&nbsp;"+
+                                "<label class=\"dlg-box\"></label>"+
+                                "("+ (vo.recruit_number-vo.surplus_recruit_number)+"/"+vo.recruit_number+")"+
+                                "</div>"+
+                                "</div>"+
+                                "<div class=\"dlg-row-3 text-right\">"+
+                                "<a href=\"javascript:void(0)\" target=\"linggong-zhuandanxiangqing\" name=\"zhuan_dan\" onclick=\"jiedan('"+vo.id+"','"+vo.task_title+"')\">接单</a>"+
+                                "</div>"+
+                                "</div>"+
+                                "</li>";
+                        }
+
+                    }else{
+                        html += "<li>"+
+                            "<div class=\"dlg-row clear-padding\">"+
+                            "<img class='dlg-no-list-img' src='./images/no-list.png'/>"+
+                            "</div>"+                        "</li>";
+                    }
+                    liBody.html("").append(html);
+                    todoPageSize(pagesize,data.body.data.total)
+                }else{alert("出错")}
+            }
+        })
+    }
+
+//获取分享地址
+    function jiedan(id,task_title) {
+        if(typeof(userid)=="undefined"){
+            alert("错误")
+        }
+        var json={
+            "access_token":access_token,
+            "bid":id,
+            "clienttype":2,
+            "isagent":isagent,
+            "btype":"j"
+        }
+            if(id!=""&&task_title!=""){
+                $.ajax({
+                    url: url+'/share/'+userid+'/create',
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    type: 'post',
+                    data:json,
+                    async:false,
+                    dataType: 'json',
+                    // timeout: '1000',
+                    cache: 'false',
+                    error: function () {
+                        alert('报错')
+                    },
+                    success: function (data) {
+                        if(data.status==200&&data.body.code=="SUCCESS"){
+                            var vo=data.body.data;
+                            $("#ewmTitleName").text(task_title);
+                            $("#uu").val(data.body.data.sharelink)
+                            getInfo(id)
+                            $(".bg_ground").show();
+                            var texturl = $("#uu").val();
+                            qrcode.makeCode(texturl);
+
+                        }
+                    }
+                })
+        }
+    }
+
+    function getInfo(id){
+        var dataJson={
+            "access_token":access_token,
+            "clienttype":2
+        }
+        $.ajax({
+            url: url + '/ent/' + id + '/getinfo',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: dataJson,
+            async:false,
+            //timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                if (jsData.status == 200 && jsData.body.code == "SUCCESS") {
+                    var data=jsData.body.data;
+                    var path=""
+                    if(typeof(data.logo)=="undefined"||data.logo=="None"){
+                        path+="images/mifeng.png";
+                    }else{
+                        path+=data.logo;
+                    }
+                    $("#ewmLogo").attr('src',path);
+                    $("#ermErName").html("").append(data.name);
+                    //差一个返回url显示二维码动作
+                   // $("#uu").attr('value',data)
+
+
+                }
+            }
+        })
+    }
+    function todoPageSize(pageSize,total) {
+        $('#pageTask').html("");
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, pageSize, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                getPage(page-1,pageSize);
+            }
+        });
+    }
+</script>

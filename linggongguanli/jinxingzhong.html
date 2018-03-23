@@ -1,0 +1,180 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="js/pagination/paging.css" />
+    <title>零工管理-进行中</title>
+</head>
+<div class="bread_nav"> <b>零工管理</b> / 进行中 </div>
+<div class="dlg-content">
+    <div class="dlg-wjd-box">
+        <div class="dlg-row-7 clear-padding-left">
+            <input type="text" id="query_text" placeholder="请输入零工名称"/>
+            <button class="btn btn-default background-gray-color">
+                <img src="./images/icon_12.png" draggable="false" onclick="dataJobTask(0);">
+            </button>
+        </div>
+        <div class="dlg-row-3">
+            <button class="btn btn-warning-o">
+                <img src="./images/fabu.png" draggable="false">
+                发布零工
+            </button>
+
+        </div>
+    </div>
+    <div class="dlg-row clear-padding-left">
+        <div class="dlg-task-lists dlg-wjd-lists">
+            <ul id="jobTask">
+
+            </ul>
+        </div>
+        <div class="dlg-page">
+            <div id="pageTask" class="dlg-task-page page-common"></div>
+        </div>
+    </div>
+</div>
+<script src="js/pagination/paging.js"></script>
+<script>
+    $(".dlg-lgsc-box div span").click(function () {
+        addActive(this);
+    })
+    $(function () {
+        dataJobTask(0);
+    })
+
+    function showEWM() {
+        var eve = event || window.event;
+        var pageX=eve.pageX|eve.x,pageY= eve.pageY|eve.y;
+        var $ewmDiv = "<div id='lgewm'class='dlg-lgewm'style='left:" + pageX + "px;top:" + pageY + "px'><img src='images/ewm.png'></div>";
+        if ($("#" + $($ewmDiv).attr("id")).length > 0) {
+            $("#" + $($ewmDiv).attr("id")).show();
+        } else {
+            $("body").append($ewmDiv);
+        }
+    }
+    function hideEWM() {
+        $("#lgewm").remove();
+    }
+
+    function todoPageSize(pageSize,total) {
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, size, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                dataJobTask(page-1);
+            }
+        });
+    }
+
+    function dataJobTask(pagenum) {
+        var query_text = $("#query_text").val();
+        var dataJson = {
+            "pagenum": pagenum,
+            "pagesize": 9,
+            "query_text":query_text,
+            "group_code":"ongoing",
+            "clienttype": "1",
+            "access_token":access_token
+        };
+        $.ajax({
+            url: url + '/job/myJobList/' + userid,
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataJson),
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("进行中数据",jsData)
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var result = "";
+                    if (jsData.body.data.list.length > 0) {
+                        for (var i = 0; i < jsData.body.data.list.length; i++) {
+                            result += "<li>";
+                            result += "     <div class=\"dlg-row add-padding-15\">";
+                            result += "         <div class=\"dlg-row-5 clear-padding\">";
+                            result += "             <div class=\"dlg-list-title\">";
+                            result += "                 <h3 class=\"font-16\" onclick=\"jumpChildrenPage('linggongguanli/yiguoqi-xiangqing.html?jobId=" + jsData.body.data.list[i].id + "', 'rightPart');\">" + jsData.body.data.list[i].task_title + "</h3>&nbsp;";
+                            result += "                     <i class=\"dlg-icon-bao\"></i>";
+                            result += "                         <i class=\"dlg-icon-daili\"></i>&nbsp;";
+                            result += "                             <span class=\"dlg-tag\">" + jsData.body.data.list[i].post_type_name + "</span>&nbsp;";
+                            switch (jsData.body.data.list[i].cost_accounting_type){
+                                case "1" :
+                                    result += "<span class=\"dlg-tag\">计时</span>";
+                                    break;
+                                case "2" :
+                                    result += "<span class=\"dlg-tag\">计件</span>";
+                                    break;
+                                case "3" :
+                                    result += "<span class=\"dlg-tag\">计时/计件</span>";
+                                    break;
+                            }
+                            result += "              </div>";
+                            result += "              <div>";
+                            if (jsData.body.data.list[i].cost_accounting_type == 1 || jsData.body.data.list[i].cost_accounting_type == 3) {
+                                result += "      <span class=\"dlg-red-color\">" + jsData.body.data.list[i].price_wage + "</span>";
+                                result += "      &nbsp;" + jsData.body.data.list[i].job_meter_unit_wage_name;
+                                result +="       &nbsp;需" + jsData.body.data.list[i].recruit_number + "人";
+                                if (jsData.body.data.list[i].job_time.length>0){
+                                    result += "  &nbsp;工作时间：" + jsData.body.data.list[i].job_time[0].start_time + "-" + jsData.body.data.list[i].job_time[0].end_time
+                                }
+
+                            }else if (jsData.body.data.list[i].cost_accounting_type == 2) {
+                                result += "      <span class=\"dlg-red-color\">" + jsData.body.data.list[i].price_commission + "</span>";
+                                result += "      &nbsp;" + jsData.body.data.list[i].job_meter_unit_commission_name;
+                                result +="       &nbsp;需" + jsData.body.data.list[i].recruit_number + "人";
+                                result += "  &nbsp;工作时间：" + jsData.body.data.list[i].start_date + "-" + jsData.body.data.list[i].end_date
+
+                            }
+                            result += "             </div>";
+                            result += "             <div>" + jsData.body.data.list[i].work_address + "</div>";
+                            result += "         </div>";
+                            result += "         <div class=\"dlg-row-5 text-right\">";
+                            result += "             <div>"+jsData.body.data.list[i].statustext+"</div>";
+                            result += "                 <div>";
+                            result += "                     <a href=\"javascript:void(0)\" onclick=\"jumpChildrenPage('linggongguanli/jinxingzhong_dingdanguanli.html', 'rightPart');\">订单管理</a>";
+                            result += "                 </div>";
+                            result += "                 <div>";
+                            for (var j = 0;j<jsData.body.data.list[i].buttons.length;j++) {
+                                if (jsData.body.data.list[i].buttons[j].operateStatusCode == 30) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='xiugai(\""+jsData.body.data.list[i].id+"\")'>"+jsData.body.data.list[i].buttons[j].operateStatusText+"</a>&nbsp;&nbsp;";
+                                }else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 31) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='xiajia(\""+jsData.body.data.list[i].id+"\")'>"+jsData.body.data.list[i].buttons[j].operateStatusText+"</a>&nbsp;&nbsp;";
+                                }else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 40) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='shanchu(\""+jsData.body.data.list[i].id+"\")'>"+jsData.body.data.list[i].buttons[j].operateStatusText+"</a>&nbsp;&nbsp;";
+                                }else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 50) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='fadan(\""+jsData.body.data.list[i].id+"\")'>"+jsData.body.data.list[i].buttons[j].operateStatusText+"</a>&nbsp;&nbsp;";
+                                }
+                            }
+                            result+= "                      <a href=\"javascript:void(0)\">分享</a>";
+//
+                            // result += "<a href=\"javascript:void(0)\">"
+                            //result += "<img src=\"images/ewm.png\" draggable=\"false\" onmouseover=\"showEWM()\" onmouseout=\"hideEWM()\">"
+                            //result += "接单码"
+                            //result += "                 </a>"
+                            result += "             </div>";
+                            result += "         </div>";
+                            result += "     </div>";
+                            result += "     <div class=\"background-gray-color\">";
+                            result += "         由&nbsp;" + jsData.body.data.list[i].nick_name + "&nbsp;发布于&nbsp;" + jsData.body.data.list[i].create_time + "&nbsp;&nbsp;web网页端发布";
+                            result += "     </div>";
+                        }
+                    } else {
+                        result += "<li>"
+                            + "<div class=\"dlg-row add-padding-15\">"
+                            + "<h3 class='font-16' style='color: red;'>暂无数据</h3>"
+                            + "</li>";
+                    }
+                    $("#jobTask").html(result);
+                    todoPageSize(9,jsData.body.data.total);
+                }
+            }
+        })
+    }
+
+</script>

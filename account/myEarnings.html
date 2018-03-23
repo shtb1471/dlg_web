@@ -1,0 +1,127 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+</head>
+<div class="bread_nav"> <b>账户管理</b> / 我的收益</div>
+<div class="right_content_left employee_content_left">
+    <div class="btngroup">
+        <span>新增</span>
+        <span>导入</span>
+    </div>
+    <div class="search">
+        <div class="input_group_inline_float">
+            <label for="" class="inline_label">代理商名称</label>
+            <input type="text" placeholder=' 手机号'>
+        </div>
+        <div class="input_group_inline_float">
+            <label for="" class="inline_label">零工时间</label>
+            <input id="taskTime" type="text" placeholder=' '>
+        </div>
+        <div class="input_group_inline_float">
+            <label for="" class="inline_label">结算时间</label>
+            <input id="balanceTime" type="text" placeholder=' '>
+        </div>
+        <div class="input_group">
+            <span class="btn_search">取消搜索</span>
+        </div>
+    </div>
+    <div class="list_account_table list_lowerAgent">
+        <table id="table" class="employee_table list_lowerAgent_table list_earn">
+            <thead>
+            <tr>
+                <th>结算时间</th>
+                <th>订单信息</th>
+                <th>雇员信息</th>
+                <th>结算信息</th>
+                <th>收益</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2017-10-21 <span>18:38:21</span></td>
+                <td>保洁阿姨<br/>20元/小时<br/>打零工互联网科技有限公司</td>
+                <td><img src="images/mifeng.png" alt="" class="img_r"> <span>人传伟</span></td>
+                <td>总共时：10小时<br/>订单报酬：200元<br/>平台服务费：8月</td>
+                <td><b class="redColor">4.80元</b><br/>获得收益比例：60%<br/ >获得差价 20</td>
+            </tr>
+            <tr>
+                <td>2017-10-21 <span>18:38:21</span></td>
+                <td>保洁阿姨<br/>20元/小时<br/>打零工互联网科技有限公司</td>
+                <td><img src="images/mifeng.png" alt="" class="img_r"> <span>人传伟</span></td>
+                <td>总共时：10小时<br/>订单报酬：200元<br/>平台服务费：8月</td>
+                <td><b class="redColor">4.80元</b><br/>获得收益比例：60%<br/ >获得差价 20</td>
+            </tr>
+            <tr>
+                <td>2017-10-21 <span>18:38:21</span></td>
+                <td>保洁阿姨<br/>20元/小时<br/>打零工互联网科技有限公司</td>
+                <td><img src="images/mifeng.png" alt="" class="img_r"> <span>人传伟</span></td>
+                <td>总共时：10小时<br/>订单报酬：200元<br/>平台服务费：8月</td>
+                <td><b class="redColor">4.80元</b><br/>获得收益比例：60%<br/ >获得差价 20</td>
+            </tr>
+            <tr>
+                <td>2017-10-21 <span>18:38:21</span></td>
+                <td>保洁阿姨<br/>20元/小时<br/>打零工互联网科技有限公司</td>
+                <td><img src="images/mifeng.png" alt="" class="img_r"> <span>人传伟</span></td>
+                <td>总共时：10小时<br/>订单报酬：200元<br/>平台服务费：8月</td>
+                <td><b class="redColor">4.80元</b><br/>获得收益比例：60%<br/ >获得差价 20</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="5" class="allMoney">合计(元)：<b class="redColor">14:60</b></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pageTool" class="dlg-task-page page-common"></div>
+    </div>
+</div>
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script>
+    $(function () {
+        $("#taskTime").datepicker();
+        $("#balanceTime").datepicker();
+    })
+    var setTotalCount = 301;
+    $('#pageTool').Paging({
+        pageSize:10,
+        count:100,
+        callback:function(page,size,count){
+            /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+        }
+    });
+    $(document).ready(function () {
+        $.prototype.goodCheck = function () {
+            var allcheck = $(this).find('th').find(':checkbox');
+            var checks = $(this).find('td').find(':checkbox');
+            $(this).find(':checkbox').prop('checked', false);
+            allcheck.click(function () {
+                var set = $(this).parents('table').find('td').find(':checkbox');
+                if ($(this).prop('checked')) {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', true)
+                    });
+                } else {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', false)
+                    })
+                }
+            });
+            checks.click(function (e) {
+                e.stopPropagation();
+                var ling = $(this).parents('table').find('td').find(':checkbox:checked').length;
+                if (ling == checks.length) {
+                    allcheck.prop("checked", true)
+                } else {
+                    allcheck.prop("checked", false)
+                }
+            })
+        };
+        $('#table').goodCheck();
+        $(".delete_btn").click(function () {
+            $(this).parents("tr").remove();
+        })
+    })
+</script>

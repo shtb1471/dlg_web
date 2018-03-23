@@ -1,0 +1,220 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div class="bread_nav"><b>账户管理</b> / 提现</div>
+<div class="dlg-content dlg-withdraw-content">
+    <div class="group_input">
+        <label>可提现金额 </label>
+        <span class="dlg-main-color">0元</span>
+    </div>
+    <div class="group_input">
+        <label>提现金额</label>
+        <div>
+            <input autocomplete="off" type="text" placeholder="请输入提现金额" class="ivu-input"  onkeyup="value=value.replace(/[^1-9]/g,'')">
+            <span>元</span>
+        </div>
+    </div>
+    <div class="group_input">
+        <label>提现至</label>
+        <ul class="dlg-withdraw-choice">
+            <li>微信</li>
+            <li>支付宝</li>
+            <li class="active">银行卡</li>
+        </ul>
+        <div>
+            <span id="has-no-wx" style="display: none"> 您还没有绑定微信<span class="dlg-main-color" onclick="bindWX()">去绑定</span> </span>
+            <span id="has-no-zfb" style="display: none"> 您还没有绑定支付宝<span class="dlg-main-color" onclick="bindZFB()">去绑定</span> </span>
+            <span id="has-no-bankCard"> 您还没有绑定银行卡<span class="dlg-main-color" onclick="bindBankCard()">去绑定</span> </span>
+          <!--  <span id="has-yes-wx" style="display: none"> 尘世、美<span class="dlg-main-color" onclick="   ()">解绑</span> </span>
+            <span id="has-yes-zfb" style="display: none"> rcw.ivan521@163.com<span class="dlg-main-color" onclick="unbindZFB()">解绑</span> </span>
+            <span id="has-yes-bankCard"> 招商银行*1469<span class="dlg-main-color" onclick="unbindBankCard()">解绑</span> </span>-->
+        </div>
+    </div>
+    <div class="group_input ">
+        <label>支付密码</label>
+        <div>
+            <input autocomplete="off" type="password" placeholder="请输入6位支付密码" maxlength="6" />
+            <span>忘记支付密码</span>
+        </div>
+    </div>
+    <div class="group_input">
+        <label>图文验证码</label>
+        <input autocomplete="off" type="text" placeholder="请输入图形验证码" maxlength="4">
+        <img src="" alt="图形验证码"/>
+    </div>
+    <div class="group_input">
+        <label>验证码</label>
+        <input type="text" placeholder="短信验证码" onkeyup="value=value.replace(/[^\d]/g,'')"
+               maxlength="4" class="time_input1">
+        <button type="button" class="btn btn-warning-o">
+            获取验证码
+        </button>
+        <span class="mini-size dlg-gray-color">验证码发送至：131****1185</span>
+    </div>
+    <div class="group_input dlg-group-tip">
+        提现须知
+        1.每月有2次提现免手续费，之后每次收取2元提现手续费；48小时之内到账。
+        2.免责申明：提现前请确认自己的收款账号无误并已通过支付宝实名认证，未实名认证将导致您的提现不到账，提现后由于收款账号问题造成的资金退回、冻结、消失 "打零工" 概不负责。
+    </div>
+    <div class="group_input btn_group">
+        <button type="button" class="btn btn-warning-o">确认提现</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-default">返回</button>
+    </div>
+</div>
+<div id="weixin" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-withdraw-modal">
+            <div class="text-center add-padding-15">
+                <h3 class="text-center add-padding-15">绑定微信</h3>
+                <div class="dlg-withdraw-modal-content">
+                    <div>
+                        <button type="button" class="btn btn-warning-o">请使用打零工App绑定微信账户</button>
+                    </div>
+                    <span class="dlg-red-color">备注：PC端没有绑定操作，app有绑定，把绑定完成，pc端显示</span>
+                </div>
+            </div>
+            <div class="add-padding-15"></div>
+        </div>
+    </div>
+</div>
+<div id="ZFB" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-withdraw-modal">
+            <h3 class="text-center add-padding-15">绑定支付宝</h3>
+            <div class="dlg-withdraw-modal-content">
+                <div>
+                    <label>支付宝账号</label>
+                    <input type="text" maxlength="1" placeholder="请输入支付宝账号"/>
+                </div>
+                <div>
+                    <label>姓名</label>
+                    <input type="text" maxlength="1" placeholder="请输入姓名"/>
+                </div>
+                <div>
+                    <label></label>
+                    <span class="dlg-red-color">提醒:为了你提现成功必须填写正确的姓名</span>
+                </div>
+            </div>
+            <div class="text-center add-padding-15">
+                <button type="button" class="btn btn-warning">立即绑定</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-default">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bank-card" class="modal_bg_ground">
+    <div class="modal_tan" style="width:520px;">
+        <span class="close">x</span>
+        <div class="dlg-withdraw-modal">
+            <h3 class="text-center add-padding-15">绑定银行卡</h3>
+            <div class="dlg-withdraw-modal-content">
+                <ul class="widthdraw-modal-tabs">
+                    <li class="active">个人账户</li>
+                    <li>企业账户</li>
+                </ul>
+                <div id="dlg-personal-card">
+                    <div>
+                        <label>银行卡号</label>
+                        <input type="text" maxlength="1" placeholder="请输入银行卡号"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>持卡人姓名</label>
+                        <input type="text" maxlength="1" placeholder="请输入持卡人姓名"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>预留手机号</label>
+                        <input type="text" maxlength="1" placeholder="请输入预留手机号"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>身份证</label>
+                        <input type="text" maxlength="1" placeholder="请输入身份证号码"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                </div>
+                <div id="dlg-company-card">
+                    <div>
+                        <label>开户银行</label>
+                        <input type="text" maxlength="1" placeholder="请输入开户银行"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>公司对公账户</label>
+                        <input type="text" maxlength="1" placeholder="公司对公账户"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                    <div>
+                        <label>银行开户名</label>
+                        <input type="text" maxlength="1" placeholder="银行开户名"/>
+                        <span class="dlg-red-color"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center add-padding-15">
+                <button type="button" class="btn btn-warning" >立即绑定</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-default">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/public.js"></script>
+<script>
+
+    $(".dlg-withdraw-choice li").click(function () {
+        addActive(this);
+        switch ($(this).index()){
+            case 0:
+                $("#has-no-wx").show();
+                $("#has-no-zfb").hide();
+                $("#has-no-bankCard").hide();
+                break;
+            case 1:
+                $("#has-no-zfb").show();
+                $("#has-no-wx").hide();
+                $("#has-no-bankCard").hide();
+                break;
+            default:
+                $("#has-no-bankCard").show();
+                $("#has-no-wx").hide();
+                $("#has-no-zfb").hide();
+                break;
+        }
+    })
+    $(".widthdraw-modal-tabs li").click(function () {
+        addActive(this);
+        switch ($(this).index()){
+            case 1:
+                $("#dlg-company-card").show();
+                $("#dlg-personal-card").hide();
+                break;
+            default:
+                $("#dlg-personal-card").show();
+                $("#dlg-company-card").hide();
+                break;
+        }
+    })
+    function bindWX() {
+        $("#weixin").show();
+    }
+    function bindBankCard() {
+        $("#bank-card").show();
+    }
+    function bindZFB() {
+        $("#ZFB").show();
+    }
+    function unbindWX() {
+        console.log("解绑微信");
+    }
+    function unbindBankCard() {
+        console.log("解绑银行卡");
+    }
+    function unbindZFB() {
+        console.log("解绑支付宝");
+    }
+</script>
+

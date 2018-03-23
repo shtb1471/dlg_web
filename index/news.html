@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="css/default.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<!--<script src="js/pagination/paging.js"></script>-->
+<script src="./js/pagination/paging.js"></script>
+<script src="js/public.js"></script>
+<link rel="stylesheet" href="./css/linggong.css"/>
+<link rel="stylesheet" href="css/news.css">
+<link rel="stylesheet" href="js/pagination/paging.css"/>
+<div class="news_title">
+    <ul>
+        <li class="active_news">邀请接单(23)</li>
+        <li>系统通知(33)</li>
+    </ul>
+</div>
+<div class="news_ask" id="news_ask">
+    <table>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>任传伟</td>
+            <td>【保洁200一天】已经有人接单了</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>任传伟</td>
+            <td>【保洁200一天】已经有人接单了</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>任传伟</td>
+            <td>【保洁200一天】已经有人接单了</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>任传伟</td>
+            <td>【保洁200一天】已经有人接单了</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+    </table>
+</div>
+<div class="news_ask" id="news_news">
+    <table>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>实名认证</td>
+            <td>恭喜你实名认证成功</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>实名认证</td>
+            <td>恭喜你实名认证成功</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>实名认证</td>
+            <td>恭喜你实名认证成功</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+        <tr>
+            <td><img src="images/mifeng.png" alt=""></td>
+            <td>实名认证</td>
+            <td>恭喜你实名认证成功</td>
+            <td>2018/17:12</td>
+            <td><a href="javascript:void(0);">查看</a></td>
+        </tr>
+    </table>
+</div>
+<div class="dlg-page">
+    <div id="pageTask" class="dlg-task-page page-common"></div>
+</div>
+<script>
+    var msgtype = "OPER_ORDER_INVITE_CODE";
+    $(function () {
+        getPage(1,10)
+    })
+    $(".news_title ul li:nth-child(1)").click(function () {
+        //切换消息类型为邀请信息
+        msgtype = 'OPER_ORDER_INVITE_CODE';
+        $(this).css("font-weight", "600").siblings(".news_title ul li:nth-child(2)").css("font-weight", "500");
+        $("#news_ask").show();
+        $("#news_news").hide();
+        getPage(1,10)
+    });
+    $(".news_title ul li:nth-child(2)").click(function () {
+        //切换消息类型为系统通知
+        msgtype = 'OPER_ORDER_APPLY_CODE';
+        $(this).css("font-weight", "600").siblings(".news_title ul li:nth-child(1)").css("font-weight", "500");
+        $("#news_ask").hide();
+        $("#news_news").show();
+        getPage(1,10)
+    });
+    function getPage(pagenum,pagesize) {
+        debugger
+        $.ajax({
+            url: url + '/push/message/' + userid + '/get',
+            type: 'post',
+            data: {
+                access_token: access_token,
+                msgtype: msgtype,
+                issender: 0,
+                reads: 2,
+                clienttype: 2,
+                startindex: pagenum,
+                count: pagesize
+            },
+            dataType: 'json',
+            timeout: '1000',
+            cache: 'false',
+            error: function () {
+                alert('报错');
+            },
+            success: function (jsData) {
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var data = jsData.body.data.msglist;
+                    //此处缺少判断系统通知的方法
+                    var tbody;
+                    if(msgtype=='OPER_ORDER_INVITE_CODE'){
+                        tbody=$("#news_ask")
+                    }else{
+                        tbody=$("#news_news")
+                    }
+                    var html =''
+                    if(jsData.body.data.total==0){
+                        $(".dlg-page").hide();
+
+                        html += '<tr><td>'+
+                            '<div class="dlg-row clear-padding">'+
+                            "<img class='dlg-no-list-img' src='./images/no-list.png'/>"+
+                            '</div></td>'+
+                            '</tr>';
+                    }else {
+                        html += '<table>'
+                        for (var i=0;i<data.msglist.length;i++) {
+                            var  di=data.msglist[i];
+                            html += '<tr>'
+                                + '     <td><img src="images/mifeng.png" alt=""></td>'
+                                + '     <td>' + di.sender + '</td>'
+                                + '     <td>' + di.msg + '</td>'
+                                + '     <td>' + di.ctime + '</td>'
+                                + '     <td><a href="javascript:void(0);">查看</a></td>'
+                                + ' </tr>'
+                        }
+                        html += '</table>'
+                        todoPageSize(pagesize, jsData.body.data.total)
+                    }
+                    tbody.html("").append(html);
+
+                } else {
+                    alert('获取数据失败');
+                }
+            }
+        })
+    }
+    function todoPageSize(pageSize,total) {
+        // $('#pageTask').html("");
+        debugger
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, pageSize, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                getPage(page,pageSize);
+            }
+        });
+    }
+</script>

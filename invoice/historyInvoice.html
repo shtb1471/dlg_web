@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="js/pagination/paging.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/qrcode.min.js"></script>
+</head>
+<body>
+<div>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="">
+            </div>
+            <div class="news">
+                <ul>
+                    <li>打零工互联网 <span>消息(<b class="redColor">10</b>)</span></li>
+                    <li>退出</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="contain">
+        <div class="nav_title">
+            <div class="container">
+                <ul>
+                    <li><img src="images/icon_18.png" alt="">首页</li>
+                    <li><b>雇员管理</b> / 公司职员</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><img src="images/icon_01.png" alt="">零工管理
+                        <ul class="nav_child">
+                            <li class="active_li"><span class="active">></span>零工市场</li>
+                            <li>未接单</li>
+                            <li>进行中</li>
+                            <li>已完成</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_02.png" alt="">客户管理
+                        <ul>
+                            <li>我的客户</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_03.png" alt="">雇员管理
+                        <ul>
+                            <li>公司职员</li>
+                            <li>临时雇员</li>
+                            <li>添加分组</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_04.png" alt="">账户管理
+                        <ul>
+                            <li>企业资料</li>
+                            <li>子账号管理</li>
+                            <li>我的钱包</li>
+                            <li>我的收益</li>
+                            <li>安全设置</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="right_content">
+                <div class="right_content_left employee_content_left">
+                    <div class="btngroup">
+                        <span>新增</span>
+                        <span>导入</span>
+                    </div>
+                    <div class="search">
+                        <div class="input_group">
+                            <input type="text" placeholder=' 手机号'>
+                        </div>
+                        <div class="input_group">
+                            <input type="text" placeholder=" 姓名">
+                        </div>
+                        <div class="input_group">
+                            <span class="btn_search"><img src="images/icon_12.png" alt=""> </span>
+                        </div>
+                        <div class="input_group">
+                            <span class="btn_search">取消搜索</span>
+                        </div>
+                    </div>
+                    <div class="list_table list_employee_table">
+                        <table id="table" class="employee_table">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>头像</th>
+                                <th>姓名</th>
+                                <th>手机号</th>
+                                <th>部门</th>
+                                <th>岗位</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>雇佣次数</th>
+                                <th style="width: 110px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                                <td>人传伟</td>
+                                <td>15225632568</td>
+                                <td>研发部</td>
+                                <td>产品经理</td>
+                                <td>可用</td>
+                                <td>15</td>
+                                <td>15</td>
+                                <td class="a_btn"><a href="#">修改</a><a href="#">停用</a><a href="javascript:void(0);"
+                                                                                         class="delete_btn">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                                <td>人传伟</td>
+                                <td>15225632568</td>
+                                <td>研发部</td>
+                                <td>产品经理</td>
+                                <td>可用</td>
+                                <td>15</td>
+                                <td>15</td>
+                                <td class="a_btn"><a href="#">修改</a><a href="#">停用</a><a href="javascript:void(0);"
+                                                                                         class="delete_btn">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                                <td>人传伟</td>
+                                <td>15225632568</td>
+                                <td>研发部</td>
+                                <td>产品经理</td>
+                                <td>可用</td>
+                                <td>15</td>
+                                <td>15</td>
+                                <td class="a_btn"><a href="#">修改</a><a href="#">停用</a><a href="javascript:void(0);"
+                                                                                         class="delete_btn">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                                <td>人传伟</td>
+                                <td>15225632568</td>
+                                <td>研发部</td>
+                                <td>产品经理</td>
+                                <td>可用</td>
+                                <td>15</td>
+                                <td>15</td>
+                                <td class="a_btn"><a href="#">修改</a><a href="#">停用</a><a href="javascript:void(0);"
+                                                                                         class="delete_btn">删除</a></td>
+                            </tr>
+                            <tr class="checkboxAll">
+                                <th><input type="checkbox"><label for="" class="checkall_label">全选</label></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><span class="de_btn">邀请接单</span></th>
+                                <th><span class="de_btn">删除</span></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div id="pageTool" class="dlg-task-page page-common"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo_1.png" alt="">
+            </div>
+            <ul>
+                <li>Copyright&copy;2017 打零工 沪ICP备156006046号-1</li>
+                <li>公司地址：上海市普陀区真北路958号天地科技广场一号楼7楼</li>
+            </ul>
+            <ul>
+                <li>客服邮箱：service@dalinggong.com</li>
+                <li>业务合作邮箱：mkt@dalinggong.com楼</li>
+            </ul>
+            <ul>
+                <li>客服热线：400-750-8585 <span>(周一至周五9：00-18：00)</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- <script src="js/nav.js"></script> -->
+<script src="js/pagination/paging.js"></script>
+<script>
+    $('#pageTool').Paging({
+        pageSize:10,
+        count:100,
+        callback:function(page,size,count){
+            /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+        }
+    });
+    $(document).ready(function () {
+        $.prototype.goodCheck = function () {
+            var allcheck = $(this).find('th').find(':checkbox');
+            var checks = $(this).find('td').find(':checkbox');
+            $(this).find(':checkbox').prop('checked', false);
+            allcheck.click(function () {
+                var set = $(this).parents('table').find('td').find(':checkbox');
+                if ($(this).prop('checked')) {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', true)
+                    });
+                } else {
+                    $.each(set, function (obj, v) {
+                        $(v).prop('checked', false)
+                    })
+                }
+            });
+            checks.click(function (e) {
+                e.stopPropagation();
+                var ling = $(this).parents('table').find('td').find(':checkbox:checked').length;
+                if (ling == checks.length) {
+                    allcheck.prop("checked", true)
+                } else {
+                    allcheck.prop("checked", false)
+                }
+            })
+        };
+        $('#table').goodCheck();
+        $(".delete_btn").click(function () {
+            $(this).parents("tr").remove();
+        })
+    })
+</script>
+</body>
+</html>

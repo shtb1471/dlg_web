@@ -1,0 +1,243 @@
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="js/pagination/paging.css"/>
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+</head>
+<div class="bread_nav"> <b>客户管理</b> / 我的客户</div>
+<div class="right_content_left">
+    <div class="search">
+        <div class="input_group">
+            <label for="customer">客户名称</label>
+            <input type="text" id="user_name_search">
+        </div>
+        <div class="input_group">
+            <label for="status">认证状态</label>
+            <select id="statusSelect" style="width:150px">
+                <option value="">请选择</option>
+                <option value="1">认证中</option>
+                <option value="2">认证通过</option>
+                <option value="3">认证未通过</option>
+            </select>
+        </div>
+        <div class="input_group forTime">
+            <label for="date">注册时间</label>
+            <p>
+                <input id="startDate" type="text">-<input type="text" id="endDate">
+            </p>
+        </div>
+        <div class="input_group">
+            <span onclick="getPage(1,10)"><img src="images/icon_12.png"  alt=""/> 搜索</span>
+        </div>
+    </div>
+    <div class="list_table" id="divTable">
+        <table id="table">
+            <thead>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>企业logo</th>
+                <th>企业名称</th>
+                <th>注册时间</th>
+                <th>认证状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            <tr>
+                <td><input type="checkbox"></td>
+                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                <td>打零工（上海）互联网科技有限公司</td>
+                <td>2017-1-1</td>
+                <td>认证通过</td>
+                <td class="a_btn"><a href="javascript:void(0)"  onclick="jumpPage('./customer/customerManageDetail.html','rightPart')">查看详情</a><a href="javascript:void(0);" class="delete_btn">删除</a></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="items"></td>
+                <td><img src="images/mifeng.png" alt="" class="company_logo"></td>
+                <td>打零工（上海）互联网科技有限公司</td>
+                <td>2017-1-1</td>
+                <td>认证通过</td>
+                <td class="a_btn"><a href="javascript:void(0);"  onclick="jumpPage('./customer/customerManageDetail.html','rightPart')">查看详情</a><a
+                        href="javascript:void(0)" class="delete_btn">删除</a></td>
+            </tr>
+            <tr class="checkboxAll">
+                <th><input type="checkbox"><label for="" class="checkall_label">全选</label></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pageTool" class="dlg-task-page page-common"></div>
+    </div>
+</div>
+<div class="erma">
+    <input id="text" type="text" value="http://www.runoob.com" style="width:80%;display:none;"/>
+    <div id="qrcode" style="width:100px; height:100px;"></div>
+    <div class="erma_btn">
+        <span>下载app</span>
+        <span>邀请</span>
+    </div>
+</div>
+<script src="js/qrcode.min.js"></script>
+<script src="js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/check.js"></script>
+<script>
+    $(function () {
+        getPage(1,10);
+        getDatePicker('startDate', 'endDate');
+        $("#customerManageDetail").click(function () {
+            jumpPage("customer/customerManageDetail.html", "rightPart");
+        })
+    });
+    // $('#pageTool').Paging({
+    //     pageSize:10,
+    //     count:100,
+    //     callback:function(page,size,count){
+    //         /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+    //     }
+    // });
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 100,
+        height: 100
+    });
+    function todoPageSize(pageSize,total) {
+        $('#pageTool').html("");
+        if(total>0){
+            $('#pageTool').Paging({
+                pageSize: pageSize,
+                count: total,
+                callback: function (page, pageSize, total) {
+                    getPage(page-1,pageSize);
+                }
+            });
+        }else{
+            $("#pageTool").hide()
+        }
+    }
+    function getPage(page,size){
+        var json={
+            "access_token": access_token,
+            "invite_type": 1,
+            "clienttype": 2,
+            "page_index": page-1,
+            "page_size": size
+        }
+        if($("#statusSelect option:selected").val()!=""){
+            json["audit"]=$("#statusSelect option:selected").val()-1;
+        }
+        if($("#user_name_search").val()!=""){
+            json["user_name"]=$("#user_name_search").val();
+        }
+        if($("#startDate").val()!=""){
+            json["ctime_start"]=$("#startDate").val();
+        }
+        if($("#endDate").val()!=""){
+            json["ctime_end"]=$("#endDate").val();
+        }
+        $.ajax({
+            url: url + '/user/'+userid+'/invite/query',
+            type: 'post',
+            data: json,
+            dataType: 'json',
+            cache: 'false',
+            contentType:'application/x-www-form-urlencoded',
+            error: function () {
+                alert('报错');
+            },
+            success: function (jsData) {
+                if(jsData!=null&&jsData.status==200){
+                    if(jsData.body.code=="SUCCESS"){
+                        var html="";
+                        if(jsData.body.data.total>0){
+                            html+="<table id=\"table\">\n" +
+                            "            <thead>\n" +
+                            "            <tr>\n" +
+                            "                <th><input type=\"checkbox\"></th>\n" +
+                            "                <th>企业logo</th>\n" +
+                            "                <th>企业名称</th>\n" +
+                            "                <th>注册时间</th>\n" +
+                            "                <th>认证状态</th>\n" +
+                            "                <th>操作</th>\n" +
+                            "            </tr>\n" +
+                            "            </thead>\n" +
+                            "            <tbody id=\"tbody\">";
+                            var data=jsData.body.data.datalist;
+                            for(var i=0;i<data.length;i++){
+                                var da=data[i];
+                                html+=" <tr>\n" +
+                                    "                <td><input type=\"checkbox\"></td>\n" +
+                                    "                <td><img src=\""
+                                    if(da.logo=="None"){
+                                        html+="images/mifeng.png";
+                                    }
+                                   html+="\" alt=\"\" class=\"company_logo\"></td>\n" +
+                                    "                <td>"+da.name+"</td>\n" +
+                                    "                <td>"+da.ctime+"</td>\n" +
+                                    "                <td>";
+                                if(da.audit==0){
+                                    html+="认证中";
+                                }else if(da.audit==1){
+                                    html+="认证通过"
+                                }else if(da.audit==2){
+                                    html+="认证未通过"
+                                }
+                                html+="</td>\n" +
+                                    "                <td class=\"a_btn\"><a href=\"javascript:void(0)\"  onclick=\"jumpChildrenPage('./customer/customerManageDetail.html?jobId="+da.userid+"','rightPart')\">查看详情</a>\n" +
+                                    "            </tr>"
+                            }
+                            html+=" <tr class=\"checkboxAll\">\n" +
+                                "                <th><input type=\"checkbox\"><label for=\"\" class=\"checkall_label\">全选</label></th>\n" +
+                                "                <th></th>\n" +
+                                "                <th></th>\n" +
+                                "                <th></th>\n" +
+                                "                <th></th>\n" +
+                                "                <th></th>\n" +
+                                "            </tr>";
+                            html+="</tbody>\n" +
+                                "                        </table>"+"<div id=\"pageTool\" class=\"dlg-task-page page-common\"></div>"
+                        }else{
+                            html += " <div class=\"dlg-row add-padding-15\">";
+                            html += "     <h3 class='font-16 text-center' style='color: red;'>";
+                            html += "         <img class='dlg-no-list-img' src='./images/no-list.png'/>";
+                            html += "     </h3>";
+                            html += " </div>";
+
+                        }
+                        $("#divTable").html("").append(html);
+                        todoPageSize(size,jsData.body.data.total)
+                    }else{
+                        alert("出错")
+                    }
+                }
+
+            }
+        })
+    }
+    function makeCode() {
+        var elText = document.getElementById("text");
+
+        if (!elText.value) {
+            alert("Input a text");
+            elText.focus();
+            return;
+        }
+
+        qrcode.makeCode(elText.value);
+    }
+
+    makeCode();
+
+    $("#text").on("blur", function () {
+        makeCode();
+    }).on("keydown", function (e) {
+        if (e.keyCode == 13) {
+            makeCode();
+        }
+    });
+</script>

@@ -1,0 +1,207 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="./js/pagination/paging.css"/>
+    <title>零工市场-接单详情</title>
+</head>
+<div class="bread_nav"> <b>零工管理</b> / 接单详情 </div>
+<div class="dlg-content">
+    <div class="dlg-box dlg-ddxq-head">
+        <table class="table">
+            <tr>
+                <td>
+                    <div>订单状态</div>
+                    <h3>无人接单</h3>
+                </td>
+                <td class="text-right">
+                    <a href="javascript:void(0)" onclick="jumpPage('linggongguanli/jinxingzhong_dingdanguanli.html', 'rightPart');">邀请</a>
+                    <a href="javascript:void(0)">下架</a>
+                    <a href="javascript:void(0)">修改</a>
+                    <a href="javascript:void(0)">分享</a>
+                    <a href="javascript:void(0)" onmouseover="showEWM()"
+                             onmouseout="hideEWM()">
+                        接单码
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="dlg-box dlg-ddxq-head">
+        <table class="table">
+            <tr>
+                <td>
+                    <div>订单状态</div>
+                    <h3>
+                        <div>进行中</div>
+                        <div>有2人等待验收&nbsp;></div>
+                    </h3>
+                </td>
+                <td class="text-right">
+                    <a href="javascript:void(0)" onclick="jumpPage('linggongguanli/jinxingzhong_dingdanguanli.html', 'rightPart');">邀请</a>
+                    <a href="javascript:void(0)">下架</a>
+                    <a href="javascript:void(0)">修改</a>
+                    <a href="javascript:void(0)">分享</a>
+                    <a href="javascript:void(0)" onmouseover="showEWM()"
+                             onmouseout="hideEWM()">
+                        接单码
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="dlg-box dlg-ddxq-head">
+        <table class="table">
+            <tr>
+                <td>
+                    <div>订单状态</div>
+                    <h3>已驳回</h3>
+                    <div class="dlg-gray-color mini-size">驳回原因：零工描述不清晰</div>
+                </td>
+                <td class="text-right">
+                    <a href="javascript:void(0)">修改</a>
+                    <a href="javascript:void(0)">删除</a>
+                    <a href="javascript:void(0)">再发一单</a>
+                    <a href="javascript:void(0)"onmouseover="showEWM()"
+                       onmouseout="hideEWM()">
+                        接单码
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="dlg-box dlg-ddxq-head">
+        <table class="table">
+            <tr>
+                <td>
+                    <div>订单状态</div>
+                    <h3>已过期</h3>
+                </td>
+                <td class="text-right">
+                    <a href="javascript:void(0)">删除</a>
+                    <a href="javascript:void(0)">再发一单</a>
+                    <a href="javascript:void(0)"onmouseover="showEWM()"
+                       onmouseout="hideEWM()">
+                        接单码
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="dlg-box dlg-ddxq-head">
+        <table class="table">
+            <tr>
+                <td>
+                    <div>订单状态</div>
+                    <h3>已下架</h3>
+                </td>
+                <td class="text-right">
+                    <a href="javascript:void(0);">修改</a>
+                    <a href="javascript:void(0);">删除</a>
+                    <a href="javascript:void(0)"onmouseover="showEWM()"
+                       onmouseout="hideEWM()">
+                        接单码
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="dlg-jiedan-box" id="jobDetails">
+
+    </div>
+</div>
+<script src="./js/pagination/paging.js"></script>
+<script>
+
+    $(function () {
+
+        var jobId=sessionStorage.getItem("jobId");
+
+        $.ajax({
+            url: url + '/job/' + jobId,
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: '',
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+
+                var result = "";
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    console.log(jsData);
+                    //console.log(jsData.body.data.area_name)
+                    result += "<div class=\"dlg-row\">";
+                    result += "<div class=\"dlg-row-8 clear-padding\">";
+                    result += "<div class=\"dlg-list-title\">";
+                    result += "<h3 class=\"font-16\">"+jsData.body.data.task_title+"</h3>&nbsp;";
+                    result += "<i class=\"dlg-icon-bao\"></i>";
+                    result += "<i class=\"dlg-icon-daili\"></i>&nbsp;";
+                    result += "<span class=\"dlg-tag\">"+jsData.body.data.post_type_name+"</span>";
+                    switch (jsData.body.data.cost_accounting_type){
+                        case "1" :
+                            result += "<span class=\"dlg-tag\">计时</span>";
+                            break;
+                        case "2" :
+                            result += "<span class=\"dlg-tag\">计件</span>";
+                            break;
+                        case "3" :
+                            result += "<span class=\"dlg-tag\">计时/计件</span>";
+                            break;
+                    }
+                    result += "</div>";
+                    result += "<div>";
+                    result += "<span class=\"dlg-red-color\">"+jsData.body.data.price_wage+"</span>&nbsp;"+jsData.body.data.job_meter_unit_wage_name+"";
+                    result += "</div>";
+                    result += "<div class=\"dlg-jiedan-prograssB\">";
+                    result += "<label>待招人数</label>&nbsp;";
+                    result += "<label id=\"dzrs\" class=\"dlg-box\"></label>";
+                    result += "("+jsData.body.data.surplus_recruit_number+"/"+jsData.body.data.recruit_number+")";
+                    result += "</div>";
+                    result += "<div>";
+                    result += "<label>干活时间：</label>";
+                    result += "<span>"+jsData.body.data.start_date+"~"+jsData.body.data.end_date+" &nbsp;&nbsp;"+jsData.body.data.job_time[0].start_time+"~"+jsData.body.data.job_time[0].end_time+"</span>";
+                    result += "</div>";
+                    result += "<div>";
+                    result += "<label>干活地址：</label>";
+                    result += "<span>"+jsData.body.data.work_address+"</span>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<div class=\"dlg-row-2 dlg-jiedan-logo\">";
+                    result += "<img src=\"images/logo.png\" alt=\"\">";
+                    result += "<div>";
+                    result += "上海打零工互联网科技有限公司";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<div class=\"detail\">";
+                    result += "<label>详情描述：</label>";
+                    result += "<div>"+jsData.body.data.task_description+"</div>";
+                    result += "</div>";
+                    if (jsData.body.data.job_imgs != undefined) {
+                        if (jsData.body.data.job_imgs.length > 0) {
+                            result += "<div>";
+                            result += "<label>图片展示：</label>";
+                            for (var i=0;i<jsData.body.data.job_imgs.length;i++) {
+                                result += "<img src=\""+jsData.body.data.job_imgs[i].url+"\" draggable=\"false\" alt=\"\">&nbsp;&nbsp;";
+                            }
+                            result += "</div>";
+                        }
+                    }
+
+                    $("#jobDetails").html(result);
+                    var num = jsData.body.data.surplus_recruit_number * 100 / jsData.body.data.recruit_number;
+                    console.log(num)
+                    $("#dzrs").progressbar({
+                        value: num
+                    });
+                }
+            }
+        });
+    })
+</script>

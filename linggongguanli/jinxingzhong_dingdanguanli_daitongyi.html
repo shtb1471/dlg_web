@@ -1,0 +1,337 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/default.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/linggong.css"/>
+    <link rel="stylesheet" href="./js/pagination/paging.css"/>
+    <title>零工管理-待处理-订单管理-待同意</title>
+</head>
+<div class="bread_nav"> <b>零工管理</b> / 订单管理 / 待同意</div>
+<div class="header">
+    <div class="container">
+        <div class="logo">
+            <img src="./images/logo.png" alt="">
+        </div>
+        <div class="news">
+            <ul>
+                <li>打零工互联网 <span>消息(<b class="redColor">10</b>)</span></li>
+                <li>退出</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="contain">
+    <div class="nav_title">
+        <div class="container">
+            <ul>
+                <li><img src="./images/icon_18.png" alt="">首页</li>
+                <li><b>零工管理</b>/待处理/订单管理/待同意</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="nav">
+            <ul>
+                <li><img src="./images/icon_01.png" alt="">零工管理
+                    <ul class="nav_child">
+                        <li class="active_li"><span class="active">></span>零工市场</li>
+                        <li>未接单</li>
+                        <li>进行中</li>
+                        <li>已完成</li>
+                    </ul>
+                </li>
+                <li><img src="./images/icon_02.png" alt="">客户管理
+                    <ul>
+                        <li>我的客户</li>
+                    </ul>
+                </li>
+                <li><img src="./images/icon_03.png" alt="">雇员管理
+                    <ul>
+                        <li>公司职员</li>
+                        <li>临时雇员</li>
+                        <li>添加分组</li>
+                    </ul>
+                </li>
+                <li><img src="./images/icon_04.png" alt="">账户管理
+                    <ul>
+                        <li>企业资料</li>
+                        <li>子账号管理</li>
+                        <li>我的钱包</li>
+                        <li>我的收益</li>
+                        <li>安全设置</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="right_content">
+            <div id="rightPart">
+                <div class="dlg-content">
+                    <div class="dlg-wjd-box">
+                        <div class="dlg-row-7 clear-padding-left">
+                            <input type="text" placeholder="搜索订单、人"/>
+                            <button class="btn btn-default background-dark-color"><img src="./images/icon_12.png"
+                                                                                       draggable="false"></button>
+                        </div>
+                        <div class="dlg-row-3">
+                            <button class="btn btn-warning-o">
+                                <img src="./images/fabu.png" draggable="false">
+                                发布零工
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="dlg-row-7 clear-padding-left">
+                            <div class="dlg-task-lists dlg-lgsc-lists">
+                                <div class="dlg-box dlg-ddgl-title-1 dlg-ddgl-title">
+                                    <div class="dlg-row-5 clear-padding">
+                                        <div>雇保洁阿姨待遇优厚</div>
+                                        <div class="mini-size dlg-gray-color">工作时间：10.2-10.4 9:00-18:00</div>
+                                    </div>
+                                    <div class="dlg-row-5 text-right">
+                                        <div>
+                                            <span class="dlg-red-color">50元</span><span class="mini-size">/小时</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dlg-box dlg-ddgl-tabs background-gray-color dlg-ddgl-title">
+                                    <ol id="ddgl-type">
+                                        <li class="active">全部(9)</li>
+                                        <li>进行中(7)</li>
+                                        <li>已完成(1)</li>
+                                        <li>已取消(1)</li>
+                                    </ol>
+                                </div>
+                                <ul id="dty-type">
+                                    <li class="active">
+                                        <div class="dty-choice">
+                                            <input type="hidden" value="1">
+                                        </div>
+                                        <div class="dlg-row-5 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-imgLogo">
+                                                    <div class="dlg-list-img">
+                                                        <img src="./images/mifeng.png" draggable="false"/>
+                                                    </div>
+                                                    <div class="dlg-cx-num">
+                                                        36.5
+                                                    </div>
+                                                </div>
+                                                <div class="dlg-list-info">
+                                                    <h3>任传伟</h3>
+                                                    <span class="mini-size">
+                                                    成交3|好评2|差评1
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                                            <div>这里是个人描述16字</div>
+                                        </div>
+                                        <div class="dlg-row-5 text-right">
+                                            <div><h3>邀请中</h3></div>
+                                            <div>接单时间：2017-10-12 9:00：00</div>
+                                            <div>
+                                                <button type="button" class="btn btn-default">取消</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dty-choice">
+                                            <input type="hidden" value="2">
+                                        </div>
+                                        <div class="dlg-row-5 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-imgLogo">
+                                                    <div class="dlg-list-img">
+                                                        <img src="./images/mifeng.png" draggable="false"/>
+                                                    </div>
+                                                    <div class="dlg-cx-num">
+                                                        36.5
+                                                    </div>
+                                                </div>
+                                                <div class="dlg-list-info">
+                                                    <h3>任传伟</h3>
+                                                    <span class="mini-size">
+                                                    成交3|好评2|差评1
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <div>男&nbsp;24|180cm|上海-普陀</div>
+                                            <div>这里是个人描述16字</div>
+                                        </div>
+                                        <div class="dlg-row-5 text-right">
+                                            <div><h3>邀请中</h3></div>
+                                            <div>接单时间：2017-10-12 9:00：00</div>
+                                            <div>
+                                                <button type="button" class="btn btn-default">取消</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="dlg-row dlg-ddgl-title">
+                                    <div class="dlg-row-5">
+                                        <label for="checkAll">
+                                            <input id="checkAll" type="checkbox" name="checkAll"
+                                                   onclick="checkedAll(this)"/>&nbsp;全选
+                                        </label>
+                                    </div>
+                                    <div class="dlg-row-5 text-right">
+                                        <button type="button" class="btn btn-default" onclick="agreeMore('checkAll')">
+                                            批量同意
+                                        </button>
+                                        <button type="button" class="btn btn-default" onclick="refuseMore('checkAll')">
+                                            批量拒绝
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="dlg-page">
+                                    <div id="pageTool" class="dlg-task-page page-common"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dlg-row-3">
+                            <div class="dlg-task-lists dlg-info-lists">
+                                <div class="dlg-yq-title">
+                                    <ol id="yq-type">
+                                        <li class="active">公司职员</li>
+                                        <li>临时雇员</li>
+                                        <li>附近</li>
+                                        <li>历史雇员</li>
+                                    </ol>
+                                </div>
+                                <div class="dlg-yq-search">
+                                    <input type="text" class="background-gray-color"/>
+                                    <button class="btn background-dark-color">
+                                        <img src="./images/icon_12.png" draggable="false"/>
+                                    </button>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="dlg-row-7 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-img dlg-info-img">
+                                                    <img src="./images/mifeng.png" draggable="false"/>
+                                                </div>
+                                                <div class="dlg-list-info dlg-info-info">
+                                                    <div class="dlg-high-color">任传伟</div>
+                                                    <div class="mini-size">
+                                                        成交3&nbsp;好评2&nbsp;差评1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dlg-row-3 text-right">
+                                            <button type="button" class="btn btn-warning mini-size">邀请</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dlg-row-7 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-img dlg-info-img">
+                                                    <img src="./images/mifeng.png" draggable="false"/>
+                                                </div>
+                                                <div class="dlg-list-info dlg-info-info">
+                                                    <div class="dlg-high-color">任传伟</div>
+                                                    <div class="mini-size">
+                                                        成交3&nbsp;好评2&nbsp;差评1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dlg-row-3 text-right">
+                                            <button type="button" class="btn mini-size" disabled="disabled">已邀请</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dlg-row-7 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-img dlg-info-img">
+                                                    <img src="./images/mifeng.png" draggable="false"/>
+                                                </div>
+                                                <div class="dlg-list-info dlg-info-info">
+                                                    <div class="dlg-high-color">任传伟</div>
+                                                    <div class="mini-size">
+                                                        成交3&nbsp;好评2&nbsp;差评1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dlg-row-3 text-right">
+                                            <button type="button" class="btn mini-size">已拒绝</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dlg-row-7 clear-padding">
+                                            <div class="dlg-list-title">
+                                                <div class="dlg-list-img dlg-info-img">
+                                                    <img src="./images/mifeng.png" draggable="false"/>
+                                                </div>
+                                                <div class="dlg-list-info dlg-info-info">
+                                                    <div class="dlg-high-color">任传伟</div>
+                                                    <div class="mini-size">
+                                                        成交3&nbsp;好评2&nbsp;差评1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dlg-row-3 text-right">
+                                            <button type="button" class="btn btn-warning mini-size">邀请</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div id="pageTool1" class="dlg-task-page page-common"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="logo">
+            <img src="./images/logo_1.png" alt="">
+        </div>
+        <ul>
+            <li>Copyright&copy;2017 打零工 沪ICP备156006046号-1</li>
+            <li>公司地址：上海市普陀区真北路958号天地科技广场一号楼7楼</li>
+        </ul>
+        <ul>
+            <li>客服邮箱：service@dalinggong.com</li>
+            <li>业务合作邮箱：mkt@dalinggong.com楼</li>
+        </ul>
+        <ul>
+            <li>客服热线：400-750-8585 <span>(周一至周五9：00-18：00)</span></li>
+        </ul>
+    </div>
+</div>
+<script src="js/pagination/paging.js"></script>
+<script>
+    $("#ddgl-type li,#yq-type li").click(function () {
+        addActive(this);
+    })
+    $("#dty-type li").click(function () {
+        $(this).toggleClass("active");
+    })
+
+    function checkedAll(obj) {
+        if ($(obj).prop("checked")) {
+            $("#dty-type li").addClass("active");
+        } else {
+            $("#dty-type li").removeClass("active");
+        }
+    }
+
+    $(function () {
+        $('#pageTool,#pageTool1').Paging({
+            pageSize:10,
+            count:100,
+            callback:function(page,size,count){
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+            }
+        });
+    })
+</script>

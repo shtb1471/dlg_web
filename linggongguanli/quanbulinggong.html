@@ -1,0 +1,348 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全部零工</title>
+</head>
+<div class="bread_nav"><b>零工管理</b> / 全部零工</div>
+<div class="dlg-content">
+    <div class="dlg-wjd-box dlg-qblg-box">
+        <div class="dlg-row-7 clear-padding-left">
+            <div>
+                <input type="text" id="query_text" placeholder="请输入零工名称"/>
+                <button class="btn btn-default background-gray-color">
+                    <img src="./images/icon_12.png" draggable="false" onclick="dataJobTask(0);">
+                </button>
+                &nbsp;<span class="dlg-blue-color" onclick="toggleSelect(this,'qblg-options')">隐藏筛选</span>
+            </div>
+            <div id="qblg-options" class="dlg-box background-gray-color">
+                <div class="qblg-options">
+                    <div >
+                        <input type="hidden" id="query_type" />
+                        <label id="taskType">
+                            <!--零工类型：&nbsp;-->
+                            <!--&nbsp;<span class="active">全部</span>-->
+                            <!--&nbsp;<span>家政保洁</span>-->
+                            <!--&nbsp;<span>志愿义工</span>-->
+                            <!--&nbsp;<span>操作工</span>-->
+                            <!--&nbsp;<span>生活服务</span>-->
+                            <!--&nbsp;<span>教育培训</span>-->
+                        </label>
+                    </div>
+                    <!--<div>-->
+                    <!--<label>-->
+                    <!--发布人：&nbsp;-->
+                    <!--&nbsp;<span class="active">全部</span>-->
+                    <!--&nbsp;<span>管理员</span>-->
+                    <!--&nbsp;<span>杨建国</span>-->
+                    <!--</label>-->
+                    <!--</div>-->
+                    <div>
+                        发布时间：&nbsp;
+                        &nbsp;<input id="startDate" type="text" placeholder="开始时间"/>
+                        &nbsp;<input id="endDate" type="text" placeholder="结束时间"/>
+                        &nbsp;<span onclick="changeDate(7)">近一周</span>
+                        &nbsp;<span onclick="changeDate(30)">近一个月</span>
+                        &nbsp;<span onclick="changeDate(90)">近三个月</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dlg-row-3">
+            <button class="btn btn-warning-o">
+                <img src="./images/fabu.png" draggable="false">
+                发布零工
+            </button>
+
+        </div>
+    </div>
+    <div class="dlg-row clear-padding-left">
+        <div class="dlg-task-lists dlg-wjd-lists">
+            <!--loading-->
+            <div id="loading" class="dlg-task-lists">
+                <div class="dlg-row clear-padding">
+                    <img class="dlg-no-list-img" src="./images/loading.gif"/>
+                </div>
+            </div>
+            <ul id="jobTask">
+            </ul>
+        </div>
+        <div class="dlg-page">
+            <div id="pageTask" class="dlg-task-page page-common"></div>
+        </div>
+    </div>
+</div>
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script>
+
+    $(function () {
+        getDatePicker2('startDate', 'endDate');
+        dataJobTask(0);
+        $("#loading").show();
+        $("#jobList").hide().html("");
+        $("#pageTask").hide();
+    })
+    function showEWM() {
+        var $ewmDiv = "<div id='lgewm'class='dlg-lgewm'style='left:" + window.event.pageX + "px;top:" + window.event.pageY + "px'><img src='images/ewm.png'></div>";
+        if ($("#" + $($ewmDiv).attr("id")).length > 0) {
+            $("#" + $($ewmDiv).attr("id")).show();
+        } else {
+            $("body").append($ewmDiv);
+        }
+    }
+
+    function hideEWM() {
+        $("#lgewm").remove();
+    }
+
+    function todoPageSize(pageSize, total) {
+        $('#pageTask').Paging({
+            pageSize: pageSize,
+            count: total,
+            callback: function (page, size, count) {
+                /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+                dataJobTask(page - 1);
+            }
+        });
+    }
+
+    //日期
+    function getDatePicker2(obj1, obj2) {
+        from = $("#" + obj1).datepicker()
+            .on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+                dataJobTask(0);
+            }),
+            to = $("#" + obj2).datepicker()
+                .on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                    dataJobTask(0);
+                });
+
+        // 日期转换
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate("yy-mm-dd", element.value);
+            } catch (error) {
+                date = null;
+            }
+            return date;
+        }
+    }
+
+    /**
+     *数据组装展示
+     * */
+    function dataJobTask(pagenum) {
+        var query_text = $("#query_text").val();
+        var post_type = $("#query_type").val();
+        var start = $("#startDate").val();
+        var end = $("#endDate").val();
+        console.log("query_text",query_text);
+        console.log("post_type",post_type)
+        console.log("start",start)
+        console.log("end",end)
+        var dataJson = {
+            "pagenum": pagenum,
+            "query_text":query_text,
+            "post_type":post_type,
+            "start":start,
+            "end":end,
+            "pagesize": 9,
+            "clienttype": "1",
+            "group_code": "",
+            "access_token": access_token
+        };
+
+        $.ajax({
+            url: url + '/job/myJobList/' + userid,
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataJson),
+            //timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                console.log("全部零工", jsData)
+                if (jsData.status == 200 && jsData.body.code == 'SUCCESS') {
+                    var result = "";
+                    $("#loading").hide();
+                    $("#jobList").show().html("");
+                    $("#pageTask").show();
+                    if (jsData.body.data.list.length > 0) {
+                        for (var i = 0; i < jsData.body.data.list.length; i++) {
+
+                            result += "<li>";
+                            result += "     <div class=\"dlg-row add-padding-15\">";
+                            result += "         <div class=\"dlg-row-5 clear-padding\">";
+                            result += "             <div class=\"dlg-list-title\">";
+                            result += "                 <h3 class=\"font-16\" onclick=\"jumpChildrenPage('linggongguanli/yiguoqi-xiangqing.html?jobId=" + jsData.body.data.list[i].id + "', 'rightPart');\">" + jsData.body.data.list[i].task_title + "</h3>&nbsp;";
+                            if (jsData.body.data.list[i].is_buy_insurance == 1) {
+                                result += "<i class=\"dlg-icon-bao\"></i>&nbsp;";
+                            } else {
+                                result += "<i></i>&nbsp;";
+                            }
+
+                            if (jsData.body.data.list[i].is_allow_agent == 1) {
+                                result += "<i class=\"dlg-icon-daili\"></i>&nbsp;";
+                            } else {
+                                result += "<i></i>&nbsp;";
+                            }
+                            result += "                     <span class=\"dlg-tag\">" + jsData.body.data.list[i].post_type_name + "</span>&nbsp;";
+                            switch (jsData.body.data.list[i].cost_accounting_type) {
+                                case "1" :
+                                    result += "<span class=\"dlg-tag\">计时</span>";
+                                    break;
+                                case "2" :
+                                    result += "<span class=\"dlg-tag\">计件</span>";
+                                    break;
+                                case "3" :
+                                    result += "<span class=\"dlg-tag\">计时/计件</span>";
+                                    break;
+                            }
+                            result += "              </div>";
+                            result += "              <div>";
+                            if (jsData.body.data.list[i].cost_accounting_type == 1 || jsData.body.data.list[i].cost_accounting_type == 3) {
+                                result += "      <span class=\"dlg-red-color\">" + jsData.body.data.list[i].price_wage + "</span>";
+                                result += "      &nbsp;" + jsData.body.data.list[i].job_meter_unit_wage_name;
+                                result += "       &nbsp;需" + jsData.body.data.list[i].recruit_number + "人";
+                                if (jsData.body.data.list[i].job_time.length > 0) {
+                                    result += "  &nbsp;工作时间：" + jsData.body.data.list[i].job_time[0].start_time + "-" + jsData.body.data.list[i].job_time[0].end_time
+                                }
+                            } else if (jsData.body.data.list[i].cost_accounting_type == 2) {
+                                result += "      <span class=\"dlg-red-color\">" + jsData.body.data.list[i].price_commission + "</span>";
+                                result += "      &nbsp;" + jsData.body.data.list[i].job_meter_unit_commission_name;
+                                result += "       &nbsp;需" + jsData.body.data.list[i].recruit_number + "人";
+                                result += "  &nbsp;工作时间：" + jsData.body.data.list[i].start_date + "-" + jsData.body.data.list[i].end_date
+                            }
+                            result += "             </div>";
+                            result += "             <div>" + jsData.body.data.list[i].work_address + "</div>";
+                            result += "         </div>";
+                            result += "         <div class=\"dlg-row-5 text-right\">";
+                            result += "             <div>" + jsData.body.data.list[i].statustext + "</div>";
+                            result += "                 <div>";
+                            result += "                     <a href=\"javascript:void(0)\" onclick=\"jumpChildrenPage('linggongguanli/jinxingzhong_dingdanguanli.html?jobId=" + jsData.body.data.list[i].id + "', 'rightPart');\">订单管理</a>";
+                            result += "                 </div>";
+                            result += "                 <div>";
+                            for (var j = 0; j < jsData.body.data.list[i].buttons.length; j++) {
+                                if (jsData.body.data.list[i].buttons[j].operateStatusCode == 30) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='xiugai(\"" + jsData.body.data.list[i].id + "\")'>" + jsData.body.data.list[i].buttons[j].operateStatusText + "</a>&nbsp;&nbsp;";
+                                } else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 31) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='xiajia(\"" + jsData.body.data.list[i].id + "\")'>" + jsData.body.data.list[i].buttons[j].operateStatusText + "</a>&nbsp;&nbsp;";
+                                } else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 40) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='shanchu(\"" + jsData.body.data.list[i].id + "\")'>" + jsData.body.data.list[i].buttons[j].operateStatusText + "</a>&nbsp;&nbsp;";
+                                } else if (jsData.body.data.list[i].buttons[j].operateStatusCode == 50) {
+                                    result += "<a href=\"javascript:void(0)\" onclick='fadan(\"" + jsData.body.data.list[i].id + "\")'>" + jsData.body.data.list[i].buttons[j].operateStatusText + "</a>&nbsp;&nbsp;";
+                                }
+                            }
+                            result += "                      <a href=\"javascript:void(0)\">分享</a>";
+                            result += "             </div>";
+                            result += "         </div>";
+                            result += "     </div>";
+                            result += "     <div class=\"background-gray-color\">";
+                            result += "         由&nbsp;" + jsData.body.data.list[i].nick_name + "&nbsp;发布于&nbsp;" + jsData.body.data.list[i].create_time + "&nbsp;&nbsp;web网页端发布";
+                            result += "     </div>";
+                        }
+                    } else {
+                        result += "<li>";
+                        result += " <div class=\"dlg-row add-padding-15\">";
+                        result += "     <h3 class='font-16 text-center' style='color: red;'>";
+                        result += "         <img class='dlg-no-list-img' src='./images/no-list.png'/>";
+                        result += "     </h3>";
+                        result += " </div>";
+                        result += "</li>";
+
+                    }
+                    $("#jobTask").html(result);
+                    todoPageSize(9, jsData.body.data.total);
+                }
+            }
+        })
+    }
+
+    /**
+     * 零工类型
+     */
+    $.ajax({
+        url: url + '/sys/jobcatgory',
+        type: 'GET',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: '',
+        timeout: '1000',
+        cache: 'false',
+        success: function (jsData) {
+            console.log("零工类型",jsData)
+            var result = "";
+            result += "零工类型：";
+            result += "&nbsp;&nbsp;";
+            result += "<span class=\"active\">全部</span>";
+            for (var i = 0; i < jsData.body.data.pagelist.length; i++) {
+                result += "&nbsp;";
+                result += " <span value=\"" + jsData.body.data.pagelist[i].ccode + "\" onclick=\"query_type('"+jsData.body.data.pagelist[i].ccode+"',this);\">" + jsData.body.data.pagelist[i].cname + "</span>";
+            }
+            $("#taskType").html(result);
+        }
+    })
+
+    function query_type(ccode,obj) {
+        addActive(obj);
+        $("#query_type").val(ccode);
+        dataJobTask(0);
+    }
+
+    /**
+     * 下架
+     * @param id
+     */
+    function xiajia(id) {
+
+        $.ajax({
+            url: url + '/job/' + id + '/undercarriage',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: '',
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                alert("下架成功");
+            }
+        })
+    }
+
+    /**
+     * 删除
+     * @param id
+     */
+    function shanchu(id) {
+
+        $.ajax({
+            url: url + '/job/' + id + '/delete',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: '',
+            timeout: '1000',
+            cache: 'false',
+            success: function (jsData) {
+                alert("删除成功");
+            }
+        })
+    }
+
+    /**
+     * 修改零工
+     * @param id
+     */
+    function xiugai(id) {
+        //根据id查询零工信息
+        if (id != null && id != "") {
+            window.localStorage.setItem('jobid',id);
+            jumpPage('./linggongguanli/fabulinggong.html', 'rightPart');
+        }
+    }
+</script>

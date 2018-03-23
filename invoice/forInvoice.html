@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打零工企业web</title>
+    <link rel="stylesheet" href="css/default.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="js/pagination/paging.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <link rel="stylesheet" href="./js/datepicker/jquery-ui.css">
+</head>
+<body>
+<div>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="">
+            </div>
+            <div class="news">
+                <ul>
+                    <li>打零工互联网 <span>消息(<b class="redColor">10</b>)</span></li>
+                    <li>退出</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="contain">
+        <div class="nav_title">
+            <div class="container">
+                <ul>
+                    <li><img src="images/icon_18.png" alt="">首页</li>
+                    <li><b>账户管理</b> / 发票管理</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><img src="images/icon_01.png" alt="">零工管理
+                        <ul class="nav_child">
+                            <li class="active_li"><span class="active">></span>零工市场</li>
+                            <li>未接单</li>
+                            <li>进行中</li>
+                            <li>已完成</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_02.png" alt="">客户管理
+                        <ul>
+                            <li>我的客户</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_03.png" alt="">雇员管理
+                        <ul>
+                            <li>公司职员</li>
+                            <li>临时雇员</li>
+                            <li>添加分组</li>
+                        </ul>
+                    </li>
+                    <li><img src="images/icon_04.png" alt="">账户管理
+                        <ul>
+                            <li>企业资料</li>
+                            <li>子账号管理</li>
+                            <li>我的钱包</li>
+                            <li>我的收益</li>
+                            <li>安全设置</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="right_content">
+                <div class="news_title">
+                    <ul>
+                        <li>待开发票</li>
+                        <li>开票历史</li>
+                    </ul>
+                </div>
+                <div class="news_ask" id="news_ask">
+                    <p>发票抬头 打零工（上海）互联网科技有限公司 <a href="javascript:void(0);" class="linkColor upload_pic_btn">修改</a></p>
+                    <div class="list_table list_employee_table">
+                        <table id="table" class="employee_table th_none_border">
+                            <thead>
+                            <tr class="checkboxAll">
+                                <th></th>
+                                <th>年/月/日</th>
+                                <th>账单标题</th>
+                                <th>账单金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th><b>10-1</b></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>10/1 14:31:30</td>
+                                <td>财务顾问</td>
+                                <td>1200元</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>10/1 14:31:30</td>
+                                <td>财务顾问</td>
+                                <td>1200元</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>10/1 14:31:30</td>
+                                <td>财务顾问</td>
+                                <td>1200元</td>
+                            </tr>
+                            <tr class="checkboxAll th_none_border">
+                                <th><input type="checkbox"><label for="" class="checkall_label">全选</label></th>
+                                <th></th>
+                                <th></th>
+                                <th>合计（元）：<b class="redColor">4080</b></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <button type="button" class="de_btn de_btn_margin">提交</button>
+                        </div>
+                        <div id="pageTool" class="dlg-task-page page-common"></div>
+                    </div>
+                </div>
+                <div class="news_ask" id="news_news">
+                    <div class="search">
+                        <div class="input_group_inline_float forTime_input">
+                            <label for="date" class="inline_label">开票时间</label>
+                            <p><input type="text" id="startDate">-<input type="text" id="endDate"></p>
+                        </div>
+                        <div class="input_group">
+                            <span class="btn_search">取消搜索</span>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>开票时间</th>
+                            <th>账单信息</th>
+                            <th>发票抬头</th>
+                            <th>开票项目</th>
+                            <th>开票金额</th>
+                            <th>开票状态</th>
+                        </tr>
+                        <tr>
+                            <td>2017/12/12<br/>12:23:56</td>
+                            <td>批量付款</td>
+                            <td>打零工公司<br/>45648676465324</td>
+                            <td>服务费</td>
+                            <td>1200元</td>
+                            <td>申请中</td>
+                        </tr>
+                        <tr>
+                            <td>2017/12/12<br/>12:23:56</td>
+                            <td>批量付款</td>
+                            <td>打零工公司<br/>45648676465324</td>
+                            <td>服务费</td>
+                            <td>1200元</td>
+                            <td>已寄出</td>
+                        </tr>
+                        <tr>
+                            <td>2017/12/12<br/>12:23:56</td>
+                            <td>批量付款</td>
+                            <td>打零工公司<br/>45648676465324</td>
+                            <td>服务费</td>
+                            <td>1200元</td>
+                            <td>已驳回</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="pageTool1" class="dlg-task-page page-common"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="logo">
+            <img src="images/logo_1.png" alt="">
+        </div>
+        <ul>
+            <li>Copyright&copy;2017 打零工 沪ICP备156006046号-1</li>
+            <li>公司地址：上海市普陀区真北路958号天地科技广场一号楼7楼</li>
+        </ul>
+        <ul>
+            <li>客服邮箱：service@dalinggong.com</li>
+            <li>业务合作邮箱：mkt@dalinggong.com楼</li>
+        </ul>
+        <ul>
+            <li>客服热线：400-750-8585 <span>(周一至周五9：00-18：00)</span></li>
+        </ul>
+    </div>
+</div>
+</div>
+<div class="bg_ground">
+    <div class="tan" style="height: 600px; margin-top:5%;">
+        <span class="close">x</span>
+        <p class="invoicetit">发票设置/修改</p>
+        <div class="form_group right_tan">
+            <div class="input_pic input_pic_group">
+                <label for="">公司抬头</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">开票项目</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">纳税人识别号</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">营业地址</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">公司电话</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">开户银行</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">开户账号</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">备注说明</label>
+                <input type="text">
+            </div>
+            <p class="invoicetit">收件地址</p>
+            <div class="input_pic input_pic_group  invoicetitaddr">
+                <label for="">收件人</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">手机号</label>
+                <input type="text">
+            </div>
+            <div class="input_pic input_pic_group">
+                <label for="">地址</label>
+                <input type="text" value="真北路">
+            </div>
+            <div class="input_group_btn">
+                <span class="de_btn">保存</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/pagination/paging.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/check.js"></script>
+<script>
+    $(function () {
+        $(".upload_pic_btn").click(function () {
+            $(".bg_ground").show();
+        })
+        $(".close").click(function () {
+            $(".bg_ground").hide();
+        })
+        getDatePicker('startDate', 'endDate');
+    })
+    var setTotalCount = 301;
+    $('#pageTool,#pageTool1').Paging({
+        pageSize:10,
+        count:100,
+        callback:function(page,size,count){
+            /*console.log('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')*/
+        }
+    });
+    $(".news_title ul li:nth-child(1)").click(function () {
+        $(this).css("border", "1px solid orange");
+        $(".news_title ul li:nth-child(2)").css("border", "1px solid #fff");
+        $("#news_ask").show();
+        $("#news_news").hide();
+    });
+    $(".news_title ul li:nth-child(2)").click(function () {
+        $(this).css("border", "1px solid orange");
+        $(".news_title ul li:nth-child(1)").css("border", "1px solid #fff");
+        $("#news_ask").hide();
+        $("#news_news").show();
+    });
+</script>
+</body>
+</html>
